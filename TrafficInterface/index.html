@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+
+
+    </script>
+    <meta charset="UTF-8">
+    <title>Traffic Analytics </title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <!-- Bootstrap 3.3.2 -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- FontAwesome 4.3.0 -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- Ionicons 2.0.0 -->
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Theme style -->
+    <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
+    <!-- iCheck -->
+    <link href="plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css"/>
+
+    <!-- jvectormap -->
+    <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!-- Date Picker -->
+    <link href="plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css"/>
+    <!-- Daterange picker -->
+    <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/bootstrap-slider/slider.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/ionslider/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/ionslider/ion.rangeSlider.skinNice.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css"
+          href="http://js.api.here.com/v3/3.0/mapsjs-ui.css"/>
+
+    <link href="dist/polaris/polaris.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="dist/css/jquery-ui-slider-pips.css">
+    <style>
+        <!--
+        Bouncing
+
+        -->
+
+        .bar {
+            position: fixed;
+        }
+
+        .bounce {
+            position: fixed;
+            -webkit-animation: bounce 1s infinite;
+        }
+
+        @-webkit-keyframes bounce {
+            0% {
+                bottom: 5px;
+            }
+
+            25%, 75% {
+                bottom: 15px;
+            }
+
+            50% {
+                bottom: 20px;
+            }
+
+            100% {
+                bottom: 0;
+            }
+        }
+
+        .rightMenu {
+            position: relative;
+            float: right;
+        }
+
+        .right-caret {
+
+            border-bottom: 4px solid transparent;
+            border-top: 4px solid transparent;
+            border-left: 4px solid #000000;
+            display: inline-block;
+            height: 0;
+            opacity: 1;
+            vertical-align: top;
+            width: 0;
+
+        }
+
+        .right {
+            float: right;
+        }
+
+        .btn-default.outline:hover, .btn-default.outline:focus, .btn-default.outline:active, .btn-default.outline.active, .open > .dropdown-toggle.btn-default {
+            color: #009688;
+            border-color: #009688;
+        }
+
+        .btn-default.outline:active, .btn-default.outline.active {
+            border-color: #009688;
+            color: #009688;
+            box-shadow: none;
+        }
+
+        #input-from, #input-to {
+
+            text-align: center;
+
+        }
+
+        #scale-slider.ui-slider, #scale-slider2.ui-slider {
+            border-radius: 0px;
+            background: #c7cdd5;
+            border: none;
+            height: 2px;
+            margin: 1em 4em 4em;
+        }
+
+        #scale-slider.ui-slider .ui-slider-range, #scale-slider2.ui-slider .ui-slider-range {
+            background: #424242;
+            border: 1px solid rgba(67, 77, 90, 0.5);
+            height: 4px;
+
+            transition: all 0.2s ease-out;
+        }
+
+        #scale-slider .ui-slider-handle, #scale-slider2 .ui-slider-handle {
+            background: #424242;
+            border-radius: 2px;
+            height: 20px;
+            width: 12px;
+            top: -26px;
+            border: none;
+        }
+
+        #scale-slider .ui-slider-handle:nth-of-type(n+1), #scale-slider2 .ui-slider-handle:nth-of-type(n+1) {
+            transform: rotateZ(-10deg);
+            margin-left: -9px;
+        }
+
+        #scale-slider .ui-slider-handle:nth-of-type(n+2), #scale-slider2 .ui-slider-handle:nth-of-type(n+2) {
+            transform: rotateZ(10deg);
+            margin-left: -3px;
+        }
+
+        #scale-slider .ui-slider-handle:after, #scale-slider2 .ui-slider-handle:after {
+            content: "";
+            border: 6px solid transparent;
+            width: 0;
+            height: 0;
+            position: absolute;
+            bottom: -11px;
+            border-top-color: #424242;
+        }
+
+        #scale-slider .ui-slider-handle.ui-slider-handle.ui-state-focus:after,
+        #scale-slider .ui-slider-handle.ui-slider-handle.ui-state-hover:after,
+        #scale-slider .ui-slider-handle.ui-slider-handle.ui-state-active:after,
+        #scale-slider2 .ui-slider-handle.ui-slider-handle.ui-state-focus:after,
+        #scale-slider2 .ui-slider-handle.ui-slider-handle.ui-state-hover:after,
+        #scale-slider2 .ui-slider-handle.ui-slider-handle.ui-state-active:after {
+            border-top-color: #424242;
+        }
+
+        #scale-slider .ui-slider-pip,
+        #scale-slider2 .ui-slider-pip {
+            top: 2px;
+        }
+
+        #scale-slider .ui-slider-pip .ui-slider-label, #scale-slider2 .ui-slider-pip .ui-slider-label {
+            display: none;
+            background: rgba(67, 77, 90, 0);
+            color: #000000;
+            border-radius: 4px;
+            padding: 0.3em 0;
+            width: 2.4em;
+            margin-left: -1.25em;
+            transition: all 0.2s ease-out;
+        }
+
+        #scale-slider .ui-slider-pip .ui-slider-line, #scale-slider2 .ui-slider-pip .ui-slider-line {
+            height: 4px;
+        }
+
+        #scale-slider .ui-slider-line, #scale-slider2 .ui-slider-line {
+            height: 8px;
+
+        }
+
+        #scale-slider .ui-slider-pip:nth-of-type(3n-1) .ui-slider-label, #scale-slider2 .ui-slider-pip:nth-of-type(3n-1) .ui-slider-label {
+            top: 16px;
+            display: block;
+
+        }
+
+        #scale-slider .ui-slider-pip.ui-slider-pip-selected .ui-slider-label,
+        #scale-slider .ui-slider-pip.ui-slider-pip-selected-first .ui-slider-label,
+        #scale-slider .ui-slider-pip.ui-slider-pip-selected-second .ui-slider-label,
+        #scale-slider2 .ui-slider-pip.ui-slider-pip-selected .ui-slider-label,
+        #scale-slider2 .ui-slider-pip.ui-slider-pip-selected-first .ui-slider-label,
+        #scale-slider2 .ui-slider-pip.ui-slider-pip-selected-second .ui-slider-label {
+            background: #BDBDBD;
+
+            color: #000000;
+        }
+
+
+    </style>
+</head>
+<body class="sidebar-mini">
+<div class="main-wrapper">
+
+    <header class="main-header">
+        <a href="#" class="logo" style="background:#BDBDBD;">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>T</b>A</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Traffic</b>Analytics</span>
+        </a>
+
+
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" style="background: #BDBDBD;">
+
+            <div class="navbar-header">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <form class="navbar-form navbar-left" role="search" style="background:#455A64">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
+                        <input type="button" class="form-control" id="submit-btn" value="Go!">
+                    </div>
+                </form>
+                <ul class="nav navbar-nav">
+
+                </ul>
+
+            </div>
+            <!-- /.navbar-collapse -->
+
+        </nav>
+    </header>
+
+
+    <!-- Sidebar style="background:#222E33" -->
+    <aside class="main-sidebar" style="background:#ffffff;color:#000000">
+        <section class="sidebar">
+
+            <ul class="sidebar-menu">
+
+                <li class="those-events header" style="background:#222E33"><h4 style="color:white;">EVENT SOURCES</h4>
+                </li>
+
+
+                <li class='those-events treeview bg-not-white' id="boxy1">
+                    <a href="#" class="event-links eventful"><h4><strong>EVENTFUL</strong><i id="arrow1"
+                                                                                             class='fa fa-arrow-right pull-right arrows'></i>
+                    </h4></a>
+                    <ul class='nav treeview-menu'>
+                        <li><a href='#' id="eventful"><h5>Show in Map</h5></a></li>
+                        <li><a href='http://eventful.com' target="_blank"><h5>About Eventful</h5></a></li>
+
+                    </ul>
+                </li>
+
+                <li class='those-events treeview' id="boxy2">
+                    <a href="#" class="event-links eventbrite"><h4><strong>EVENTBRITE</strong><i id="arrow2"
+                                                                                                 class='fa fa-arrow-right pull-right arrows'></i>
+                    </h4></a>
+                    <ul class='nav treeview-menu'>
+                        <li><a href='#' id="eventbrite"><h5>Show in Map</h5></a></li>
+                        <li><a href='http://eventbrite.com' target="_blank"><h5>About Eventbrite</h5></a></li>
+                    </ul>
+                </li>
+                <li>
+
+                <li class='those-events treeview' id="boxy3">
+                    <a href="#" class="event-links here"><h4><strong>HERE</strong><i id="arrow3"
+                                                                                     class='fa fa-arrow-right pull-right arrows'></i>
+                    </h4></a>
+                    <ul class='nav treeview-menu'>
+                        <li><a href='#' id="here"><h5>Show in Map</h5></a></li>
+                        <li><a href='http://here.com' target="_blank"><h5>About Here</h5></a></li>
+
+                    </ul>
+                </li>
+                <li class='those-events treeview' id="boxy4">
+                    <a href="#" class="event-links openweather"><h4><strong>OPEN WEATHER</strong><i id="arrow4"
+                                                                                                    class='fa fa-arrow-right pull-right arrows'></i>
+                    </h4></a>
+                    <ul class='nav treeview-menu'>
+                        <li><a href='#' id="openweather"><h5>Show in Map</h5></a></li>
+                        <li><a href='http://openweather.com' target="_blank"><h5>About Open Weather</h5></a></li>
+                    </ul>
+                </li>
+                <li>
+
+                <li class="those-events header" style="background:#222E33"><h4 style="color:white;">TRAFFIC SOURCES</h4>
+                </li>
+                <li class='those-events treeview' id="boxy5">
+                    <a href="#" class="event-links 511"><h4><strong>511</strong><i id="arrow5"
+                                                                                   class='fa fa-arrow-right pull-right arrows'></i>
+                    </h4></a>
+                    <ul class='nav treeview-menu'>
+                        <li><a href='#' id="RLI"><h5 class="bg-not-white">Road Links </h5></a></li>
+                        <li><a href='#'><h5>Active Events</h5></a></li>
+                        <li><a href='#'><h5>Scheduled Events</h5></a></li>
+                        <li><a href='#'><h5>Twitter Events</h5></a></li>
+                        <li><a href='http://511.org' target="_blank"><h5>About 511</h5></a></li>
+                    </ul>
+                </li>
+                <li class='those-events treeview' id="boxy6">
+                    <a href="#" class="event-links inrix"><h4><strong>INRIX</strong><i id="arrow6"
+                                                                                       class='fa fa-arrow-right pull-right arrows'></i>
+                    </h4></a>
+                    <ul class='nav treeview-menu'>
+                        <li><a href='#' id="incident"><h5>Show in Map</h5></a></li>
+                        <li><a href='#'><h5 class="bg-not-white">Road Link Information</h5></a></li>
+                        <li><a href='http://inrix.com' target="_blank"><h5>About Inrix</h5></a></li>
+
+                    </ul>
+                </li>
+
+                <li>
+
+                <li class='those-events treeview' id="boxy7">
+                    <a href="#" class="event-links googlemaps"><h4><img
+                            src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Google_Maps.svg/1280px-Google_Maps.svg.png"
+                            width="50%" height="40%"><i id="arrow7" class='fa fa-arrow-right pull-right arrows'></i>
+                    </h4></a>
+                    <ul class='nav treeview-menu'>
+                        <li><a href='#' id="showTraffic"><h5><i class="fa fa-car"> </i> Traffic</h5></a></li>
+                        <li><a href='#' id="showWeather"><h5><i class="fa fa-cloud"> </i> Weather</h5></a></li>
+                        <li><a href='https://developers.google.com/maps/' target="_blank"><h5>About Google Maps API</h5>
+                        </a></li>
+                    </ul>
+
+                </li>
+                <li class='those-events treeview' id="boxy8">
+                    <a href="#" class="event-links refresh"><h4><strong>REFRESH MAP</strong><i
+                            class="fa fa-refresh pull-right"></i></h4></a>
+                </li>
+
+
+                <li class="those-events treeview bounce" id="boxy9">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix" style="background:#222E33;">
+                            INFO <i class="fa fa-info-circle pull-right"></i>
+                        </div>
+                        <div class="description panel-body" style="background:#222E33;color:white;height:100px">
+
+                        </div>
+                    </div>
+
+
+                </li>
+
+
+            </ul>
+
+
+        </section>
+    </aside>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 style="color:white">
+
+
+            </h1>
+
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            <div class="box box-success">
+                <div class="box-header">
+                    <strong>Map</strong>
+                    <i class="fa fa-map-marker"></i>
+
+                    <h3 class="box-title">
+
+                    </h3>
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">Toogle Time Slider</button>
+                    </div>
+                    <!-- /.box-tools -->
+
+
+                    <!--<input id="range_4" name="range_4" style="width : 100%, height : 100%"/> -->
+
+
+                </div>
+                <div class="box-body">
+
+
+                    <!--  <input type="text" value="" class="slider" data-slider-min="0" data-slider-max="23" data-slider-step="1" data-slider-value="" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="hide" data-slider-id="red">
+                   -->
+                    <div class="row">
+                        <h3 class="col-md-12"><label class="col-md-12 label label-default">Date & Time</label></h3>
+
+
+                    </div>
+                    <input type="text" class="form-control" id="input-from" placeholder="Date?" ng-model="fromDate"/>
+
+                    <div class="row">
+
+
+                        <div class="col-md-12">
+                            <div id="scale-slider"
+                                 class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all ui-slider-pips"></div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="overlay">
+                <i class="fa fa-spinner fa-spin"></i>
+
+            </div>
+            <div id="map-canvas" style="height: 1000px; width: 100%"></div>
+            <div id="legend" style="background:white"></div>
+            <!-- Map box -->
+
+
+        </section>
+
+
+    </div>
+
+</div>
+
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="dist/js/jquery-ui-slider-pips.js"></script>
+
+<script>
+</script>
+
+
+<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--<script src="plugins/bootstrap-slider/bootstrap-slider.js" type="text/javascript"></script>  -->
+<script src="plugins/ionslider/ion.rangeSlider.min.js" type="text/javascript"></script>
+
+
+<script>
+
+
+    var flag11 = 0;
+
+    $('[data-toggle=offcanvas]').click(function () {
+        if (flag11 === 0) {
+
+            $('.those-events').addClass('hidden');
+            flag11 = 1;
+        } else {
+
+            $('.those-events').removeClass('hidden');
+            flag11 = 0;
+        }
+    });
+
+
+    $('#boxy1,#boxy2,#boxy3,#boxy4,#boxy5,#boxy6,#boxy7,#boxy8,#boxy9').animate({"left": "-=250px"}, "slow");
+    $('#boxy1,#boxy2,#boxy3,#boxy4,#boxy5,#boxy6,#boxy7,#boxy8,#boxy9').animate({"left": "+=250px"}, "slow");
+    $('.bg-not-white').css("color", "#FFFFFF");
+
+    var arrows = 0;
+
+
+    $('.event-links').hover(
+            function () {
+
+                if ($(this).hasClass('inrix')) {
+                    $('.description').html('Traffic and Incident data from INRIX source');
+                }
+                else if ($(this).hasClass('eventful')) {
+                    $('.description').html('Event data coming from eventful data source');
+                }
+                else if ($(this).hasClass('eventbrite')) {
+                    $('.description').html('Event data coming from eventbrite data source');
+                }
+                else if ($(this).hasClass('here')) {
+                    $('.description').html('HERE MAPS');
+                }
+                else if ($(this).hasClass('511')) {
+                    $('.description').html('511 traffic data source');
+                }
+                else if ($(this).hasClass('openweather')) {
+                    $('.description').html('Weather data from Open Weather');
+                }
+                else if ($(this).hasClass('googlemaps')) {
+                    $('.description').html('Google maps javascript api & layers');
+                }
+                else if ($(this).hasClass('refresh')) {
+                    $('.description').html('Refresh the map');
+                }
+
+
+            }, function () {
+                $('.description').html('');
+            }
+    );
+
+    $('.box-body').hover(function () {
+
+        $('.description').html('Specify the date & time slider helps you toggle time and changes the events accordingly');
+
+    }, function () {
+
+        $('.description').html('');
+
+
+    });
+
+
+    $('.bg-not-white').hover(function () {
+
+        $(this).css("color", "#000000");
+
+    }, function () {
+
+        $(this).css("color", "#FFFFFF");
+
+
+    });
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="plugins/morris/morris.min.js" type="text/javascript"></script>
+<!-- Sparkline -->
+<script src="plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+<!-- jvectormap -->
+<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+<!-- jQuery Knob Chart -->
+<script src="plugins/knob/jquery.knob.js" type="text/javascript"></script>
+
+<!-- Bootstrap WYSIHTML5 -->
+
+<script src="plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<!-- Slimscroll -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<!-- FastClick -->
+<script src='plugins/fastclick/fastclick.min.js'></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js" type="text/javascript"></script>
+
+<script src="dist/js/demo.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8mfHWMoN-qBkrV174bkm101aiEbgJvHE">
+</script>
+
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="dist/js/pages/chartScript.js" type="text/javascript"></script>
+<script src="dist/js/GoogleMap.js" type="text/javascript"></script>
+<script src="dist/js/pages/MyEvents.js" type="text/javascript"></script>
+<script src="dist/js/pages/dashboard.js" type="text/javascript"></script>
+
+<script src="dist/js/icheck.js" type="text/javascript"></script>
+<script src="dist/js/pages/X2J.js" type="text/javascript"></script>
+<script src="dist/js/pages/incidents.js" type="text/javascript"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.input-check-eventful,.input-check-eventbrite,.input-check-roadlinks,.input-check-inrix,.input-check-here').iCheck({
+            checkboxClass: 'icheckbox_polaris',
+
+            increaseArea: '-10%' // optional
+        });
+
+        $('.input-check-eventful').on('ifChecked', function (event) {
+
+            //alert(event.type + ' callback');   
+
+            clickedEF = true;
+
+
+        });
+
+        $('.input-check-eventbrite').on('ifChecked', function (event) {
+
+
+            clickedEB = true;
+
+        });
+        $('.input-check-roadlinks').on('ifChecked', function (event) {
+
+        });
+        $('.input-check-inrix').on('ifChecked', function (event) {
+
+
+        });
+        $('.input-check-here').on('ifChecked', function (event) {
+            clickedHere = true;
+
+        });
+
+
+    });
+</script>
+</body>
+</html>

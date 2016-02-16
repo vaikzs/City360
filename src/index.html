@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="white lighten-1">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <title>TA</title>
+
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet'/>
+    <script
+        src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css'
+          rel='stylesheet'/>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css'
+          rel='stylesheet'/>
+    <!-- CSS  -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/map.css" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="section z-depth-2" id="map">
+
+</div>
+<div class="fixed-action-btn horizontal fade-in scale" style="top: 45px; right: 24px;">
+    <a class="btn-floating btn-large purple z-depth-5 nav-events">
+        <i class="material-icons">call_received</i>
+    </a>
+    <ul>
+        <li><a class="waves-light btn-floating red tooltipped" data-position="bottom"
+               data-tooltip="Free roam"><i class="material-icons">pan_tool</i></a></li>
+        <li><a data-target="modal1" class="waves-light btn-floating blue modal-trigger tooltipped"
+               data-position="bottom"
+               data-tooltip="Select layers">
+            <i class="material-icons">layers</i>
+        </a></li>
+        <li><a class="waves-light btn-floating grey tooltipped" data-position="bottom"
+               data-tooltip="Event sources"><i
+            class="material-icons">explicit</i></a></li>
+        <li><a class="waves-light btn-floating deep-purple tooltipped" data-position="bottom"
+               data-tooltip="Search for location"><i
+            class="material-icons geocode">location_on</i> </a></li>
+
+    </ul>
+
+
+</div>
+
+
+<div class="collection modal" id="modal1" style="width:300px">
+    <a href="#!" class="collection-item" id="trafficLayer" onclick="$('#modal1').closeModal();">Traffic Layer <i
+        class="right material-icons">traffic</i> </a>
+    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();"><i class="right material-icons">cloud</i>Weather
+        Layer</a>
+    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();"><i class="right material-icons">photo_camera</i>Traffic Camera
+        Layer</a>
+</div>
+
+
+<ul class="side-nav" id="mobile-demo">
+    <li><a href="sass.html">User guide</a></li>
+    <li><a href="#!" class="geocode">Search for Location<i class="material-icons right">location_on</i></a></li>
+
+</ul>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="js/Mapbox.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/1.1.1/intro.min.js"></script>
+<script src="js/Initial.js"></script>
+<script src="js/TrafficLayer.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+</body>
+</html>

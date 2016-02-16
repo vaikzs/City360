@@ -1,0 +1,167 @@
+var securityToken = '';
+var serverPath = '';
+var overlay = '';
+var markersEventful, markers;
+var clickTrafficLayer = false;
+var geocodeControlLayer = false;
+var RADIUS = 600;
+
+var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
+    opacity: 1,
+    weight: 1,
+    fillOpacity: 0.4,
+    color: '#ff8f00'
+});
+/*
+ Geocoding search for locations, example pan to New york
+ */
+$('.geocode').click(function () {
+    if (geocodeControlLayer === false) {
+        map.addControl(geocoder);
+
+        geocodeControlLayer = true;
+    }
+    else {
+        map.removeControl(geocoder);
+        geocodeControlLayer = false;
+
+
+    }
+});
+/*
+ On click traffic layer
+ */
+
+$('#trafficLayer').click(function () {
+    if (clickTrafficLayer === false) {
+        //Initialize for the first time
+        trafficLayer();
+        //Handling events after that over the map
+
+        map.on('load viewreset drag', trafficLayer);
+        clickTrafficLayer = true;
+    }
+    else {
+
+        clickTrafficLayer = false;
+
+    }
+});
+
+/*
+ Handling map events, example layer add event
+ */
+map.on('layeradd', function (e) {
+    console.log("layer added");
+});
+
+/*
+ On right click bring up search for all events nearby within the radius
+ */
+map.on('contextmenu', function (e) {
+
+    eventMarkersLayer(e);
+});
+
+var eventMarkersLayer = function (e) {
+
+    filterCircle.addTo(map);
+    if (map.getZoom() === 12) {
+        map.removeLayer(filterCircle);
+        filterCircle.setRadius(1200);
+    }
+
+    filterCircle.setLatLng(e.latlng);
+    map.addLayer(filterCircle);
+    markersEventful = new L.MarkerClusterGroup();
+    $.ajax({
+        url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&callback=?",
+        dataType: "json",
+    }).done(function (data) {
+
+        for (var i = 0; i < data.events.event.length; i++) {
+
+            var markerEF = L.marker(new L.LatLng(data.events.event[i].latitude, data.events.event[i].longitude), {
+                icon: L.mapbox.marker.icon({'marker-symbol': "e", 'marker-color': "1b5e20"}),
+                title: 'Eventful'
+            });
+
+            if (e.latlng.distanceTo(L.latLng(data.events.event[i].latitude.toString(), data.events.event[i].longitude.toString())) < RADIUS) {
+
+                markerEF.bindPopup('Title : ' + data.events.event[i].title + '<br> Venue : ' + data.events.event[i].venue_address + '<br> Cityname: ' + data.events.event[i].city_name + ' <br> Starttime:  ' + data.events.event[i].start_time + ' <br> Endtime:  ' + data.events.event[i].stop_time);
+                markersEventful.addLayer(markerEF);
+
+                markerEF.on('mouseover', function (e) {
+                    this.openPopup();
+
+                });
+                markerEF.on('mouseout', function (e) {
+                    this.closePopup();
+                });
+
+            }
+            else {
+                markersEventful.removeLayer(markerEF);
+            }
+
+
+        }
+        map.addLayer(markersEventful);
+
+    });
+
+    markers = new L.MarkerClusterGroup();
+    $.ajax({
+        url: "http://na.api.inrix.com/traffic/inrix.ashx?action=getsecuritytoken&VendorID=1808895794&ConsumerID=ce1f424d-fb48-43d3-a4b8-999c0c9d913e",
+        dataType: "xml"
+    }).done(function (data) {
+        securityToken = data.getElementsByTagName("AuthToken")[0].textContent;
+        serverPath = data.getElementsByTagName("ServerPath")[0].textContent;
+
+
+        $.ajax({
+            url: 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetIncidentsInRadius&Token=' + securityToken + '&Radius=5&Center=' + e.latlng.lat.toString() + '|' + e.latlng.lng.toString() + '&LocRefmethod=XD,TMC&IncidentOutputFields=All',
+            dataType: "xml"
+        }).done(function (xml) {
+            var arr = xml.getElementsByTagName("Incident");
+
+            var count = 0;
+            for (var j = 0; j < arr.length; j++) {
+
+                var title = arr[j].getElementsByTagName("ShortDesc");
+                var lat = arr[j].getAttribute("latitude");
+                var long = arr[j].getAttribute("longitude");
+                var marker = L.marker(new L.LatLng(lat, long), {
+                    icon: L.mapbox.marker.icon({'marker-symbol': "i"}),
+                    title: 'Inrix'
+                });
+
+
+                if (e.latlng.distanceTo(L.latLng(arr[j].getAttribute("latitude"), arr[j].getAttribute("longitude"))) < RADIUS) {
+                    count = count + 1;
+
+                    marker.bindPopup('Title : ' + title[0].textContent);
+                    markers.addLayer(marker);
+                    marker.on('mouseover', function (e) {
+                        this.openPopup();
+                    });
+                    marker.on('mouseout', function (e) {
+                        this.closePopup();
+                    });
+                }
+                else {
+                    markers.removeLayer(marker);
+
+                }
+
+
+            }
+            map.addLayer(markers);
+
+
+        });
+
+    });
+
+
+}

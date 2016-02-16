@@ -1,0 +1,18 @@
+#map {
+
+    position: absolute;
+    width: 100%;
+    top:0; bottom:0;
+}
+
+
+.nav-events {
+        margin-right : 20px;
+
+}
+
+#staggered-test {
+    opacity: 0;
+
+}
+
