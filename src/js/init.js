@@ -23,8 +23,15 @@
 
             }
         });
-        $('.button-collapse').sideNav();
+        $('.button-collapse').sideNav({
+                menuWidth: 450, // Default is 240
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            }
+        );
+
         $('.modal-trigger').leanModal();
+
 
     }); // end of document ready
 })(jQuery); // end of jQuery name space

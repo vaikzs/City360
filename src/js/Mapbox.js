@@ -5,7 +5,8 @@ L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczM
 var map = L.map('map', {
     maxZoom: 16,
     minZoom: 10,
-    attributionControl : false
+    attributionControl: false,
+    zoomControl : false
 });
 var baseOutdoors = L.mapbox.tileLayer('mapbox.outdoors');
 var baseDark = L.mapbox.tileLayer('mapbox.dark');
@@ -16,15 +17,44 @@ var geocoder = L.mapbox.geocoderControl('mapbox.places', {
     autocomplete: true
 });
 var layers = {
+    Dark: baseDark,
     Streets: baseStreet,
     Outdoors: baseOutdoors,
-    Dark: baseDark, Satellite: baseSatellite
+    Satellite: baseSatellite
 };
+
+var sideNav = false;
+$('.data-analytics').click(function () {
+    if (sideNav === false) {
+        $('#map').animate({
+            width: '65%'
+        });
+        $('.fixed-action-btn').animate({right : '35%'});
+        $('.data-icon').html("arrow_forward");
+
+        sideNav = true;
+    }
+    else {
+
+        $('#map').animate({
+            width: '100%'
+        });
+        $('.fixed-action-btn').animate({right : '5%'});
+        $('.data-icon').html("assessment");
+
+
+        sideNav = false
+    }
+
+});
+
 var initialize = function () {
+
     map.setView([37.773972
         , -122.431297], 13);
-    layers.Streets.addTo(map);
+    layers.Dark.addTo(map);
     L.control.layers(layers).addTo(map);
+
 
 }
 
