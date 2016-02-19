@@ -5,8 +5,8 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <title>TA</title>
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet'/>
+    <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' />
     <script
         src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css'
@@ -15,20 +15,20 @@
           rel='stylesheet'/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/map.css" rel="stylesheet">
+    <link hre="css/hopscotch.css" rel="stylesheet">
 
 
 </head>
 <body id="body">
-
 <div class="row">
     <div class="map-section z-depth-2" id="mapIntro">
-        <div class="section z-depth-2 fade-in" id="map">
+        <div class="section z-depth-2 fade-in" id="map" class="dark">
 
         </div>
-        <div class="hide-on-med-and-down">
+        <div class="">
             <div id="first-menu" class="fixed-action-btn horizontal fade-in scale" style="top: 5%; right: 5%">
 
-                <a class="btn-floating btn-large blue-grey z-depth-5 nav-events">
+                <a class="btn-floating btn-large blue-grey z-depth-2 nav-events">
                     <i class="material-icons">explore</i>
                 </a>
 
@@ -41,7 +41,7 @@
                            data-tooltip="Select layers">
                         <i class="material-icons">layers</i>
                     </a></li>
-                    <li><a class="waves-light btn-floating grey tooltipped" data-position="bottom"
+                    <li><a data-target="modalInitial" class="waves-light modal-trigger btn-floating grey tooltipped" data-position="bottom"
                            data-tooltip="Event sources"><i
                         class="material-icons">explicit</i></a></li>
                     <li><a class="waves-light btn-floating deep-purple tooltipped" data-position="bottom"
@@ -51,7 +51,8 @@
                 </ul>
             </div>
             <div class="fixed-action-btn horizontal fade-in scale" style="right:5%; top: 15%">
-                <a href="#" data-activates="slide-out" class="btn-floating btn-large light-green button-collapse z-depth-5">
+                <a href="#" data-activates="slide-out"
+                   class="btn-floating btn-large light-green button-collapse z-depth-2">
                     <!--<i class="material-icons">dashboard</i>-->
                     <i class="material-icons data-icon">assessment</i>
                 </a>
@@ -61,7 +62,7 @@
                 </ul>
             </div>
             <div class="fixed-action-btn horizontal fade-in scale" style="right:5%; top: 25%">
-                <a class="btn-floating btn-large amber z-depth-5 nav-events" id="date-change">
+                <a class="btn-floating btn-large amber z-depth-2 nav-events" id="date-change">
                     <i class="material-icons">date_range</i>
                 </a>
                 <ul>
@@ -71,7 +72,7 @@
             </div>
         </div>
         <div class="fixed-action-btn vertical" style="right:1%; bottom: 4%">
-            <a class="btn-flat btn-floating btn-medium grey darken-2 lighten-1 nav-events">
+            <a class="btn-flat btn-floating btn-small grey darken-2 lighten-1 nav-events">
                 <i class="material-icons white-text">copyright</i>
             </a>
             <ul>
@@ -93,9 +94,18 @@
 
     </div>
 
-    <ul id="slide-out" class="side-nav">
-        <li><a href="#!">Explore<i class="right small material-icons">explore</i></a></li>
-    </ul>
+
+    <div class="card side-nav" id="slide-out">
+        <div class="card-image waves-effect waves-block waves-light" id="camera-image">
+
+
+        </div>
+        <div class="card-content">
+
+        </div>
+
+    </div>
+
     <a href="#" data-activates="slide-out" class="btn-flat hide-on-med-and-up button-collapse"><i
         class="white-text mdi-navigation-menu"></i></a>
 
@@ -103,20 +113,37 @@
 <div class="collection modal" id="modal1" style="width:300px">
     <a href="#!" class="collection-item" id="trafficLayer" onclick="$('#modal1').closeModal();">Traffic Layer <i
         class="right material-icons">traffic</i> </a>
-    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();"><i class="right material-icons">cloud</i>Weather
+    <a href="#!" class="collection-item" id="traffic-camera" onclick="$('#modal1').closeModal();"><i
+        class="right material-icons">photo_camera</i>Traffic
+        Cameras</a>
+    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();"><i
+        class="right material-icons">cloud</i>Weather
         Layer</a>
-    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();"><i class="right material-icons">photo_camera</i>Traffic
-        Camera
-        Layer</a>
+
 </div>
+
+
+<div class="row modal" id="modalInitial" style="width: 50%">
+
+        <div class="card-panel">
+          <span class="teal-text center-align">
+
+              Double click to get your events within the radius !
+
+          </span>
+        </div>
+
+</div>
+
+
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="js/Mapbox.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/1.1.1/intro.min.js"></script>
 <script src="js/Initial.js"></script>
 <script src="js/TrafficLayer.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-
 <script src="js/materialize.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.2.5/js/hopscotch.min.js"></script>
+
 <script src="js/init.js"></script>
 
 </body>

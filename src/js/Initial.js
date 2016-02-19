@@ -4,6 +4,7 @@ var overlay = '';
 var markersEventful, markers;
 var clickTrafficLayer = false;
 var geocodeControlLayer = false;
+var populatedMarkers = [];
 var RADIUS = 600;
 
 var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
@@ -58,9 +59,10 @@ map.on('layeradd', function (e) {
 /*
  On right click bring up search for all events nearby within the radius
  */
-map.on('contextmenu', function (e) {
+map.on('dblclick', function (e) {
 
     eventMarkersLayer(e);
+    trafficCamera(e);
 });
 
 var eventMarkersLayer = function (e) {
@@ -165,3 +167,95 @@ var eventMarkersLayer = function (e) {
 
 
 }
+
+markersCameras = new L.MarkerClusterGroup({
+    // The iconCreateFunction takes the cluster as an argument and returns
+    // an icon that represents it. We use L.mapbox.marker.icon in this
+    // example, but you could also use L.icon or L.divIcon.
+    iconCreateFunction: function (cluster) {
+        return L.mapbox.marker.icon({
+            // show the number of markers in the cluster on the icon.
+            'marker-symbol': cluster.getChildCount(),
+            'marker-color': '#422'
+        });
+    }
+});
+
+var trafficCamera = function (e) {
+
+    $.ajax({
+        url: "http://na.api.inrix.com/traffic/inrix.ashx?action=getsecuritytoken&VendorID=1808895794&ConsumerID=ce1f424d-fb48-43d3-a4b8-999c0c9d913e",
+        dataType: "xml"
+    }).done(function (data) {
+        securityToken = data.getElementsByTagName("AuthToken")[0].textContent;
+        serverPath = data.getElementsByTagName("ServerPath")[0].textContent;
+        $.ajax({
+            url: 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCamerasInRadius&Token=' + securityToken + '&Radius=5&Center=' + e.latlng.lat.toString() + '|' + e.latlng.lng.toString(),
+            dataType: "xml"
+        }).done(function (xml) {
+            var point = xml.getElementsByTagName("Point");
+            var cam = xml.getElementsByTagName("Camera");
+
+
+            for (var j = 0; j < cam.length; j++) {
+                var title = cam[j].getElementsByTagName("Name");
+                var cameraId = cam[j].getAttribute("id");
+                var lat = cam[j].getElementsByTagName("Point")[0].attributes[0].value;
+                var long = cam[j].getElementsByTagName("Point")[0].attributes[1].value;
+                var marker = L.marker(L.latLng(lat, long), {
+                    icon: L.mapbox.marker.icon({'marker-symbol': "camera"}),
+                    title: 'Inrix traffic cameras'
+                });
+
+                var strll = lat+"-"+long;
+                if (e.latlng.distanceTo(L.latLng(lat, long)) < RADIUS && $.inArray(strll,populatedMarkers)===-1) {
+                    populatedMarkers.push(strll);
+                    //Open dash to give image details
+
+                    var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
+                    marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
+                    marker.on('mouseover', function (e) {
+
+                        this.openPopup();
+
+
+                    });
+
+                    var newCamID = cameraId;
+                    marker.on('click', function (e) {
+                        console.log(urlstr);
+                        $('#camera-image').html('');
+                        $('#camera-image').html('<img src=' + urlstr + '>' + '<span class="card-title">'+newCamID+'</span>');
+
+                        $('.button-collapse').sideNav('show', {
+                                menuWidth: 300, // Default is 240
+                                edge: 'left', // Choose the horizontal origin
+                                closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                            }
+                        );
+                    });
+
+
+                    marker.on('mouseout', function (e) {
+                        this.closePopup();
+                    });
+                    markersCameras.addLayer(marker);
+
+                } else {
+                    markersCameras.removeLayer(marker);
+                }
+            }
+            map.addLayer(markersCameras);
+
+
+        });
+
+    });
+
+
+}
+$('#traffic-camera').click(function () {
+
+    map.panTo([40.748817, -73.985428], {});
+
+});

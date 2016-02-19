@@ -6,8 +6,12 @@ var map = L.map('map', {
     maxZoom: 16,
     minZoom: 10,
     attributionControl: false,
-    zoomControl : false
+    zoomControl : false,
+    doubleClickZoom : false,
+    dragging : true
 });
+
+
 var baseOutdoors = L.mapbox.tileLayer('mapbox.outdoors');
 var baseDark = L.mapbox.tileLayer('mapbox.dark');
 var baseStreet = L.mapbox.tileLayer('mapbox.streets');
@@ -15,6 +19,7 @@ var baseSatellite = L.mapbox.tileLayer('mapbox.satellite');
 var geocoder = L.mapbox.geocoderControl('mapbox.places', {
     keepOpen: true,
     autocomplete: true
+
 });
 var layers = {
     Dark: baseDark,
@@ -52,7 +57,7 @@ var initialize = function () {
 
     map.setView([37.773972
         , -122.431297], 13);
-    layers.Dark.addTo(map);
+    layers.Streets.addTo(map);
     L.control.layers(layers).addTo(map);
 
 

@@ -4,7 +4,7 @@
     var trafficLayer = function(url){
         map.eachLayer(function (layer) {
 
-            if (layer !== baseOutdoors && layer!== baseDark && layer!== baseStreet && layer!== baseSatellite && layer !== markersEventful && layer !== markers && layer !==filterCircle) {
+            if (layer !== baseOutdoors && layer!== baseDark && layer!== baseStreet && layer!== baseSatellite && layer !== markersEventful && layer !== markers && layer !==filterCircle && layer !== markersCameras) {
 
                 map.removeLayer(layer);
 
