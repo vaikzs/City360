@@ -6,9 +6,9 @@ var map = L.map('map', {
     maxZoom: 16,
     minZoom: 10,
     attributionControl: false,
-    zoomControl : false,
-    doubleClickZoom : false,
-    dragging : true
+    zoomControl: false,
+    doubleClickZoom: false,
+    dragging: true
 });
 
 
@@ -34,7 +34,7 @@ $('.data-analytics').click(function () {
         $('#map').animate({
             width: '65%'
         });
-        $('.fixed-action-btn').animate({right : '35%'});
+        $('.fixed-action-btn').animate({right: '35%'});
         $('.data-icon').html("arrow_forward");
 
         sideNav = true;
@@ -44,7 +44,7 @@ $('.data-analytics').click(function () {
         $('#map').animate({
             width: '100%'
         });
-        $('.fixed-action-btn').animate({right : '5%'});
+        $('.fixed-action-btn').animate({right: '5%'});
         $('.data-icon').html("assessment");
 
 

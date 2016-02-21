@@ -2,7 +2,7 @@ var securityToken = '';
 var serverPath = '';
 var overlay = '';
 var markersEventful, markers;
-var clickTrafficLayer = false;
+var clickTrafficLayer = true;
 var geocodeControlLayer = false;
 var populatedMarkers = [];
 var RADIUS = 600;
@@ -29,22 +29,32 @@ $('.geocode').click(function () {
 
     }
 });
+
 /*
  On click traffic layer
  */
 
 $('#trafficLayer').click(function () {
-    if (clickTrafficLayer === false) {
+    if (clickTrafficLayer === true) {
         //Initialize for the first time
-        trafficLayer();
-        //Handling events after that over the map
 
-        map.on('load viewreset drag', trafficLayer);
-        clickTrafficLayer = true;
-    }
-    else {
+        //Handling events after that over the map
+        trafficLayer();
+        map.on('dragstart dragend viewreset', function(){
+            trafficLayer();
+        });
 
         clickTrafficLayer = false;
+    }
+    else {
+        if(overlay !== '') {
+
+                    map.removeLayer(overlay);
+                    map.removeEventListener('dragstart dragend viewreset');
+                    clickTrafficLayer = true;
+
+
+        }
 
     }
 });
