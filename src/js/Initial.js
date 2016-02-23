@@ -5,13 +5,13 @@ var markersEventful, markers;
 var clickTrafficLayer = true;
 var geocodeControlLayer = false;
 var populatedMarkers = [];
-var RADIUS = 600;
+var RADIUS = 700;
 
 var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
     opacity: 1,
     weight: 1,
-    fillOpacity: 0.4,
-    color: '#ff8f00'
+    fillOpacity: 0.1,
+    color: '#DD2C00'
 });
 /*
  Geocoding search for locations, example pan to New york
@@ -40,18 +40,18 @@ $('#trafficLayer').click(function () {
 
         //Handling events after that over the map
         trafficLayer();
-        map.on('dragstart dragend viewreset', function(){
+        map.on('dragstart dragend viewreset', function () {
             trafficLayer();
         });
 
         clickTrafficLayer = false;
     }
     else {
-        if(overlay !== '') {
+        if (overlay !== '') {
 
-                    map.removeLayer(overlay);
-                    map.removeEventListener('dragstart dragend viewreset');
-                    clickTrafficLayer = true;
+            map.removeLayer(overlay);
+            map.removeEventListener('dragstart dragend viewreset');
+            clickTrafficLayer = true;
 
 
         }
@@ -94,7 +94,7 @@ var eventMarkersLayer = function (e) {
         for (var i = 0; i < data.events.event.length; i++) {
 
             var markerEF = L.marker(new L.LatLng(data.events.event[i].latitude, data.events.event[i].longitude), {
-                icon: L.mapbox.marker.icon({'marker-symbol': "e", 'marker-color': "1b5e20"}),
+                icon: L.mapbox.marker.icon({'marker-symbol': "e", 'marker-color': "1b5e20", 'marker-size': 'large'}),
                 title: 'Eventful'
             });
 
@@ -144,7 +144,7 @@ var eventMarkersLayer = function (e) {
                 var lat = arr[j].getAttribute("latitude");
                 var long = arr[j].getAttribute("longitude");
                 var marker = L.marker(new L.LatLng(lat, long), {
-                    icon: L.mapbox.marker.icon({'marker-symbol': "i"}),
+                    icon: L.mapbox.marker.icon({'marker-symbol': "i", 'marker-size': 'large'}),
                     title: 'Inrix'
                 });
 
@@ -174,6 +174,7 @@ var eventMarkersLayer = function (e) {
         });
 
     });
+
 
 
 }
@@ -213,12 +214,12 @@ var trafficCamera = function (e) {
                 var lat = cam[j].getElementsByTagName("Point")[0].attributes[0].value;
                 var long = cam[j].getElementsByTagName("Point")[0].attributes[1].value;
                 var marker = L.marker(L.latLng(lat, long), {
-                    icon: L.mapbox.marker.icon({'marker-symbol': "camera"}),
+                    icon: L.mapbox.marker.icon({'marker-symbol': "camera", 'marker-size': 'large'}),
                     title: 'Inrix traffic cameras'
                 });
 
-                var strll = lat+"-"+long;
-                if (e.latlng.distanceTo(L.latLng(lat, long)) < RADIUS && $.inArray(strll,populatedMarkers)===-1) {
+                var strll = lat + "-" + long;
+                if (e.latlng.distanceTo(L.latLng(lat, long)) < RADIUS && $.inArray(strll, populatedMarkers) === -1) {
                     populatedMarkers.push(strll);
                     //Open dash to give image details
 
@@ -235,16 +236,14 @@ var trafficCamera = function (e) {
                     marker.on('click', function (e) {
                         console.log(urlstr);
                         $('#camera-image').html('');
-                        $('#camera-image').html('<img src=' + urlstr + '>' + '<span class="card-title">'+newCamID+'</span>');
-
-                        $('.button-collapse').sideNav('show', {
-                                menuWidth: 300, // Default is 240
-                                edge: 'left', // Choose the horizontal origin
-                                closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                            }
-                        );
+                        $('#camera-image').html('<img src=' + urlstr + '>' + '<span class="card-title">' + newCamID + '</span>');
+                        $('#listings').addClass('fixed');
+                        $('#listings').sideNav('show');
                     });
+                    markersCameras.eachLayer(function(locale){
+                        console.log(locale)
 
+                    });
 
                     marker.on('mouseout', function (e) {
                         this.closePopup();
@@ -261,6 +260,7 @@ var trafficCamera = function (e) {
         });
 
     });
+
 
 
 }
