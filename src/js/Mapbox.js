@@ -9,17 +9,19 @@ var map = L.map('map', {
     doubleClickZoom: false,
     dragging: true
 });
-var baseOutdoors = L.mapbox.tileLayer('mapbox.outdoors',{zIndex : 2});
+var baseOutdoors = L.mapbox.tileLayer('mapbox.outdoors');
 
-var baseDark = L.mapbox.tileLayer('mapbox.dark',{zIndex : 2});
-var baseStreet = L.mapbox.tileLayer('mapbox.streets',{zIndex : 2});
-var baseSatellite = L.mapbox.tileLayer('mapbox.satellite',{zIndex : 2});
+var baseDark = L.mapbox.tileLayer('mapbox.dark');
+var baseStreet = L.mapbox.tileLayer('mapbox.streets');
+var baseSatellite = L.mapbox.tileLayer('mapbox.satellite');
+var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cikzsz3h800329klzi0bbrxpj');
 var geocoder = L.mapbox.geocoderControl('mapbox.places', {
     keepOpen: true,
     autocomplete: true
 
 });
 var layers = {
+    Custom : baseStyle,
     Dark: baseDark,
     Streets: baseStreet,
     Outdoors: baseOutdoors,
@@ -55,7 +57,7 @@ var initialize = function () {
 
     map.setView([37.773972
         , -122.431297], 13);
-    layers.Streets.addTo(map);
+    layers.Custom.addTo(map);
     L.control.layers(layers).addTo(map);
 
 
