@@ -34,67 +34,46 @@
 
 <div class="row">
 
-    <div id='listings' class='side-nav listings' id="slide-out">
+    <div id='listings' class='listings'>
         <div class="card-image waves-effect waves-block waves-light" id="camera-image">
         </div>
         <div class="card-content">
         </div>
     </div>
+    <ul class='side-nav right' id="slide-out">
+        <li><a href="#!">First Sidebar Link</a></li>
+        <li><a href="#!">Second Sidebar Link</a></li>
+
+    </ul>
 
     <div class="map-section " id="mapIntro">
         <div class="section z-depth-5" id="map"></div>
-        <div class="nav-buttons">
+        <div class="left nav-buttons transparent left-align" style="padding: 1%;">
+            <a href="#modalCameras" class="traffic-camera btn-large blue-grey darken-3 tooltipped modal-trigger fade-in scale"
+               data-position="bottom"
+               data-tooltip="Cameras" data-target="modalInitial">
+                <!--<i class="material-icons">dashboard</i>-->
+                <i class="material-icons">photo_camera</i>
+            </a>
 
-            <div id="first-menu" class="fixed-action-btn horizontal  fade-in scale" style="top: 5%; right: 5%">
-                <a class="btn-floating btn-large blue-grey waves-light nav-events tooltipped" data-position="right"
-                   data-tooltip="Search">
-                    <i class="material-icons geocode">location_on</i> </a>
-                <ul>
-                    <li></li>
+            <a
+                class="btn-large   blue-grey darken-3 tooltipped fade-in scale"
+                data-position="bottom"
+                data-tooltip="Layers" id="trafficLayer"><i
+                class="material-icons">layers</i></a>
 
+            <a class=" btn-large  blue-grey darken-3 waves-light nav-events tooltipped fade-in scale"
+               data-position="bottom"
+               data-tooltip="Time" id="date-change">
+                <i class="material-icons">date_range</i>
+            </a>
+            <a class="btn-large  blue-grey darken-3  waves-light nav-events tooltipped fade-in scale"
+               data-position="bottom" data-tooltip="Events">
+                <i class="material-icons">explicit</i></a>
+            <a class="btn-large  blue-grey darken-3 waves-light nav-events tooltipped fade-in scale"
+               data-position="bottom" data-tooltip="help">
+                <i class="material-icons">help</i></a>
 
-                </ul>
-            </div>
-            <div class="fixed-action-btn horizontal fade-in scale" style="right:5%; top: 15%">
-                <a data-target="modalInitial" class="waves-light btn-large btn-floating green tooltipped"
-                   data-position="right"
-                   data-tooltip="Events"><i
-                    class="material-icons">explicit</i></a>
-
-            </div>
-            <div class="fixed-action-btn horizontal fade-in scale" style="right:5%; top: 25%">
-                <a href="#" class="btn-floating waves-light btn-large amber darken-3 tooltipped"
-                   data-position="right"
-                   data-tooltip="Layers">
-                    <!--<i class="material-icons">dashboard</i>-->
-                    <i class="material-icons">layers</i>
-                </a>
-                <ul>
-                    <li><a class="waves-light btn-floating blue tooltipped"
-                           data-position="bottom"
-                           data-tooltip="Traffic flow" id="trafficLayer">
-                        <i class="right material-icons">traffic</i>
-                    </a></li>
-                    <li><a class="waves-light btn-floating indigo darken-3 tooltipped"
-                           data-position="bottom"
-                           data-tooltip="Cameras" id="traffic-camera">
-                        <i
-                            class="right material-icons">photo_camera</i>
-                    </a></li>
-
-                </ul>
-            </div>
-            <div class="fixed-action-btn horizontal fade-in scale" style="right:5%; top: 35%">
-                <a class="btn-floating btn-large brown waves-light nav-events tooltipped"
-                   data-position="right"
-                   data-tooltip="Time" id="date-change">
-                    <i class="material-icons">date_range</i>
-                </a>
-                <ul>
-
-
-                </ul>
-            </div>
         </div>
 
 
@@ -104,27 +83,61 @@
         class="white-text mdi-navigation-menu"></i></a>
 
 </div>
-<div class="collection modal" id="modal1" style="width:300px">
-    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();">Traffic Layer <i
-        class="right material-icons">traffic</i> </a>
-    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();"><i
-        class="right material-icons">photo_camera</i>Traffic
-        Cameras</a>
-    <a href="#!" class="collection-item" onclick="$('#modal1').closeModal();"><i
-        class="right material-icons">cloud</i>Weather
-        Layer</a>
+
+<div class="card-panel modal grey lighten-2" id="initialModal" style="width: 25%">
+
+    <h4 class="blue-grey lighten-1 card-panel white-text modal-heading center">Choose layers</h4>
+
+    <ul class="collection modal-content">
+
+        <li class="collection-item">
+            <div><i class="left blue-grey-text material-icons">traffic</i>Traffic<a href="#!" class="secondary-content">
+                <div class="switch">
+
+                    <label class="right">
+                        No
+                        <input id="traffic-flow" type="checkbox" checked>
+                        <span class="lever"></span>
+                        Yes
+                    </label>
+                </div>
+            </a></div>
+        </li>
+        <li class="collection-item">
+            <div><i class="left blue-grey-text material-icons">cloud</i>Weather<a href="#!" class="secondary-content">
+                <div class="switch">
+
+                    <label class="right">
+                        No
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        Yes
+                    </label>
+                </div>
+            </a></div>
+        </li>
+
+    </ul>
+
+
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+
+    </div>
 
 </div>
 
+<div class="card-panel modal" id="modalCameras" style="width: 25%">
 
-<div class="row modal" id="modalInitial" style="width: 50%">
+    <h4 class="teal card-panel white-text modal-heading center">Traffic Cameras</h4>
+    <div class="modal-content">
 
-    <div class="card-panel">
-          <span class="teal-text center-align">
+        <p>Panning to New york in few seconds . . </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" id="cancel" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
 
-              Double click to get your events within the radius !
-
-          </span>
     </div>
 
 </div>
@@ -132,16 +145,14 @@
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
-<script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-traffic.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
-
+<script
+    src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-traffic.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
+<script src="js/materialize.js"></script>
 <script src="js/Mapbox.js"></script>
-
 <script src="js/Initial.js"></script>
 <script src="js/TrafficLayer.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-<script src="js/materialize.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.2.5/js/hopscotch.min.js"></script>
-
 <script src="js/init.js"></script>
 
 </body>

@@ -33,14 +33,13 @@ $('.geocode').click(function () {
 /*
  On click traffic layer
  */
-
-$('#trafficLayer').click(function () {
+var trafficEnable = function () {
     if (clickTrafficLayer === true) {
         //Initialize for the first time
 
         //Handling events after that over the map
         trafficLayer();
-        map.on('dragstart dragend viewreset', function () {
+        map.on('drag viewreset', function () {
             trafficLayer();
         });
 
@@ -50,14 +49,32 @@ $('#trafficLayer').click(function () {
         if (overlay !== '') {
 
             map.removeLayer(overlay);
-            map.removeEventListener('dragstart dragend viewreset');
+            map.removeEventListener('drag viewreset');
             clickTrafficLayer = true;
 
 
         }
 
     }
+};
+$("#traffic-flow").click( function(){
+    if( $(this).is(':checked') )  trafficEnable();
+    else {
+        if (overlay !== '') {
+
+            map.removeLayer(overlay);
+            map.removeEventListener('drag viewreset');
+            clickTrafficLayer = true;
+
+
+        }
+
+    }
+
+
 });
+
+$('#trafficLayer').click(trafficEnable);
 
 /*
  Handling map events, example layer add event
@@ -176,7 +193,6 @@ var eventMarkersLayer = function (e) {
     });
 
 
-
 }
 
 markersCameras = new L.MarkerClusterGroup({
@@ -240,7 +256,7 @@ var trafficCamera = function (e) {
                         $('#listings').addClass('fixed');
                         $('#listings').sideNav('show');
                     });
-                    markersCameras.eachLayer(function(locale){
+                    markersCameras.eachLayer(function (locale) {
                         console.log(locale)
 
                     });
@@ -262,10 +278,19 @@ var trafficCamera = function (e) {
     });
 
 
-
 }
-$('#traffic-camera').click(function () {
+var initPan = '';
+$('.traffic-camera').click(function () {
+    //Pan after 5 seconds
+    initPan = setTimeout(function () {
+        map.panTo([40.748817, -73.985428], {});
+        $('#modalCameras').closeModal();
+    }, 5000);
 
-    map.panTo([40.748817, -73.985428], {});
+
+});
+
+$('#cancel').click(function () {
+    clearTimeout(initPan);
 
 });

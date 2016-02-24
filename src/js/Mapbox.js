@@ -2,6 +2,7 @@
  * Created by vaikunth on 2/15/16.
  */
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
+
 var map = L.map('map', {
     minZoom: 10,
     attributionControl: false,
@@ -9,6 +10,7 @@ var map = L.map('map', {
     doubleClickZoom: false,
     dragging: true
 });
+
 var baseOutdoors = L.mapbox.tileLayer('mapbox.outdoors');
 
 var baseDark = L.mapbox.tileLayer('mapbox.dark');
@@ -28,37 +30,18 @@ var layers = {
     Satellite: baseSatellite
 };
 
-var sideNav = false;
-$('.data-analytics').click(function () {
-    if (sideNav === false) {
-        $('#map').animate({
-            width: '65%'
-        });
-        $('.fixed-action-btn').animate({right: '35%'});
-        $('.data-icon').html("arrow_forward");
-
-        sideNav = true;
-    }
-    else {
-
-        $('#map').animate({
-            width: '100%'
-        });
-        $('.fixed-action-btn').animate({right: '5%'});
-        $('.data-icon').html("assessment");
-
-
-        sideNav = false
-    }
-
-});
 
 var initialize = function () {
+    $('#initialModal').openModal();
 
     map.setView([37.773972
         , -122.431297], 13);
     layers.Custom.addTo(map);
     L.control.layers(layers).addTo(map);
+    var attr = new L.control.attribution();
+    attr.addAttribution('Inrix traffic data &copy; Mapbox ').addTo(map);
+
+
 
 
 }
