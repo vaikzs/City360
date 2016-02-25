@@ -16,18 +16,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/map.css" rel="stylesheet">
     <link hre="css/hopscotch.css" rel="stylesheet">
-    <style>
-        .sidebar {
-            width: 33.3333%;
-        }
 
-        .pad2 {
-            padding: 20px;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-    </style>
 
 </head>
 <body id="body">
@@ -40,95 +29,88 @@
         <div class="card-content">
         </div>
     </div>
-    <ul class='side-nav right' id="slide-out">
-        <li><a href="#!">First Sidebar Link</a></li>
-        <li><a href="#!">Second Sidebar Link</a></li>
 
-    </ul>
 
     <div class="map-section " id="mapIntro">
         <div class="section z-depth-5" id="map"></div>
-        <div class="left nav-buttons transparent left-align" style="padding: 1%;">
-            <a href="#modalCameras" class="traffic-camera btn-large blue-grey darken-3 tooltipped modal-trigger fade-in scale"
-               data-position="bottom"
-               data-tooltip="Cameras" data-target="modalInitial">
-                <!--<i class="material-icons">dashboard</i>-->
-                <i class="material-icons">photo_camera</i>
+        <div class="row right nav-buttons hide-on-med-and-down" style="padding: 1%;">
+            <a href="#modalCameras"
+               class="col s6 offset-s6 traffic-camera fade-in scale hoverable btn-large white-text brown lighten-1 waves-effect waves-teal blue-grey-text tooltipped modal-trigger fade-in scale"
+               data-position="left"
+               data-tooltip="Cameras NY" data-delay="50" data-target="modalInitial">
+                <i class="left material-icons">photo_camera</i>Cameras
             </a>
-
-            <a
-                class="btn-large   blue-grey darken-3 tooltipped fade-in scale"
-                data-position="bottom"
-                data-tooltip="Layers" id="trafficLayer"><i
-                class="material-icons">layers</i></a>
-
-            <a class=" btn-large  blue-grey darken-3 waves-light nav-events tooltipped fade-in scale"
-               data-position="bottom"
-               data-tooltip="Time" id="date-change">
-                <i class="material-icons">date_range</i>
+            <a href="#initialModal"
+               class="col s6 offset-s6 btn-large modal-trigger fade-in scale hoverable brown lighten-1 waves-effect waves-teal tooltipped fade-in scale"
+               data-position="left" data-delay="50"
+               data-tooltip="Layers" id="trafficLayer" data-target="initialModal"><i
+                class="left material-icons">layers</i>Layers </a>
+            <a class="col s6 offset-s6 btn-large hoverable fade-in scale brown lighten-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+               data-position="left" data-delay="50"
+               data-tooltip="Select date" id="date-change">
+                <i class="left material-icons">date_range</i>Date
             </a>
-            <a class="btn-large  blue-grey darken-3  waves-light nav-events tooltipped fade-in scale"
-               data-position="bottom" data-tooltip="Events">
-                <i class="material-icons">explicit</i></a>
-            <a class="btn-large  blue-grey darken-3 waves-light nav-events tooltipped fade-in scale"
-               data-position="bottom" data-tooltip="help">
-                <i class="material-icons">help</i></a>
+            <a href="#modal-events"
+               class="col s6 offset-s6 btn-large modal-trigger fade-in scale hoverable brown lighten-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+               data-position="left" data-delay="50" data-target="modal-events" data-tooltip="Event sources">
+                <i class="left material-icons">explicit</i>Event Sources</a>
+            <a href="#modal-help"
+               class="col s6 offset-s6 btn-large hoverable fade-in scale brown lighten-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+               data-position="left" data-delay="50" data-tooltip="User guide" data-target="modal-help">
+                <i class="left material-icons">help</i>Help</a>
 
         </div>
 
 
     </div>
 
-    <a href="#" data-activates="slide-out" class="btn-flat hide-on-med-and-up button-collapse"><i
-        class="white-text mdi-navigation-menu"></i></a>
 
 </div>
 
-<div class="card-panel modal grey lighten-2" id="initialModal" style="width: 25%">
-
-    <h4 class="blue-grey lighten-1 card-panel white-text modal-heading center">Choose layers</h4>
-
-    <ul class="collection modal-content">
-
-        <li class="collection-item">
-            <div><i class="left blue-grey-text material-icons">traffic</i>Traffic<a href="#!" class="secondary-content">
-                <div class="switch">
-
-                    <label class="right">
-                        No
-                        <input id="traffic-flow" type="checkbox" checked>
-                        <span class="lever"></span>
-                        Yes
-                    </label>
-                </div>
-            </a></div>
-        </li>
-        <li class="collection-item">
-            <div><i class="left blue-grey-text material-icons">cloud</i>Weather<a href="#!" class="secondary-content">
-                <div class="switch">
-
-                    <label class="right">
-                        No
-                        <input type="checkbox">
-                        <span class="lever"></span>
-                        Yes
-                    </label>
-                </div>
-            </a></div>
-        </li>
-
-    </ul>
+<ul class="card-panel fade-in row modal collection with-header grey lighten-2" id="initialModal">
 
 
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+    <li class="center white-text blue-grey collection-header">
+        <h4> Choose layers</h4>
+    </li>
 
-    </div>
+    <li class="collection-item">
+        <div><i class="left blue-grey-text material-icons">traffic</i>Traffic<a href="#!" class="secondary-content">
+            <div class="switch">
+                <label class="right">
+                    Disable
+                    <input id="traffic-flow" type="checkbox">
+                    <span class="lever"></span>
+                    Enable
+                </label>
+            </div>
+        </a></div>
+    </li>
+    <li class="collection-item">
+        <div><i class="left blue-grey-text material-icons">cloud</i><span>Weather</span><a href="#!"
+                                                                                           class="secondary-content">
+            <div class="switch">
 
-</div>
+                <label class="right">
+                    Disable
+                    <input type="checkbox">
+                    <span class="lever"></span>
+                    Enable
+                </label>
+            </div>
+        </a></div>
+    </li>
 
-<div class="card-panel modal" id="modalCameras" style="width: 25%">
+    <li class="collection-item">
+        <a class="btn-flat modal-close">Cancel</a>
+        <a class="btn-flat modal-close right grey white-text">Ok</a>
+
+    </li>
+
+
+</ul>
+
+<div class="card-panel fade-in modal" id="modalCameras">
 
     <h4 class="teal card-panel white-text modal-heading center">Traffic Cameras</h4>
     <div class="modal-content">
@@ -139,6 +121,34 @@
         <a href="#!" id="cancel" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
 
     </div>
+
+</div>
+<div class="row container fade-in modal grey" id="modal-events">
+
+
+    <div class="card col s6">
+        <div class="card-image">
+            <img src="images/Screenshot from 2016-02-24 21:18:13.png"  width="20%" height="20%">
+            <span class="black-text card-title">Radial Search</span>
+        </div>
+        <div class="card-content">
+            <p>This option is selected by default and it searches for events within a radius</p>
+        </div>
+
+    </div>
+    <div class="card col s6">
+
+        <div class="card-image">
+            <img src="images/Screenshot from 2016-02-24 21:57:47.png" width="20%" height="20%">
+            <span class="black-text card-title">Boundingbox Search</span>
+        </div>
+        <div class="card-content">
+            <p>This option when selected makes a bounding box search, populates all the events within the bounding box</p>
+        </div>
+
+
+    </div>
+
 
 </div>
 

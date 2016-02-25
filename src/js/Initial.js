@@ -33,48 +33,29 @@ $('.geocode').click(function () {
 /*
  On click traffic layer
  */
-var trafficEnable = function () {
-    if (clickTrafficLayer === true) {
-        //Initialize for the first time
 
-        //Handling events after that over the map
+$("#traffic-flow").click(function () {
+    if ($(this).prop('checked')) {
         trafficLayer();
-        map.on('drag viewreset', function () {
+        map.on('dragstart dragend viewreset', function () {
             trafficLayer();
         });
 
-        clickTrafficLayer = false;
-    }
-    else {
-        if (overlay !== '') {
-
-            map.removeLayer(overlay);
-            map.removeEventListener('drag viewreset');
-            clickTrafficLayer = true;
-
-
-        }
 
     }
-};
-$("#traffic-flow").click( function(){
-    if( $(this).is(':checked') )  trafficEnable();
     else {
+
         if (overlay !== '') {
-
             map.removeLayer(overlay);
-            map.removeEventListener('drag viewreset');
-            clickTrafficLayer = true;
-
 
         }
+        map.removeEventListener('dragstart dragend viewreset');
 
     }
 
 
 });
 
-$('#trafficLayer').click(trafficEnable);
 
 /*
  Handling map events, example layer add event
@@ -122,6 +103,7 @@ var eventMarkersLayer = function (e) {
 
                 markerEF.on('mouseover', function (e) {
                     this.openPopup();
+                    map.panTo(e.layer.getLatLng());
 
                 });
                 markerEF.on('mouseout', function (e) {
@@ -173,6 +155,7 @@ var eventMarkersLayer = function (e) {
                     markers.addLayer(marker);
                     marker.on('mouseover', function (e) {
                         this.openPopup();
+                        map.panTo(e.layer.getLatLng());
                     });
                     marker.on('mouseout', function (e) {
                         this.closePopup();
@@ -242,7 +225,7 @@ var trafficCamera = function (e) {
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
                     marker.on('mouseover', function (e) {
-
+                        map.panTo(e.layer.getLatLng());
                         this.openPopup();
 
 

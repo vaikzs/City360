@@ -32,12 +32,12 @@ var layers = {
 
 
 var initialize = function () {
-    $('#initialModal').openModal();
 
+    $('#initialModal').openModal();
     map.setView([37.773972
         , -122.431297], 13);
-    layers.Custom.addTo(map);
-    L.control.layers(layers).addTo(map);
+    layers.Streets.addTo(map);
+    L.control.layers(layers,"",{position:'bottomleft'}).addTo(map);
     var attr = new L.control.attribution();
     attr.addAttribution('Inrix traffic data &copy; Mapbox ').addTo(map);
 
