@@ -21,55 +21,59 @@
 </head>
 <body id="body">
 
-<div class="row">
 
-    <div id='listings' class='listings'>
-        <div class="card-image waves-effect waves-block waves-light" id="camera-image">
-        </div>
-        <div class="card-content">
-        </div>
-    </div>
+<ul id='listings' class='collapsible side-nav fixed hide' data-collapsible="accordion">
+
+</ul>
 
 
-    <div class="map-section " id="mapIntro">
-        <div class="section z-depth-5" id="map"></div>
-        <div class="row right nav-buttons hide-on-med-and-down" style="padding: 1%;">
+<div class="map-section " id="mapIntro">
+    <div class="section z-depth-5" id="map"></div>
+    <div class="row right nav-buttons" style="padding: 1%;">
+        <div class="row">
             <a href="#modalCameras"
-               class="col s6 offset-s6 traffic-camera fade-in scale hoverable btn-large white-text brown lighten-1 waves-effect waves-teal blue-grey-text tooltipped modal-trigger fade-in scale"
+               class="traffic-camera fade-in scale hoverable btn-floating btn-large white-text grey darken-1 waves-effect waves-teal blue-grey-text tooltipped modal-trigger fade-in scale"
                data-position="left"
                data-tooltip="Cameras NY" data-delay="50" data-target="modalInitial">
-                <i class="left material-icons">photo_camera</i>Cameras
+                <i class=" material-icons">photo_camera</i>
             </a>
+        </div>
+        <div class="row">
             <a href="#initialModal"
-               class="col s6 offset-s6 btn-large modal-trigger fade-in scale hoverable brown lighten-1 waves-effect waves-teal tooltipped fade-in scale"
+               class="btn-floating btn-large modal-trigger fade-in scale hoverable grey darken-1 waves-effect waves-teal tooltipped fade-in scale"
                data-position="left" data-delay="50"
                data-tooltip="Layers" id="trafficLayer" data-target="initialModal"><i
-                class="left material-icons">layers</i>Layers </a>
-            <a class="col s6 offset-s6 btn-large hoverable fade-in scale brown lighten-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+                class=" material-icons">layers</i> </a>
+        </div>
+        <div class="row">
+            <a class="btn-floating btn-large hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
                data-position="left" data-delay="50"
                data-tooltip="Select date" id="date-change">
-                <i class="left material-icons">date_range</i>Date
+                <i class="material-icons">date_range</i>
             </a>
-            <a href="#modal-events"
-               class="col s6 offset-s6 btn-large modal-trigger fade-in scale hoverable brown lighten-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
-               data-position="left" data-delay="50" data-target="modal-events" data-tooltip="Event sources">
-                <i class="left material-icons">explicit</i>Event Sources</a>
-            <a href="#modal-help"
-               class="col s6 offset-s6 btn-large hoverable fade-in scale brown lighten-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
-               data-position="left" data-delay="50" data-tooltip="User guide" data-target="modal-help">
-                <i class="left material-icons">help</i>Help</a>
-
         </div>
-
+        <div class="row">
+            <a href="#modal-events"
+               class="btn-floating btn-large modal-trigger fade-in scale hoverable grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+               data-position="left" data-delay="50" data-target="modal-events" data-tooltip="Event sources">
+                <i class=" material-icons">explicit</i></a>
+        </div>
+        <div class="row">
+            <a href="#modal-help"
+               class="btn-floating btn-large modal-trigger hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+               data-position="left" data-delay="50" data-tooltip="User guide" data-target="modal-help">
+                <i class=" material-icons">help</i></a>
+        </div>
 
     </div>
 
 
 </div>
 
+
+</div>
+
 <ul class="card-panel fade-in row modal collection with-header grey lighten-2" id="initialModal">
-
-
     <li class="center white-text blue-grey collection-header">
         <h4> Choose layers</h4>
     </li>
@@ -128,7 +132,7 @@
 
     <div class="card col s6">
         <div class="card-image">
-            <img src="images/Screenshot from 2016-02-24 21:18:13.png"  width="20%" height="20%">
+            <img src="images/Screenshot from 2016-02-24 21:18:13.png" width="20%" height="20%">
             <span class="black-text card-title">Radial Search</span>
         </div>
         <div class="card-content">
@@ -143,7 +147,8 @@
             <span class="black-text card-title">Boundingbox Search</span>
         </div>
         <div class="card-content">
-            <p>This option when selected makes a bounding box search, populates all the events within the bounding box</p>
+            <p>This option when selected makes a bounding box search, populates all the events within the bounding
+                box</p>
         </div>
 
 
@@ -151,6 +156,37 @@
 
 
 </div>
+
+<ul class="collection modal fade-in" id="modal-help">
+    <li class="collection-item avatar">
+        <i class="material-icons circle">photo_camera</i>
+        <span class="title">Cameras NY</span>
+        <p>First Line <br>
+            Second Line
+        </p>
+    </li>
+    <li class="collection-item avatar">
+        <i class="material-icons circle">layers</i>
+        <span class="title">Understanding Layers</span>
+        <p>First Line <br>
+            Second Line
+        </p>
+    </li>
+    <li class="collection-item avatar">
+        <i class="material-icons circle green">date_range</i>
+        <span class="title">Date selection</span>
+        <p>First Line <br>
+            Second Line
+        </p>
+    </li>
+    <li class="collection-item avatar">
+        <i class="material-icons circle red">explicit</i>
+        <span class="title">Event Selection</span>
+        <p>First Line <br>
+            Second Line
+        </p>
+    </li>
+</ul>
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
