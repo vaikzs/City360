@@ -17,6 +17,7 @@ var baseDark = L.mapbox.tileLayer('mapbox.dark');
 var baseStreet = L.mapbox.tileLayer('mapbox.streets');
 var baseSatellite = L.mapbox.tileLayer('mapbox.satellite');
 var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cikzsz3h800329klzi0bbrxpj');
+var baseEmerald = L.mapbox.tileLayer('mapbox.emerald');
 var geocoder = L.mapbox.geocoderControl('mapbox.places', {
     keepOpen: true,
     autocomplete: true
@@ -27,7 +28,8 @@ var layers = {
     Dark: baseDark,
     Streets: baseStreet,
     Outdoors: baseOutdoors,
-    Satellite: baseSatellite
+    Satellite: baseSatellite,
+    Emerald : baseEmerald
 };
 
 
@@ -36,8 +38,8 @@ var initialize = function () {
     $('#initialModal').openModal();
     map.setView([37.773972
         , -122.431297], 13);
-    layers.Streets.addTo(map);
-    L.control.layers(layers,"",{position:'bottomleft'}).addTo(map);
+    layers.Emerald.addTo(map);
+    L.control.layers(layers,"",{position:'bottomright'}).addTo(map);
     var attr = new L.control.attribution();
     attr.addAttribution('Inrix traffic data &copy; Mapbox ').addTo(map);
 

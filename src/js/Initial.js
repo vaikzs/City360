@@ -1,7 +1,7 @@
 var securityToken = '';
 var serverPath = '';
 var overlay = '';
-var markersEventful, markers, markersCameras;
+var markersEventful, markersInrix, markersCameras;
 var clickTrafficLayer = true;
 var geocodeControlLayer = false;
 var populatedMarkers = [];
@@ -67,14 +67,41 @@ map.on('layeradd', function (e) {
 /*
  On right click bring up search for all events nearby within the radius
  */
+var arrow = false;
+var arrowFunc = function () {
+    if (arrow === false) {
+        $(this).animate({left: '220px'});
+        $(this).html("<i class='material-icons'>keyboard_arrow_left</i>");
+        $('#listings').animate({
+            opacity: 1
+        },1000);
+        arrow = true;
+    }
+    else {
+        $('#listings').animate({
+            opacity: 0
+        },1000);
+        $(this).animate({
+            left: '-12px'
+        });
+        $(this).html("<i class='material-icons'>keyboard_arrow_right</i>");
+        arrow = false;
+    }
+
+};
 map.on('dblclick', function (e) {
-    $('#listings').addClass('hide');
-    $('#listings').removeClass('hide');
+    $('#arrow').animate({left: '220px'});
+    $('#arrow').html("<i class='material-icons'>keyboard_arrow_left</i>");
+    $('#listings').animate({
+        opacity: 1
+    },1000);
+    arrow = true;
     $('#listings').html("");
     eventMarkersLayer(e);
     trafficCamera(e);
 });
 
+$('#arrow').click(arrowFunc);
 var eventMarkersLayer = function (e) {
 
     filterCircle.addTo(map);
@@ -104,9 +131,7 @@ var eventMarkersLayer = function (e) {
                 markersEventful.addLayer(markerEF);
 
 
-
-                $('#listings').append('<li><div class="collapsible-header">'+data.events.event[i].title +'</div><div class="collapsible-body">Eventful info</div></li>');
-
+                $('#listings').append('<li><div class="collapsible-header">' + data.events.event[i].title + '</div><div class="collapsible-body">Eventful info</div></li>');
 
 
                 markerEF.on('mouseover', function (e) {
@@ -128,7 +153,7 @@ var eventMarkersLayer = function (e) {
 
     });
 
-    markers = new L.MarkerClusterGroup();
+    markersInrix = new L.MarkerClusterGroup();
     $.ajax({
         url: "http://na.api.inrix.com/traffic/inrix.ashx?action=getsecuritytoken&VendorID=1808895794&ConsumerID=ce1f424d-fb48-43d3-a4b8-999c0c9d913e",
         dataType: "xml"
@@ -156,8 +181,8 @@ var eventMarkersLayer = function (e) {
                 if (e.latlng.distanceTo(L.latLng(arr[j].getAttribute("latitude"), arr[j].getAttribute("longitude"))) < RADIUS) {
                     count = count + 1;
                     marker.bindPopup('Title : ' + title[0].textContent);
-                    markers.addLayer(marker);
-                    $('#listings').append('<li><div class="collapsible-header">'+title[0].textContent +'</div><div class="collapsible-body">Inrix info</div></li>');
+                    markersInrix.addLayer(marker);
+                    $('#listings').append('<li><div class="collapsible-header">' + title[0].textContent + '</div><div class="collapsible-body">Inrix info</div></li>');
                     marker.on('mouseover', function (e) {
                         this.openPopup();
                     });
@@ -168,14 +193,14 @@ var eventMarkersLayer = function (e) {
 
                 }
                 else {
-                    markers.removeLayer(marker);
+                    markersInrix.removeLayer(marker);
 
                 }
 
 
             }
             $('.inrix-count').html(count);
-            map.addLayer(markers);
+            map.addLayer(markersInrix);
 
 
         });
@@ -201,7 +226,7 @@ var trafficCamera = function (e) {
         }).done(function (xml) {
             var point = xml.getElementsByTagName("Point");
             var cam = xml.getElementsByTagName("Camera");
-            $('#listings').append('<li class="blue-grey white-text">Camera locations<span class="badge camera-count white-text">0</span> </li>');
+            $('#listings').append('<li class="blue-grey white-text">Cameras<span class="badge camera-count white-text">0</span> </li>');
             var count = 0;
             for (var j = 0; j < cam.length; j++) {
                 var title = cam[j].getElementsByTagName("Name");
@@ -220,8 +245,13 @@ var trafficCamera = function (e) {
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
-                    $('#listings').append('<li id="'+cameraId+'"><div class="collapsible-header">'+title[0].textContent +'</div><div class="collapsible-body"><img src="urlstr"></div></li>');
-                    marker.on('mouseover', function (e) {
+                    $('#listings').append('<li><div  id="' + cameraId + '" class="collapsible-header">' + title[0].textContent + '</div><div class="collapsible-body"><img src=' + urlstr + ' width="100%" height="200px"></div></li>');
+
+                    $('#'+cameraId).click(function(){
+                        map.panTo([40.748817, -73.985428], {});
+
+                    });
+                    marker.on('click', function (e) {
 
                         this.openPopup();
 
@@ -230,18 +260,9 @@ var trafficCamera = function (e) {
 
                     var newCamID = cameraId;
                     marker.on('click', function (e) {
-                        console.log(urlstr);
-                        $('#camera-image').html('');
-                        $('#camera-image').html('<img src=' + urlstr + '>' + '<span class="card-title">' + newCamID + '</span>');
-                        $('#listings').addClass('fixed');
-                        $('#listings').sideNav('show');
-                    });
-                    markersCameras.eachLayer(function (locale) {
-                        console.log(locale)
 
                     });
-
-                    marker.on('mouseout', function (e) {
+                    marker.on('dblclick', function (e) {
                         this.closePopup();
                     });
                     markersCameras.addLayer(marker);
