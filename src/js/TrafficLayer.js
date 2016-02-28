@@ -4,7 +4,7 @@
 var trafficLayer = function () {
     map.eachLayer(function (layer) {
 
-        if (layer != baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras) {
+        if (layer!== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras) {
 
             map.removeLayer(layer);
 
@@ -21,7 +21,7 @@ var trafficLayer = function () {
             securityToken = data.getElementsByTagName("AuthToken")[0].textContent;
             serverPath = data.getElementsByTagName("ServerPath")[0].textContent;
             var imageBounds = map.getBounds();
-            console.log(map.getZoom());
+
             var zoom = map.getZoom();
             var frc = '';
             var penwidth = '';
@@ -49,9 +49,9 @@ var trafficLayer = function () {
                 frc = "1,2,3,4,5,6,7";
                 penwidth = 9;
             }
-            //Map Quest Traffic Data
-            //MQ.trafficLayer().addTo(map);
+
             overlay = L.imageOverlay('http://na-rseg-tts.inrix.com/RsegTiles/Tile.ashx?Action=GetMapTile&speedBucketId=54135&token=' + securityToken + '&corner1=' + map.getBounds()._northEast.lat + '|' + map.getBounds()._northEast.lng + '&corner2=' + map.getBounds()._southWest.lat + '|' + map.getBounds()._southWest.lng + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&opacity=100&penwidth='+penwidth+'&coverage=255&format=png&FRCLevel=' + frc + '&layers=T&roadsegmenttype=TMC&resolution=25', imageBounds, {}).addTo(map);
+
         });
     }
     else {

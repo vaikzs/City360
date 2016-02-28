@@ -13,6 +13,13 @@
           rel='stylesheet'/>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css'
           rel='stylesheet'/>
+    <script
+        src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
+    <script
+        src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-traffic.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
+    <script type="text/javascript" src="js/leaflet-openweathermap.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/leaflet-openweathermap.css"/>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/map.css" rel="stylesheet">
     <link hre="css/hopscotch.css" rel="stylesheet">
@@ -22,10 +29,23 @@
 <body id="body">
 
 <div class="row " id="listings-menu">
-    <ul id='listings' style="z-index: 1;opacity: 0"  class='collapsible side-nav fixed' data-collapsible="accordion">
+
+
+    <ul id='listings' style="z-index: 1;opacity: 0" class='collapsible side-nav fixed' data-collapsible="accordion">
+        <li class="search">
+            <div class="input-field container">
+                <i class="material-icons col s2 right">search</i>
+               <input id="icon_prefix" type="text" class="col s10 validate">
+
+
+            </div>
+        </li>
 
     </ul>
-    <a style="left:-12px;z-index: 2" id="arrow" href="#!" class="red lighten-2 hide-on-med-and-down btn-floating"><i class="material-icons">keyboard_arrow_right</i></a>
+
+    <a style="top:12px;left:-12px;z-index: 2" id="arrow" href="#!" class="red lighten-2 hide-on-med-and-down btn-floating"><i
+        class="material-icons">keyboard_arrow_right</i></a>
+
 </div>
 
 
@@ -92,20 +112,7 @@
             </div>
         </a></div>
     </li>
-    <li class="collection-item">
-        <div><i class="left blue-grey-text material-icons">cloud</i><span>Weather</span><a href="#!"
-                                                                                           class="secondary-content">
-            <div class="switch">
 
-                <label class="right">
-                    Disable
-                    <input type="checkbox">
-                    <span class="lever"></span>
-                    Enable
-                </label>
-            </div>
-        </a></div>
-    </li>
 
     <li class="collection-item">
         <a class="btn-flat modal-close">Cancel</a>
@@ -192,9 +199,8 @@
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
-<script
-    src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-traffic.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
+
+
 <script src="js/materialize.js"></script>
 <script src="js/Mapbox.js"></script>
 <script src="js/Initial.js"></script>
