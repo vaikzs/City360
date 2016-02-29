@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="188ff116-9b82-4bf6-9146-95e7f8553201" name="Default" comment="Event&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/css/leaflet-search.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/js/googleproviders.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/js/inrix.js" />
+    <list default="true" id="188ff116-9b82-4bf6-9146-95e7f8553201" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/images/Screenshot from 2016-02-24 21:18:13.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/images/Screenshot from 2016-02-24 21:57:47.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/images/logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/css/leaflet-openweathermap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/js/leaflet-openweathermap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/js/leaflet-src.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/css/materialize.css" afterPath="$PROJECT_DIR$/src/css/materialize.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/css/materialize.min.css" afterPath="$PROJECT_DIR$/src/css/materialize.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.html" afterPath="$PROJECT_DIR$/src/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Initial.js" afterPath="$PROJECT_DIR$/src/js/Initial.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Mapbox.js" afterPath="$PROJECT_DIR$/src/js/Mapbox.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/TrafficLayer.js" afterPath="$PROJECT_DIR$/src/js/TrafficLayer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/init.js" afterPath="$PROJECT_DIR$/src/js/init.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/materialize.js" afterPath="$PROJECT_DIR$/src/js/materialize.js" />
     </list>
     <ignored path="untitled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.636364">
-              <caret line="47" column="72" selection-start-line="47" selection-start-column="72" selection-end-line="47" selection-end-column="72" />
+            <state vertical-scroll-proportion="0.25957972">
+              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
               <folding>
                 <element signature="n#style#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#a#0;n#li#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -61,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Initial.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Initial.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/Initial.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24369748">
-              <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
+            <state vertical-scroll-proportion="-61.935482">
+              <caret line="128" column="67" selection-start-line="128" selection-start-column="67" selection-end-line="128" selection-end-column="67" />
               <folding>
                 <marker date="1456733918346" expanded="true" signature="3986:3997" placeholder="..." />
                 <marker date="1456733918346" expanded="true" signature="6467:6479" placeholder="..." />
@@ -289,42 +284,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="untitled" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LatestTrafficInterface" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="untitled" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LatestTrafficInterface" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -430,13 +389,20 @@
       <option name="project" value="LOCAL" />
       <updated>1456650501319</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Event/Incident/Camera on click focuses on that particular event&#10;Removal of Traffic layer with markers syncs properly&#10;Geocoding yet to be done">
+      <created>1456734367208</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1456734367208</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="75" y="82" width="1605" height="968" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885906" sideWeight="0.49532712" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -452,7 +418,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32885906" sideWeight="0.49532712" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -495,7 +460,8 @@
     <MESSAGE value="UI fix" />
     <MESSAGE value="Marker listing, side-nav and dynamic penwidth." />
     <MESSAGE value="Weather layer from OpenWeather&#10;Road links from 511&#10;Twitter events on right click&#10;Search bar &#10;&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Weather layer from OpenWeather&#10;Road links from 511&#10;Twitter events on right click&#10;Search bar &#10;&#10;" />
+    <MESSAGE value="Event/Incident/Camera on click focuses on that particular event&#10;Removal of Traffic layer with markers syncs properly&#10;Geocoding yet to be done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Event/Incident/Camera on click focuses on that particular event&#10;Removal of Traffic layer with markers syncs properly&#10;Geocoding yet to be done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -843,14 +809,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/leaflet-openweathermap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9652778">
-          <caret line="1405" column="2" selection-start-line="1405" selection-start-column="2" selection-end-line="1405" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/css/leaflet-openweathermap.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.96428573">
@@ -964,10 +922,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/Initial.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-61.935482">
+          <caret line="128" column="67" selection-start-line="128" selection-start-column="67" selection-end-line="128" selection-end-column="67" />
+          <folding>
+            <marker date="1456733918346" expanded="true" signature="3986:3997" placeholder="..." />
+            <marker date="1456733918346" expanded="true" signature="6467:6479" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/leaflet-openweathermap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="24.39236">
+          <caret line="1405" column="2" selection-start-line="1405" selection-start-column="2" selection-end-line="1405" selection-end-column="2" />
+          <folding>
+            <marker date="1456646041934" expanded="true" signature="12416:12505" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="18886:19046" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="19168:19286" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="19431:19549" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="19804:19929" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="20063:20190" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="20426:20794" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="20983:21098" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="25361:25465" placeholder="..." />
+            <marker date="1456646041934" expanded="true" signature="25611:25728" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.636364">
-          <caret line="47" column="72" selection-start-line="47" selection-start-column="72" selection-end-line="47" selection-end-column="72" />
+        <state vertical-scroll-proportion="0.25957972">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
           <folding>
             <element signature="n#style#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#a#0;n#li#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -975,17 +963,6 @@
             <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/Initial.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24369748">
-          <caret line="72" column="22" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
-          <folding>
-            <marker date="1456733918346" expanded="true" signature="3986:3997" placeholder="..." />
-            <marker date="1456733918346" expanded="true" signature="6467:6479" placeholder="..." />
           </folding>
         </state>
       </provider>
