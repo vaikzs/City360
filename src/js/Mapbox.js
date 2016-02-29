@@ -2,15 +2,11 @@
  * Created by vaikunth on 2/15/16.
  */
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
-var map = L.map('map', {
-    maxZoom : 16,
-    attributionControl: false,
-    zoomControl: false,
-    doubleClickZoom: false,
-    dragging: true
+var map = L.mapbox.map('map','mapbox.streets',{
+
+    doubleClickZoom : false
+
 });
-
-
 var baseOutdoors = L.mapbox.tileLayer('mapbox.outdoors', {
     interaction: true,
     format: 'png'
@@ -39,9 +35,7 @@ var baseLight = L.mapbox.tileLayer('mapbox.light', {
 
     format: 'png'
 });
-var geocoder = L.mapbox.geocoderControl('mapbox.places', {
-    keepOpen: true,
-    autocomplete: true
+var geocoder = L.mapbox.geocoder('mapbox.places', {
 
 });
 var clouds = L.OWM.clouds({showLegend: false, opacity: 1});
@@ -96,3 +90,15 @@ var initialize = function () {
 
 
 $(document).ready(initialize);
+
+function showMap(err, data) {
+    // The geocoder can return an area, like a city, or a
+    // point, like an address. Here we handle both cases,
+    // by fitting the map bounds to an area or zooming to a point.
+    if (data.lbounds) {
+        map.fitBounds(data.lbounds);
+    } else if (data.latlng) {
+        map.setView([data.latlng[0], data.latlng[1]], 13);
+    }
+}
+

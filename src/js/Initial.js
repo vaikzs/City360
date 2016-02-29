@@ -16,39 +16,29 @@ var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
 /*
  Geocoding search for locations, example pan to New york
  */
-$('.geocode').click(function () {
-    if (geocodeControlLayer === false) {
-        map.addControl(geocoder);
-
-        geocodeControlLayer = true;
-    }
-    else {
-        map.removeControl(geocoder);
-        geocodeControlLayer = false;
 
 
-    }
-});
+
 
 /*
  On click traffic layer
  */
 
-
+map.on('dragstart dragend viewreset', function () {
+    trafficLayer();
+});
 $("#traffic-flow").click(function () {
     if ($(this).prop('checked')) {
 
         trafficLayer();
-        map.on('blur dragstart dragend viewreset', function () {
-            trafficLayer();
-        });
+
 
     }
     else {
 
         if (imageOverlay !== '') {
             map.removeLayer(imageOverlay);
-            map.removeEventListener('blur dragstart dragend viewreset');
+            map.removeEventListener('dragstart dragend viewreset');
 
         }
 
@@ -57,7 +47,7 @@ $("#traffic-flow").click(function () {
 
 
 });
-map.on('layeradd',function(e){
+map.on('layeradd', function (e) {
 
     console.log(e);
 
@@ -95,7 +85,14 @@ var arrowFunc = function () {
     }
 
 };
+$('#geocode').click(function () {
 
+    console.log("works")
+
+    //geocoder.query('Chester, NJ', showMap);
+
+
+});
 var sidebar_out = function () {
     $('#arrow').animate({left: '330px'});
     $('#arrow').html("<i class='material-icons'>keyboard_arrow_left</i>");
@@ -110,7 +107,12 @@ var sidebar_out = function () {
 $('#arrow').click(arrowFunc);
 
 map.on('dblclick', function (e) {
-
+    map.eachLayer(function (layer) {
+        if (layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras && typeof layer !== 'L.marker') {
+            map.removeLayer(layer);
+        }
+    });
+    reloadTrafficLayer();
     sidebar_out();
     $('.events-title,#events,#incidents,#cameras').show();
 
@@ -152,7 +154,7 @@ var eventMarkersLayer = function (e) {
                 markersEventful.addLayer(markerEF);
 
 
-                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], map.getMaxZoom()); reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="truncate">' + data.events.event[i].title.trim() + '</h6></div></li>');
+                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="truncate">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
 
                 markerEF.on('mouseover', function (e) {
@@ -172,9 +174,9 @@ var eventMarkersLayer = function (e) {
         }
         map.addLayer(markersEventful);
         markersEventful.on('clusterclick', function (a) {
-           reloadTrafficLayer();
+            reloadTrafficLayer();
 
-                });
+        });
 
     });
 
@@ -207,7 +209,7 @@ var eventMarkersLayer = function (e) {
                     count = count + 1;
                     marker.bindPopup('Title : ' + title[0].textContent);
                     markersInrix.addLayer(marker);
-                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], map.getMaxZoom());reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="truncate">' + title[0].textContent + '</h6></div></li>');
+                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="truncate">' + title[0].textContent + '</h6></div></li>');
                     marker.on('mouseover', function (e) {
                         this.openPopup();
                     });
@@ -272,7 +274,7 @@ var trafficCamera = function (e) {
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
-                    $('#cameras').after('<li><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], map.getMaxZoom());reloadTrafficLayer();"><i class="teal-text right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
+                    $('#cameras').after('<li><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
 
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});

@@ -38,17 +38,18 @@
            class="brand-logo">
             <img style="padding:4%" src="images/logo.png" class="center-block"></a>
     </li>
-    <li class="row">
-        <a href="#!" class="btn-flat col s3 offset-s1 right"><i class="material-icons ">search</i></a>
-        <input id="icon_prefix" placeholder="Location" type="text" class="focus col s7 offset-s1" autofocus>
+    <li class="row card-panel" style="margin:2%;">
 
+        <input id="icon_prefix" placeholder="Location" type="search" class="col s7 offset-s1">
+        <a href="#!" class="btn-flat col s3 offset-s1 right"  onclick="if($('#icon_prefix').val()!=='')geocoder.query($('#icon_prefix').val(),showMap)"><i class="material-icons ">search</i></a>
+        <div></div>
     </li>
-    <li class="blue lighten-2 events-title white-text center large">List</li>
-    <li id="events" class="grey white-text"> Entertainment Events<span
+    <li class="blue lighten-2 events-title white-text center large card-panel" style="margin:2%;">List</li>
+    <li id="events" class="grey white-text card-panel" style="margin:2%;"> Entertainment Events<span
         class="badge eventful-count white-text">0</span></li>
-    <li id="incidents" class="grey white-text">Incidents<span class="badge inrix-count white-text">0</span>
+    <li id="incidents" class="grey white-text card-panel" style="margin:2%;">Incidents<span class="badge inrix-count white-text">0</span>
     </li>
-    <li id="cameras" class="grey white-text">Cameras<span class="badge camera-count white-text">0</span></li>
+    <li id="cameras" class="grey white-text card-panel" style="margin:2%;">Cameras<span class="badge camera-count white-text">0</span></li>
 </ul>
 
 <a style="top:12px;left:-12px;z-index: 2" id="arrow" href="#!"
@@ -75,7 +76,7 @@
                 class=" material-icons">layers</i> </a>
         </div>
         <div class="row">
-            <a class="btn-floating btn-large hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+            <a class="geocode btn-floating btn-large hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
                data-position="left" data-delay="50"
                data-tooltip="Select date" id="date-change">
                 <i class="material-icons">date_range</i>
@@ -112,7 +113,7 @@
             <div class="switch">
                 <label class="right">
                     Disable
-                    <input id="traffic-flow" type="checkbox">
+                    <input id="traffic-flow" type="checkbox" checked>
                     <span class="lever"></span>
                     Enable
                 </label>
