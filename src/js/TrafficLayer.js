@@ -4,26 +4,9 @@
 
 var trafficLayer = function () {
 
+    //Clearing all previous image overlays
+     $('.leaflet-overlay-pane').html(" ");
 
-    //map.eachLayer(function(layer){
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //});
-    if (imageOverlay !== '') {
-        map.eachLayer(function (layer) {
-
-
-            if (layer === imageOverlay || typeof imageOverlay === layer) {
-                map.removeLayer(layer);
-            }
-
-        });
-    }
     if (map.getZoom() <= 16) {
         $.ajax({
             url: "http://na.api.inrix.com/traffic/inrix.ashx?action=getsecuritytoken&VendorID=1808895794&ConsumerID=ce1f424d-fb48-43d3-a4b8-999c0c9d913e",
@@ -74,4 +57,3 @@ var trafficLayer = function () {
     }
 
 }
-

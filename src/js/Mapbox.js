@@ -72,7 +72,7 @@ var initialize = function () {
 
     map.setView([37.773972
         , -122.431297], 13);
-    layers.Emerald.addTo(map);
+    layers.Streets.addTo(map);
     var zoom = new L.control.zoom({
         position: 'topright',
         zoomInTitle: 'zoom in',
@@ -83,6 +83,9 @@ var initialize = function () {
 
     attr.addAttribution('Inrix traffic data &copy; Mapbox ').addTo(map);
     L.control.layers(layers, overlayMaps, {position: 'bottomright'}).addTo(map);
+
+
+
 
 
 
@@ -100,5 +103,8 @@ function showMap(err, data) {
     } else if (data.latlng) {
         map.setView([data.latlng[0], data.latlng[1]], 13);
     }
+
+
 }
+
 

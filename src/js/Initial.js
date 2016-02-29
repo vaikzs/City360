@@ -1,6 +1,7 @@
 var securityToken = '';
 var serverPath = '';
 var imageOverlay = '';
+var div = '';
 var markersEventful, markersInrix, markersCameras;
 var clickTrafficLayer = true;
 var geocodeControlLayer = false;
@@ -24,21 +25,24 @@ var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
  On click traffic layer
  */
 
-map.on('dragstart dragend viewreset', function () {
-    trafficLayer();
+map.on('viewreset', function () {
+    trafficLayer(div);
+});
+map.on('drag',function(){
+    trafficLayer(div);
 });
 $("#traffic-flow").click(function () {
     if ($(this).prop('checked')) {
 
-        trafficLayer();
+        trafficLayer(div);
 
 
     }
     else {
 
         if (imageOverlay !== '') {
-            map.removeLayer(imageOverlay);
-            map.removeEventListener('dragstart dragend viewreset');
+
+            map.removeEventListener('drag viewreset');
 
         }
 
@@ -54,7 +58,7 @@ map.on('layeradd', function (e) {
 });
 
 var reloadTrafficLayer = function () {
-    trafficLayer();
+    trafficLayer(div);
 
 
 }
@@ -107,11 +111,7 @@ var sidebar_out = function () {
 $('#arrow').click(arrowFunc);
 
 map.on('dblclick', function (e) {
-    map.eachLayer(function (layer) {
-        if (layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras && typeof layer !== 'L.marker') {
-            map.removeLayer(layer);
-        }
-    });
+
     reloadTrafficLayer();
     sidebar_out();
     $('.events-title,#events,#incidents,#cameras').show();
