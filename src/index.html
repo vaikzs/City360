@@ -7,6 +7,8 @@
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
+
+
     <script
         src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css'
@@ -19,6 +21,8 @@
         src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-traffic.js?key=Kmjtd%7Cluua2qu7n9%2C7a%3Do5-lzbgq"></script>
     <script type="text/javascript" src="js/leaflet-openweathermap.js"></script>
     <link rel="stylesheet" type="text/css" href="css/leaflet-openweathermap.css"/>
+    <script src="js/leaflet-src.js"></script>    <script src="js/googleproviders.js"></script>
+
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/map.css" rel="stylesheet">
@@ -28,30 +32,35 @@
 </head>
 <body id="body">
 
-<div class="row " id="listings-menu">
 
+<ul id='listings' style="z-index: 1;opacity: 0" class='z-index-5 collapsible side-nav fixed'
+    data-collapsible="expandable">
+    <li class="logo row">
+        <a id="logo-container" href="http://www.knoesis.org" target="_blank"
+           class="brand-logo">
+            <img style="padding:4%" src="images/logo.png" class="center-block"></a>
+    </li>
+    <li class="row">
+        <a href="#!" class="btn-flat col s3 offset-s1 right"><i class="material-icons ">search</i></a>
+        <input id="icon_prefix" placeholder="Location" type="text" class="focus col s7 offset-s1" autofocus>
 
-    <ul id='listings' style="z-index: 1;opacity: 0" class='collapsible side-nav fixed' data-collapsible="accordion">
-        <li class="search">
-            <div class="input-field container">
-                <i class="material-icons col s2 right">search</i>
-               <input id="icon_prefix" type="text" class="col s10 validate">
+    </li>
+    <li class="blue lighten-2 events-title white-text center large">List</li>
+    <li id="events" class="grey white-text"> Entertainment Events<span
+        class="badge eventful-count white-text">0</span></li>
+    <li id="incidents" class="grey white-text">Incidents<span class="badge inrix-count white-text">0</span>
+    </li>
+    <li id="cameras" class="grey white-text">Cameras<span class="badge camera-count white-text">0</span></li>
+</ul>
 
-
-            </div>
-        </li>
-
-    </ul>
-
-    <a style="top:12px;left:-12px;z-index: 2" id="arrow" href="#!" class="red lighten-2 hide-on-med-and-down btn-floating"><i
-        class="material-icons">keyboard_arrow_right</i></a>
-
-</div>
+<a style="top:12px;left:-12px;z-index: 2" id="arrow" href="#!"
+   class="light-blue hide-on-med-and-down btn-floating"><i
+    class="material-icons">keyboard_arrow_right</i></a>
 
 
 <div class="map-section " id="mapIntro">
     <div class="section z-depth-5" id="map"></div>
-    <div class="row right nav-buttons" style="padding: 1%;">
+    <div class="row right nav-buttons " style="padding: 1%;">
         <div class="row">
             <a href="#modalCameras"
                class="traffic-camera fade-in scale hoverable btn-floating btn-large white-text grey darken-1 waves-effect waves-teal blue-grey-text tooltipped modal-trigger fade-in scale"
@@ -199,15 +208,16 @@
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-
-
+<script src="https://cdn.jsdelivr.net/pubsubjs/1.4.2/pubsub.min.js"></script>
+<script src="js/inrix.js"></script>
 <script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
 <script src="js/Mapbox.js"></script>
 <script src="js/Initial.js"></script>
 <script src="js/TrafficLayer.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.2.5/js/hopscotch.min.js"></script>
-<script src="js/init.js"></script>
+
 
 </body>
 </html>

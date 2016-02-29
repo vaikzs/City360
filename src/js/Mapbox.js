@@ -2,8 +2,6 @@
  * Created by vaikunth on 2/15/16.
  */
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
-
-
 var map = L.map('map', {
     maxZoom : 16,
     attributionControl: false,
@@ -57,7 +55,7 @@ var pressure = L.OWM.pressure();
 var pressurecntr = L.OWM.pressureContour();
 var temp = L.OWM.temperature();
 var OWM_API_KEY = '06aac0fd4ba239a20d824ef89602f311';
-var city = L.OWM.current({intervall: 20, minZoom: 10,lang :'en',
+var city = L.OWM.current({intervall: 20, minZoom: 10,lang :'en',imageLoadingUrl :'https://cdn.elegantthemes.com/blog/wp-content/uploads/2014/12/LazyLoadingHeader.png',
     appId: OWM_API_KEY,caching:true,showTimestamp:true});
 
 var overlayMaps = {"Weather":city};
@@ -75,7 +73,9 @@ var layers = {
 
 var initialize = function () {
 
-    $('#initialModal').openModal();
+
+    //$('#initialModal').openModal();
+
     map.setView([37.773972
         , -122.431297], 13);
     layers.Emerald.addTo(map);
@@ -89,6 +89,7 @@ var initialize = function () {
 
     attr.addAttribution('Inrix traffic data &copy; Mapbox ').addTo(map);
     L.control.layers(layers, overlayMaps, {position: 'bottomright'}).addTo(map);
+
 
 
 }

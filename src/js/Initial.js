@@ -36,8 +36,9 @@ $('.geocode').click(function () {
 
 $("#traffic-flow").click(function () {
     if ($(this).prop('checked')) {
+
         trafficLayer();
-        map.on('dragstart dragend viewreset', function () {
+        map.on('dragstart dragend zoom viewreset', function () {
             trafficLayer();
         });
 
@@ -48,6 +49,7 @@ $("#traffic-flow").click(function () {
         if (overlay !== '') {
             map.removeLayer(overlay);
             map.removeEventListener('dragstart dragend viewreset');
+
         }
 
 
@@ -57,12 +59,7 @@ $("#traffic-flow").click(function () {
 });
 
 
-/*
- Handling map events, example layer add event
- */
-map.on('layeradd', function (e) {
 
-});
 
 /*
  On right click bring up search for all events nearby within the radius
@@ -70,17 +67,17 @@ map.on('layeradd', function (e) {
 var arrow = false;
 var arrowFunc = function () {
     if (arrow === false) {
-        $(this).animate({left: '220px'});
+        $(this).animate({left: '330px'});
         $(this).html("<i class='material-icons'>keyboard_arrow_left</i>");
         $('#listings').animate({
             opacity: 1
-        }, 1000);
+        });
         arrow = true;
     }
     else {
         $('#listings').animate({
             opacity: 0
-        }, 1000);
+        });
         $(this).animate({
             left: '-12px'
         });
@@ -90,14 +87,15 @@ var arrowFunc = function () {
 
 };
 
-var sidebar_out = function(){
-    $('#arrow').animate({left: '220px'});
+var sidebar_out = function () {
+    $('#arrow').animate({left: '330px'});
     $('#arrow').html("<i class='material-icons'>keyboard_arrow_left</i>");
     $('#listings').animate({
         opacity: 1
-    }, 1000);
+    });
     arrow = true;
-    $('#listings').html('<li class="search"><div class="input-field container"><i class="material-icons col s2 right">search</i><input id="icon_prefix" type="text" class="col s10 validate"></div></li>');
+
+    $('#listings').html($('#listings').html());
 
 }
 $('#arrow').click(arrowFunc);
@@ -105,13 +103,17 @@ $('#arrow').click(arrowFunc);
 map.on('dblclick', function (e) {
 
     sidebar_out();
+    $('.events-title,#events,#incidents,#cameras').show();
+
     eventMarkersLayer(e);
     trafficCamera(e);
-    roadLinks511(e);
+
+
 
 });
 map.on('contextmenu', function (e) {
     twitter(e);
+    roadLinks511(e);
 });
 var eventMarkersLayer = function (e) {
 
@@ -127,7 +129,7 @@ var eventMarkersLayer = function (e) {
         url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&callback=?",
         dataType: "json",
     }).done(function (data) {
-        $('#listings').append('<li class="blue-grey white-text">Eventful incidents<span class="badge eventful-count white-text">0</span> </li>');
+        console.log("Event data" + data)
         var count = 0;
         for (var i = 0; i < data.events.event.length; i++) {
 
@@ -142,7 +144,7 @@ var eventMarkersLayer = function (e) {
                 markersEventful.addLayer(markerEF);
 
 
-                $('#listings').append('<li><div class="collapsible-header">' + data.events.event[i].title + '</div><div class="collapsible-body">Eventful info</div></li>');
+                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView(['+data.events.event[i].latitude.toString()+', '+data.events.event[i].longitude.toString()+'], map.getMaxZoom()); trafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="truncate">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
 
                 markerEF.on('mouseover', function (e) {
@@ -161,6 +163,9 @@ var eventMarkersLayer = function (e) {
 
         }
         map.addLayer(markersEventful);
+        markersEventful.on('clusterclick', function (a) {
+            trafficLayer();
+        });
 
     });
 
@@ -175,8 +180,8 @@ var eventMarkersLayer = function (e) {
             url: 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetIncidentsInRadius&Token=' + securityToken + '&Radius=5&Center=' + e.latlng.lat.toString() + '|' + e.latlng.lng.toString() + '&LocRefmethod=XD,TMC&IncidentOutputFields=All',
             dataType: "xml"
         }).done(function (xml) {
+
             var arr = xml.getElementsByTagName("Incident");
-            $('#listings').append('<li class="blue-grey white-text">Inrix incidents<span class="badge inrix-count white-text">0</span> </li>');
             var count = 0;
             for (var j = 0; j < arr.length; j++) {
 
@@ -193,7 +198,7 @@ var eventMarkersLayer = function (e) {
                     count = count + 1;
                     marker.bindPopup('Title : ' + title[0].textContent);
                     markersInrix.addLayer(marker);
-                    $('#listings').append('<li><div class="collapsible-header">' + title[0].textContent + '</div><div class="collapsible-body">Inrix info</div></li>');
+                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView(['+arr[j].getAttribute("latitude")+', '+arr[j].getAttribute("longitude")+'], map.getZoom()+3);"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="truncate">' + title[0].textContent + '</h6></div></li>');
                     marker.on('mouseover', function (e) {
                         this.openPopup();
                     });
@@ -212,6 +217,10 @@ var eventMarkersLayer = function (e) {
             }
             $('.inrix-count').html(count);
             map.addLayer(markersInrix);
+            markersInrix.on('clusterclick', function (a) {
+                trafficLayer();
+            });
+
 
 
         });
@@ -237,7 +246,6 @@ var trafficCamera = function (e) {
         }).done(function (xml) {
             var point = xml.getElementsByTagName("Point");
             var cam = xml.getElementsByTagName("Camera");
-            $('#listings').append('<li class="blue-grey white-text">Cameras<span class="badge camera-count white-text">0</span> </li>');
             var count = 0;
             for (var j = 0; j < cam.length; j++) {
                 var title = cam[j].getElementsByTagName("Name");
@@ -256,7 +264,7 @@ var trafficCamera = function (e) {
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
-                    $('#listings').append('<li><div  id="' + cameraId + '" class="collapsible-header">' + title[0].textContent + '</div><div class="collapsible-body"><img src=' + urlstr + ' width="100%" height="200px"></div></li>');
+                    $('#cameras').after('<li><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView(['+lat+', '+long+'], map.getMaxZoom());"><i class="teal-text right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
 
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
@@ -284,6 +292,11 @@ var trafficCamera = function (e) {
             }
             $('.camera-count').html(count);
             map.addLayer(markersCameras);
+
+            markersCameras.on('clusterclick', function (a) {
+                trafficLayer();
+            });
+
 
 
         });
@@ -408,7 +421,11 @@ var roadLinks511 = function (e) {
                         // L.circleMarker() draws a circle with fixed radius in pixels.
                         // To draw a circle overlay with a radius in meters, use L.circle()
                         return L.marker(latlon, {
-                            icon: L.mapbox.marker.icon({'marker-symbol': "o", 'marker-size': 'small','marker-color':'#5E35B1'}),
+                            icon: L.mapbox.marker.icon({
+                                'marker-symbol': "o",
+                                'marker-size': 'small',
+                                'marker-color': '#5E35B1'
+                            }),
                             title: '511 road links'
                         });
                     }
@@ -423,7 +440,11 @@ var roadLinks511 = function (e) {
                         // L.circleMarker() draws a circle with fixed radius in pixels.
                         // To draw a circle overlay with a radius in meters, use L.circle()
                         return L.marker(latlon, {
-                            icon: L.mapbox.marker.icon({'marker-symbol': "d", 'marker-size': 'small','marker-color':'#D50000'}),
+                            icon: L.mapbox.marker.icon({
+                                'marker-symbol': "d",
+                                'marker-size': 'small',
+                                'marker-color': '#D50000'
+                            }),
                             title: '511 road links'
                         });
                     }
@@ -441,14 +462,18 @@ var roadLinks511 = function (e) {
                         // To draw a circle overlay with a radius in meters, use L.circle()
                         console.log(feature);
                         return L.marker(latlon, {
-                            icon: L.mapbox.marker.icon({'marker-symbol': "d", 'marker-size': 'small','marker-color':'#D50000'}),
+                            icon: L.mapbox.marker.icon({
+                                'marker-symbol': "d",
+                                'marker-size': 'small',
+                                'marker-color': '#D50000'
+                            }),
                             title: '511 road links'
                         });
                     }
                 });
 
                 featureLayer.addTo(map);
-                featureLayer.eachLayer(function(layer) {
+                featureLayer.eachLayer(function (layer) {
                     // See the `.bindPopup` documentation for full details. This
                     // dataset has a property called `name`: your dataset might not,
                     // so inspect it and customize to taste.
@@ -457,8 +482,8 @@ var roadLinks511 = function (e) {
                 featureLayer.bindPopup(linkid);
                 featureLayer.on('mouseover', function (e) {
 
-                    map.eachLayer(function(layer){
-                        if (layer!== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras) {
+                    map.eachLayer(function (layer) {
+                        if (layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras) {
                             map.removeLayer(layer);
                         }
                     });
@@ -473,7 +498,6 @@ var roadLinks511 = function (e) {
                 desti.bringToFront();
             });
         }
-
 
 
         //
@@ -896,3 +920,9 @@ $('#cancel').click(function () {
     clearTimeout(initPan);
 
 });
+
+$(document).ready(function () {
+    sidebar_out();
+    $('.events-title,#events,#incidents,#cameras').hide();
+});
+
