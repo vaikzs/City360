@@ -1,6 +1,6 @@
 var securityToken = '';
 var serverPath = '';
-var overlay = '';
+var imageOverlay = '';
 var markersEventful, markersInrix, markersCameras;
 var clickTrafficLayer = true;
 var geocodeControlLayer = false;
@@ -33,22 +33,33 @@ $('.geocode').click(function () {
 /*
  On click traffic layer
  */
+$(document).ready(function () {
+
+
+        trafficLayer();
+    map.on('dragstart dragend viewreset', function () {
+        trafficLayer();
+    });
+
+
+
+
+});
 
 $("#traffic-flow").click(function () {
     if ($(this).prop('checked')) {
 
         trafficLayer();
-        map.on('dragstart dragend zoom viewreset', function () {
+        map.on('blur layeradd baselayerchange zoomend dragstart dragend viewreset', function () {
             trafficLayer();
         });
-
 
     }
     else {
 
         if (overlay !== '') {
             map.removeLayer(overlay);
-            map.removeEventListener('dragstart dragend viewreset');
+            map.removeEventListener('zoomlevelschange dragstart dragend viewreset');
 
         }
 
@@ -57,8 +68,17 @@ $("#traffic-flow").click(function () {
 
 
 });
+map.on('layeradd',function(e){
+
+    console.log(e);
+
+});
+
+var reloadTrafficLayer = function () {
+    trafficLayer();
 
 
+}
 
 
 /*
@@ -109,7 +129,6 @@ map.on('dblclick', function (e) {
     trafficCamera(e);
 
 
-
 });
 map.on('contextmenu', function (e) {
     twitter(e);
@@ -144,7 +163,7 @@ var eventMarkersLayer = function (e) {
                 markersEventful.addLayer(markerEF);
 
 
-                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView(['+data.events.event[i].latitude.toString()+', '+data.events.event[i].longitude.toString()+'], map.getMaxZoom()); trafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="truncate">' + data.events.event[i].title.trim() + '</h6></div></li>');
+                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], map.getMaxZoom()); reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="truncate">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
 
                 markerEF.on('mouseover', function (e) {
@@ -164,8 +183,9 @@ var eventMarkersLayer = function (e) {
         }
         map.addLayer(markersEventful);
         markersEventful.on('clusterclick', function (a) {
-            trafficLayer();
-        });
+           reloadTrafficLayer();
+
+                });
 
     });
 
@@ -198,7 +218,7 @@ var eventMarkersLayer = function (e) {
                     count = count + 1;
                     marker.bindPopup('Title : ' + title[0].textContent);
                     markersInrix.addLayer(marker);
-                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView(['+arr[j].getAttribute("latitude")+', '+arr[j].getAttribute("longitude")+'], map.getZoom()+3);"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="truncate">' + title[0].textContent + '</h6></div></li>');
+                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], map.getMaxZoom());reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="truncate">' + title[0].textContent + '</h6></div></li>');
                     marker.on('mouseover', function (e) {
                         this.openPopup();
                     });
@@ -218,9 +238,8 @@ var eventMarkersLayer = function (e) {
             $('.inrix-count').html(count);
             map.addLayer(markersInrix);
             markersInrix.on('clusterclick', function (a) {
-                trafficLayer();
+                reloadTrafficLayer();
             });
-
 
 
         });
@@ -264,7 +283,7 @@ var trafficCamera = function (e) {
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
-                    $('#cameras').after('<li><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView(['+lat+', '+long+'], map.getMaxZoom());"><i class="teal-text right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
+                    $('#cameras').after('<li><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], map.getMaxZoom());reloadTrafficLayer();"><i class="teal-text right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
 
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
@@ -294,9 +313,8 @@ var trafficCamera = function (e) {
             map.addLayer(markersCameras);
 
             markersCameras.on('clusterclick', function (a) {
-                trafficLayer();
+                reloadTrafficLayer();
             });
-
 
 
         });

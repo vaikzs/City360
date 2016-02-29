@@ -1,10 +1,35 @@
 /**
  * Created by vaikunth on 2/12/16.
  */
+
 var trafficLayer = function () {
 
-    if(overlay!=='')
-        map.removeLayer(overlay);
+
+    //map.eachLayer(function(layer){
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //});
+    map.eachLayer(function(layer){
+
+        //if (layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras && typeof layer !== 'L.marker') {
+        //            map.removeLayer(layer);
+        //        }
+       if(layer === imageOverlay || typeof imageOverlay === layer){
+           map.removeLayer(layer);
+       }else if(layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras && typeof layer !== 'L.marker'){
+            map.removeLayer(layer);
+
+
+        }
+
+
+    });
+
 
     if (map.getZoom() <= 16) {
         $.ajax({
@@ -13,8 +38,8 @@ var trafficLayer = function () {
         }).done(function (data) {
             securityToken = data.getElementsByTagName("AuthToken")[0].textContent;
             serverPath = data.getElementsByTagName("ServerPath")[0].textContent;
-            var imageBounds = map.getBounds();
 
+            var imageBounds = map.getBounds();
             var zoom = map.getZoom();
             var frc = '';
             var penwidth = '';
@@ -43,7 +68,12 @@ var trafficLayer = function () {
                 penwidth = 9;
             }
 
-            overlay = L.imageOverlay('http://na-rseg-tts.inrix.com/RsegTiles/Tile.ashx?Action=GetMapTile&speedBucketId=54135&token=' + securityToken + '&corner1=' + map.getBounds()._northEast.lat + '|' + map.getBounds()._northEast.lng + '&corner2=' + map.getBounds()._southWest.lat + '|' + map.getBounds()._southWest.lng + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&opacity=100&penwidth=' + penwidth + '&coverage=255&format=png&FRCLevel=' + frc + '&layers=T&roadsegmenttype=TMC&resolution=25', imageBounds, {}).addTo(map);
+            imageOverlay = L.imageOverlay('http://na-rseg-tts.inrix.com/RsegTiles/Tile.ashx?Action=GetMapTile&speedBucketId=54135&token=' + securityToken + '&corner1=' + map.getBounds()._northEast.lat + '|' + map.getBounds()._northEast.lng + '&corner2=' + map.getBounds()._southWest.lat + '|' + map.getBounds()._southWest.lng + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&opacity=100&penwidth=' + penwidth + '&coverage=255&format=png&FRCLevel=' + frc + '&layers=T&roadsegmenttype=TMC&resolution=25', imageBounds, {});
+
+
+            imageOverlay.addTo(map);
+
+
 
         });
     }
@@ -51,7 +81,6 @@ var trafficLayer = function () {
 
         //Popup a message, telling the traffic cannot be displayed for this zoom level
     }
-
 
 }
 
