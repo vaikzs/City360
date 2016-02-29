@@ -33,33 +33,22 @@ $('.geocode').click(function () {
 /*
  On click traffic layer
  */
-$(document).ready(function () {
 
-
-        trafficLayer();
-    map.on('dragstart dragend viewreset', function () {
-        trafficLayer();
-    });
-
-
-
-
-});
 
 $("#traffic-flow").click(function () {
     if ($(this).prop('checked')) {
 
         trafficLayer();
-        map.on('blur layeradd baselayerchange zoomend dragstart dragend viewreset', function () {
+        map.on('blur dragstart dragend viewreset', function () {
             trafficLayer();
         });
 
     }
     else {
 
-        if (overlay !== '') {
-            map.removeLayer(overlay);
-            map.removeEventListener('zoomlevelschange dragstart dragend viewreset');
+        if (imageOverlay !== '') {
+            map.removeLayer(imageOverlay);
+            map.removeEventListener('blur dragstart dragend viewreset');
 
         }
 
@@ -940,6 +929,7 @@ $('#cancel').click(function () {
 });
 
 $(document).ready(function () {
+
     sidebar_out();
     $('.events-title,#events,#incidents,#cameras').hide();
 });

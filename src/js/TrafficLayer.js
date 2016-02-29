@@ -21,12 +21,7 @@ var trafficLayer = function () {
         //        }
        if(layer === imageOverlay || typeof imageOverlay === layer){
            map.removeLayer(layer);
-       }else if(layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras && typeof layer !== 'L.marker'){
-            map.removeLayer(layer);
-
-
-        }
-
+       }
 
     });
 
