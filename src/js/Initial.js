@@ -6,7 +6,21 @@ var markersEventful, markersInrix, markersCameras;
 var clickTrafficLayer = true;
 var geocodeControlLayer = false;
 var populatedMarkers = [];
-var RADIUS = 1200;
+var RADIUS = 950;
+map.on('zoomchange',function(e){
+
+
+if(map.getZoom()===17||map.getZoom()===16||map.getZoom()===15){
+
+    RADIUS = 500;
+}
+else if(map.getZoom()===14||map.getZoom()===13||map.getZoom()===12){
+    RADIUS = 700;
+}
+else if(map.getZoom()===11||map.getZoom()===10||map.getZoom()===9){
+    RADIUS = 900;
+}
+});
 
 var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
     opacity: 1,
@@ -25,7 +39,7 @@ var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
  On click traffic layer
  */
 
-map.on('dragstart zoom dragend viewreset', function () {
+map.on('dragstart dragend zoom viewreset', function () {
     removetrafficflow();
     trafficLayer();
 });
@@ -35,32 +49,16 @@ $("#traffic-flow").click(function () {
 
         removetrafficflow();
         trafficLayer();
-
-
-
     }
     else {
-
-
-            removetrafficflow();
-            map.removeEventListener('dragstart zoom dragend viewreset');
-
-
-
-
+        removetrafficflow();
+        map.removeEventListener('dragstart dragend zoom viewreset');
     }
-
-
 });
-
-
 var reloadTrafficLayer = function () {
     removetrafficflow();
     trafficLayer();
-
 }
-
-
 /*
  On right click bring up search for all events nearby within the radius
  */
@@ -108,7 +106,7 @@ var sidebar_out = function () {
 $('#arrow').click(arrowFunc);
 
 map.on('dblclick', function (e) {
-
+    $('.welcome-message').hide();
     sidebar_out();
     $('.events-title,#events,#incidents,#cameras').show();
 
@@ -118,8 +116,8 @@ map.on('dblclick', function (e) {
 
 });
 map.on('contextmenu', function (e) {
-    twitter(e);
-    roadLinks511(e);
+    //twitter(e);
+    //roadLinks511(e);
 });
 var eventMarkersLayer = function (e) {
 
@@ -132,7 +130,7 @@ var eventMarkersLayer = function (e) {
     map.addLayer(filterCircle);
     markersEventful = new L.MarkerClusterGroup();
     $.ajax({
-        url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&callback=?",
+        url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&starttime=today&callback=?",
         dataType: "json",
     }).done(function (data) {
         console.log("Event data" + data)
@@ -150,7 +148,7 @@ var eventMarkersLayer = function (e) {
                 markersEventful.addLayer(markerEF);
 
 
-                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="truncate">' + data.events.event[i].title.trim() + '</h6></div></li>');
+                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
 
                 markerEF.on('mouseover', function (e) {
@@ -205,7 +203,7 @@ var eventMarkersLayer = function (e) {
                     count = count + 1;
                     marker.bindPopup('Title : ' + title[0].textContent);
                     markersInrix.addLayer(marker);
-                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="truncate">' + title[0].textContent + '</h6></div></li>');
+                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="">' + title[0].textContent + '</h6></div></li>');
                     marker.on('mouseover', function (e) {
                         this.openPopup();
                     });
