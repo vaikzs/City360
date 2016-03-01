@@ -25,41 +25,38 @@ var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
  On click traffic layer
  */
 
-map.on('viewreset', function () {
-    trafficLayer(div);
+map.on('dragstart zoom dragend viewreset', function () {
+    removetrafficflow();
+    trafficLayer();
 });
-map.on('drag',function(){
-    trafficLayer(div);
-});
+
 $("#traffic-flow").click(function () {
     if ($(this).prop('checked')) {
 
-        trafficLayer(div);
+        removetrafficflow();
+        trafficLayer();
+
 
 
     }
     else {
 
-        if (imageOverlay !== '') {
 
-            map.removeEventListener('drag viewreset');
+            removetrafficflow();
+            map.removeEventListener('dragstart zoom dragend viewreset');
 
-        }
+
 
 
     }
 
 
 });
-map.on('layeradd', function (e) {
 
-    console.log(e);
-
-});
 
 var reloadTrafficLayer = function () {
-    trafficLayer(div);
-
+    removetrafficflow();
+    trafficLayer();
 
 }
 
@@ -112,7 +109,6 @@ $('#arrow').click(arrowFunc);
 
 map.on('dblclick', function (e) {
 
-    reloadTrafficLayer();
     sidebar_out();
     $('.events-title,#events,#incidents,#cameras').show();
 

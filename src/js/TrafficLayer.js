@@ -1,11 +1,11 @@
 /**
  * Created by vaikunth on 2/12/16.
  */
+var removetrafficflow = function(){
+    $('.leaflet-image-layer').remove();
 
+}
 var trafficLayer = function () {
-
-    //Clearing all previous image overlays
-     $('.leaflet-overlay-pane').html(" ");
 
     if (map.getZoom() <= 16) {
         $.ajax({
