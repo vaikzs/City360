@@ -119,6 +119,32 @@ map.on('contextmenu', function (e) {
     //twitter(e);
     //roadLinks511(e);
 });
+// Once we've got a position, zoom and center the map
+// on it, and add a single marker.
+map.on('locationfound', function(e) {
+    map.fitBounds(e.bounds);
+
+    myLayer.setGeoJSON({
+        type: 'Feature',
+        geometry: {
+            type: 'Point',
+            coordinates: [e.latlng.lng, e.latlng.lat]
+        },
+        properties: {
+            'title': 'Your locality!',
+            'marker-color': '#26c6da',
+            'marker-symbol': 'star'
+        }
+    });
+    myLayer.openPopup();
+
+});
+
+// If the user chooses not to allow their location
+// to be shared, display an error message.
+map.on('locationerror', function() {
+    geolocate.innerHTML = 'Position could not be found';
+});
 var eventMarkersLayer = function (e) {
 
     filterCircle.addTo(map);

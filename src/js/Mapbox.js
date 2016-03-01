@@ -3,7 +3,8 @@
  */
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
-var map = L.mapbox.map('map', 'mapbox.light', {
+var map = L.mapbox.map('map', 'mapbox.streets', {
+    doubleClickZoom:false,
     zoomControl: false,
     attributionControl: false
 });
@@ -69,14 +70,17 @@ var layers = {
     Emerald: baseEmerald
 };
 
+var myLayer = L.mapbox.featureLayer().addTo(map);
 
 //var timeSettings = setTimeout(function () {
 //    $('#modal-events').openModal();
 //}, 5000);
 var initialize = function () {
 
-    map.doubleClickZoom.disable();
-
+    $('#init-message').openModal();
+    $('#locate').click(function(){
+        map.locate();
+    });
     //$('#initialModal').openModal();
 
     map.setView([37.773972

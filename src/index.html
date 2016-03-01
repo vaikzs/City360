@@ -25,28 +25,29 @@
 <body id="body">
 
 
-<ul id='listings' style="z-index: 1;opacity: 0" class='z-index-5 collapsible side-nav fixed'
+<ul id='listings' style="z-index: 1;opacity: 0" class='grey lighten-4 z-index-5 collapsible side-nav fixed'
     data-collapsible="expandable">
     <li class="logo row">
         <a id="logo-container" href="http://www.knoesis.org" target="_blank"
            class="brand-logo">
-            <img style="margin-top:5%" class="container center-block" src="images/knoesis-org.jpg">
+            <img style="margin-top:5%" class="container center-block" src="images/logo.png" height="100%">
         </a>
     </li>
 
 
-    <li class="row card-panel white-text z-depth-5 blue-grey lighten-1" style="margin:2%;">
+    <li class="row card-panel z-depth-5" style="margin:2%;">
 
-        <input id="icon_prefix" placeholder="Enter location" type="search" onkeypress="return runScript(event)" class="white-text col s7 offset-s1">
-        <a href="#!" class="btn disabled white-text col s3 offset-s1 right"  onclick="eval($('#icon_prefix').val())">GO</a>
+        <input id="icon_prefix" placeholder="Enter location" type="search" onkeypress="return runScript(event)"
+               class="col s7 offset-s1">
+        <a href="#!" class="right " onclick="eval($('#icon_prefix').val())"><i class="material-icons">search</i></a>
         <div></div>
     </li>
-    <ul class="collection card-panel white-text grey z-depth-2 welcome-message" style="margin:2%;">
-        <h5 class="collection-item grey">Welcome!<i class="material-icons right">info</i></h5>
-        <p>This tool is meant for users who can view heterogeneous data in the vicinity of point of interest that is
-            found to be congested by traffic in San Francisco Bay Area</p>
+    <ul class="collection card-panel z-depth-2 welcome-message" style="margin:2%;">
+        <h5 class="collection-item ">Welcome!<i class="material-icons right">info</i></h5>
+        <p>This tool is meant for users who can view heterogeneous data in the region of interest that might cause
+            traffic congestion in San Francisco Bay Area</p>
     </ul>
-    <h5 class="blue lighten-2 events-title white-text center card-panel" style="margin:2%;">List</h5>
+    <h5 class="events-title center card-panel" style="margin:2%;">List</h5>
     <li id="events" class="grey white-text card-panel" style="margin:2%;"> Entertainment Events<span
         class="badge eventful-count white-text">0</span></li>
     <li id="incidents" class="grey white-text card-panel" style="margin:2%;">Incidents<span
@@ -64,7 +65,8 @@
 <div class="map-section " id="mapIntro">
     <div id='legend' style='display:none;' class="grey darken-1">
 
-        <img class="grey darken-1" src="http://maps.gstatic.com/tactile/layers/traffic-legend-20150511.png" width="90px" height="7px">
+        <img class="grey darken-1" src="http://maps.gstatic.com/tactile/layers/traffic-legend-20150511.png" width="90px"
+             height="7px">
 
 
     </div>
@@ -101,7 +103,7 @@
         <div class="row">
             <a href="#modal-help"
                class="btn-floating btn-large modal-trigger hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
-               data-position="left" data-delay="50" data-tooltip="User guide" data-target="modal-help">
+               data-position="left" data-delay="50" data-tooltip="User guide (Not yet implemented)" data-target="modal-help">
                 <i class=" material-icons">help</i></a>
         </div>
 
@@ -113,84 +115,88 @@
 
 </div>
 
-<ul class="card-panel fade-in modal collection with-header grey lighten-2" id="initialModal">
-    <li class="center white-text blue-grey collection-header">
-        <h4> Enable/Disable Traffic flow</h4>
-    </li>
+<div class="card-panel fade-in modal grey lighten-2" id="initialModal">
 
-    <li class="collection-item">
+    <div class=" white-text grey modal-content">
+        <h4 class="flow-text"> Enable/Disable Traffic flow</h4>
         <div class="row">
-            <span class="col s6 "><i class="left blue-grey-text material-icons">traffic</i>Traffic</span>
+            <span class="col s6 ">
+                <i class="left white-text material-icons">traffic</i>Traffic</span>
             <a href="#!" class=" col s6 secondary-content">
                 <div class="switch">
                     <label class="right">
-                        <span class="hide-on-med-and-down">Disable</span>
+                        <span class="hide-on-med-and-down white-text">Disable</span>
                         <input id="traffic-flow" type="checkbox" checked>
                         <span class="lever"></span>
-                        <span class="hide-on-med-and-down">Enable</span>
+                        <span class="hide-on-med-and-down white-text">Enable</span>
                     </label>
                 </div>
             </a>
         </div>
-    </li>
+    </div>
 
 
-    <li class="collection-item">
-        <a class="btn-flat modal-close">Cancel</a>
-        <a class="btn-flat modal-close right grey white-text">Ok</a>
+    <div class="collection-item modal-footer">
+        <a class="btn-flat modal-close right ">Cancel</a>
+        <a class="btn-flat modal-close left grey white-text">Ok</a>
 
-    </li>
+    </div>
 
 
-</ul>
+</div>
 
 <div class="card-panel fade-in modal" id="modalCameras">
 
-    <h4 class="teal card-panel white-text modal-heading center">Traffic Cameras</h4>
+    <h4 class="grey card-panel white-text modal-heading center">Traffic Cameras</h4>
     <div class="modal-content">
 
         <p>We collect camera images/information from NY, Panning to New york in few seconds . . </p>
     </div>
     <div class="modal-footer">
-        <a href="#!" id="cancel" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        <a href="#!" id="cancel" class="grey white-text modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
 
     </div>
 
 </div>
-<ul class="collection modal grey" id="modal-events" style="height:100%">
-    <li class="collection-item row">
+<div class="modal grey fade-in scale" id="modal-events" >
+    <div class="modal-content row">
 
-        <div class="card col s6">
+
+        <div class="card col s6 hide-on-med-and-down">
             <div class="card-image">
                 <img src="images/Screenshot from 2016-02-24 21:18:13.png" width="18%" height="18%">
                 <span class="blue-grey-text card-title">Radial Search</span>
             </div>
             <div class="card-content ">
-                <span class="activator grey-text text-darken-4">Description<i class="material-icons right">more_vert</i></span>
+                    <span class="activator grey-text text-darken-4">Description<i
+                        class="material-icons right">more_vert</i></span>
 
 
             </div>
             <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Radial Search<i class="material-icons right">close</i></span>
+                    <span class="card-title grey-text text-darken-4">Radial Search<i
+                        class="material-icons right">close</i></span>
                 <p>This option is selected by default and it searches for events within a radius</p>
             </div>
 
         </div>
-        <div class="card col s6">
+        <div class="card col s6 hide-on-med-and-down">
 
             <div class="card-image">
                 <img src="images/Screenshot from 2016-02-24 21:57:47.png" width="18%" height="18%">
                 <span class="blue-grey-text card-title">Boundingbox Search</span>
             </div>
             <div class="card-content">
-                <span class="activator grey-text text-darken-4">Description<i class="material-icons right">more_vert</i></span>
+                    <span class="activator grey-text text-darken-4">Description<i
+                        class="material-icons right">more_vert</i></span>
 
 
             </div>
             <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4">Boundingbox Search<i
                     class="material-icons right">close</i></span>
-                <p>This option when selected makes a bounding box search, populates all the events within the bounding
+                <p>This option when selected makes a bounding box search, populates all the events within the
+                    bounding
                     box</p>
             </div>
 
@@ -198,31 +204,30 @@
         </div>
 
 
-    </li>
-    <li class="collection-item row">
+        <div class="row white">
 
-        <p class="col s6">
-            <input name="group1" type="radio" id="test1" checked/>
-            <label for="test1">Radial Search</label>
-        </p>
-        <p class="col s6">
-            <input name="group1" type="radio" id="test2"/>
-            <label for="test2">Bounding box</label>
-        </p>
+            <p class="col s6">
+                <input name="group1" type="radio" id="test1" checked/>
+                <label for="test1">Radial Search</label>
+            </p>
+            <p class="col s6">
+                <input name="group1" type="radio" id="test2"/>
+                <label for="test2">Bounding box</label>
+            </p>
 
-    </li>
-    <li class="collection-item">
-        <h5>How to search for events?</h5>
-        <p>Double click any where on the Map search</p>
+        </div>
 
-        <a class="btn-flat modal-close grey white-text">Ok</a>
-        <a class="btn-flat modal-close right">Cancel</a>
-    </li>
+    </div>
+    <div class="modal-footer">
 
+        <a class="btn-flat modal-close grey left white-text">Ok</a>
+        <a class="btn-flat modal-close  ">Cancel</a>
 
-</ul>
+    </div>
 
-<ul class="collection modal fade-in" id="modal-help">
+</div>
+
+<ul class="collection modal fade-in scale" id="modal-help">
     <li class="collection-item avatar">
         <i class="material-icons circle">photo_camera</i>
         <span class="title">Cameras NY</span>
@@ -252,6 +257,16 @@
         </p>
     </li>
 </ul>
+
+<div class="modal card-panel white-text grey" id="init-message">
+    <div class="card"></div>
+    <h5 class="modal-content container flow-text">Hello there,<br> Do you wish to locate yourself?</h5>
+    <div class="modal-footer">
+
+        <a class="btn-flat modal-close  ">No</a>
+        <a class="btn-flat modal-close grey  left white-text" id="locate">Yes</a>
+    </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
