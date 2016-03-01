@@ -4,8 +4,6 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 var map = L.mapbox.map('map', 'mapbox.light', {
-    dragging: true,
-    doubleClickZoom: false,
     zoomControl: false,
     attributionControl: false
 });
@@ -28,7 +26,7 @@ var baseSatellite = L.mapbox.tileLayer('mapbox.satellite', {
 var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cil8z8h43002ea7kn460yhc42', {
 
     format: 'png'
-}).addTo(map);
+});
 var baseEmerald = L.mapbox.tileLayer('mapbox.emerald', {
 
     format: 'png'
@@ -77,6 +75,7 @@ var layers = {
 //}, 5000);
 var initialize = function () {
 
+    map.doubleClickZoom.disable();
 
     //$('#initialModal').openModal();
 
@@ -86,12 +85,11 @@ var initialize = function () {
         position: 'bottomright',
         zoomInTitle: 'zoom in',
         zoomOutText: 'zoom out'
-    }).addTo(map);
+    });
     var attr = new L.control.attribution();
     L.control.scale({metric: true}).addTo(map);
     baseStyle.addTo(map);
 
-    L.control.layers(layers, overlayMaps, {position: 'bottomright'}).addTo(map);
 
     map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 
@@ -107,19 +105,32 @@ function showMap(err, data) {
     // The geocoder can return an area, like a city, or a
     // point, like an address. Here we handle both cases,
     // by fitting the map bounds to an area or zooming to a point.
+
+
     if (data.lbounds) {
         map.fitBounds(data.lbounds);
     } else if (data.latlng) {
-        map.setView([data.latlng[0], data.latlng[1]], 17);
+        map.setView([data.latlng[0], data.latlng[1]], 15);
         var geocode = L.marker(new L.LatLng(data.latlng[0], data.latlng[1]), {
             icon: L.mapbox.marker.icon({'marker-color': "1b5e20", 'marker-size': 'large'}),
             title: 'Leaflet'
         });
+        geocode.bindPopup($('#icon_prefix').val());
+
         map.addLayer(geocode);
-        $('.leaflet-marker-pane').remove();
+        geocode.openPopup();
     }
 
 
 }
 
-
+function eval(va){
+    geocoder.query(va,showMap);
+}
+function runScript(e) {
+    if (e.keyCode == 13) {
+        var tb = $('#icon_prefix')
+        eval(tb.val());
+        return false;
+    }
+}
