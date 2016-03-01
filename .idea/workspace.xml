@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="188ff116-9b82-4bf6-9146-95e7f8553201" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Initial.js" afterPath="$PROJECT_DIR$/src/js/Initial.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/TrafficLayer.js" afterPath="$PROJECT_DIR$/src/js/TrafficLayer.js" />
     </list>
     <ignored path="untitled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -389,7 +387,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456790170623</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Traffic flow Bug fix">
+      <created>1456791392302</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1456791392302</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -456,10 +460,10 @@
     <MESSAGE value="Weather layer from OpenWeather&#10;Road links from 511&#10;Twitter events on right click&#10;Search bar &#10;&#10;" />
     <MESSAGE value="Event/Incident/Camera on click focuses on that particular event&#10;Removal of Traffic layer with markers syncs properly&#10;Geocoding yet to be done" />
     <MESSAGE value="Adding all missing files, small fix" />
-    <MESSAGE value="Traffic flow Bug fix" />
     <MESSAGE value="Traffic flow Bug fix and UI fix" />
     <MESSAGE value="Traffic flow Bug fix final!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Traffic flow Bug fix final!" />
+    <MESSAGE value="Traffic flow Bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Traffic flow Bug fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
