@@ -35,13 +35,15 @@
     </li>
 
 
-    <li class="row card-panel z-depth-5" style="margin:2%;">
+    <li class="row card-panel white" >
 
-        <input id="icon_prefix" placeholder="Enter location" type="search" onkeypress="return runScript(event)"
-               class="col s7 offset-s1">
+        <input id="icon_prefix" autocomplete="on" placeholder="Enter location" type="search" onkeydown="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1">
         <a href="#!" class="right " onclick="eval($('#icon_prefix').val())"><i class="material-icons">search</i></a>
-        <div></div>
+        <div class="col s12 search-result">
+
+        </div>
     </li>
+
     <ul class="collection card-panel z-depth-2 welcome-message" style="margin:2%;">
         <h5 class="collection-item ">Welcome!<i class="material-icons right">info</i></h5>
         <p>This tool is meant for users who can view heterogeneous data in the region of interest that might cause
@@ -103,7 +105,8 @@
         <div class="row">
             <a href="#modal-help"
                class="btn-floating btn-large modal-trigger hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
-               data-position="left" data-delay="50" data-tooltip="User guide (Not yet implemented)" data-target="modal-help">
+               data-position="left" data-delay="50" data-tooltip="User guide (Not yet implemented)"
+               data-target="modal-help">
                 <i class=" material-icons">help</i></a>
         </div>
 
@@ -158,7 +161,7 @@
     </div>
 
 </div>
-<div class="modal grey fade-in scale" id="modal-events" >
+<div class="modal grey fade-in scale" id="modal-events">
     <div class="modal-content row">
 
 

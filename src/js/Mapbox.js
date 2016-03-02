@@ -4,7 +4,7 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 var map = L.mapbox.map('map', 'mapbox.streets', {
-    doubleClickZoom:false,
+    doubleClickZoom: false,
     zoomControl: false,
     attributionControl: false
 });
@@ -78,8 +78,10 @@ var myLayer = L.mapbox.featureLayer().addTo(map);
 var initialize = function () {
 
     $('#init-message').openModal();
-    $('#locate').click(function(){
-        map.locate();
+    $('#locate').click(function () {
+        map.locate({
+            enableHighAccuracy: true
+        });
     });
     //$('#initialModal').openModal();
 
@@ -104,34 +106,56 @@ $('#modal-events').click(function () {
 
 });
 $(document).ready(initialize);
-
-function showMap(err, data) {
+$('.preloader-wrapper').hide();
+var showMap = function(err, data) {
     // The geocoder can return an area, like a city, or a
     // point, like an address. Here we handle both cases,
     // by fitting the map bounds to an area or zooming to a point.
 
 
+    if(data){
+        for (var j = 0; j < data.results.features.length; j++) {
+
+            $('.search-result').append('<a href="#" class="col s12 white truncate container-fluid"> ' + data.results.features[j].place_name + '</a>')
+
+        }
+
+        $('.search-result a').click(function () {
+            var qu = $(this).html();
+            queryGeo(qu);
+            $('.search-result').html(" ");
+        });
+    }
+}
+
+var showresult = function (err,data) {
+
     if (data.lbounds) {
         map.fitBounds(data.lbounds);
-    } else if (data.latlng) {
+    }
+    if (data.latlng) {
         map.setView([data.latlng[0], data.latlng[1]], 15);
         var geocode = L.marker(new L.LatLng(data.latlng[0], data.latlng[1]), {
-            icon: L.mapbox.marker.icon({'marker-color': "1b5e20", 'marker-size': 'large'}),
+            icon: L.mapbox.marker.icon({'marker-color': "1b5e20", 'marker-size': 'medium', 'marker-symbol':'star'}),
             title: 'Leaflet'
         });
-        geocode.bindPopup($('#icon_prefix').val());
-
+        geocode.bindPopup(data.results.features[0].place_name);
         map.addLayer(geocode);
         geocode.openPopup();
+
     }
+}
+var queryGeo = function(v){
 
+    geocoder.query(v,showresult);
+}
+var eval=function(va) {
+    if(va.length>1)
+    geocoder.query(va, showMap);
+    $('.search-result').html(" ");
 
 }
-
-function eval(va){
-    geocoder.query(va,showMap);
-}
-function runScript(e) {
+var runScript = function(e) {
     if (e.keyCode == 13) {
         var tb = $('#icon_prefix')
         eval(tb.val());
