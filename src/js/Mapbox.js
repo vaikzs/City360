@@ -123,7 +123,9 @@ var showMap = function(err, data) {
         $('.search-result a').click(function () {
             var qu = $(this).html();
             queryGeo(qu);
+            $('#icon_prefix').val($(this).html());
             $('.search-result').html(" ");
+
         });
     }
 }

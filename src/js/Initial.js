@@ -116,8 +116,8 @@ map.on('dblclick', function (e) {
 
 });
 map.on('contextmenu', function (e) {
-    //twitter(e);
-    //roadLinks511(e);
+    twitter(e);
+    roadLinks511(e);
 });
 // Once we've got a position, zoom and center the map
 // on it, and add a single marker.
