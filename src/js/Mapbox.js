@@ -95,11 +95,11 @@ var showMap = function (err, data) {
     // point, like an address. Here we handle both cases,
     // by fitting the map bounds to an area or zooming to a point.
 
-
+    $('.welcome-message').hide();
     if (data) {
         for (var j = 0; j < data.results.features.length; j++) {
-
-            $('.search-result').append('<a href="#" class="col s12 white truncate container-fluid"> ' + data.results.features[j].place_name + '</a>')
+            window.setTimeout(function(){},1000);
+            $('.search-result').append('<a href="#" class="col s12 white truncate results"> ' + data.results.features[j].place_name + '</a>')
 
         }
 
@@ -107,7 +107,9 @@ var showMap = function (err, data) {
             var qu = $(this).html();
             queryGeo(qu);
             $('#icon_prefix').val($(this).html());
-            $('.search-result').html(" ");
+
+                $('.search-result').empty();
+
 
         });
     }
@@ -138,8 +140,8 @@ var eval = function (va) {
     if (va.length > 1)
         geocoder.query(va, showMap);
 
+        $('.search-result').empty();
 
-    $('.search-result').html(" ");
 }
 var runScript = function (e) {
     if (e.keyCode == 13) {

@@ -6,7 +6,7 @@
  */
 var removetrafficflow = function () {
 
-    $('.leaflet-image-layer').remove();
+    $('.leaflet-image-layer').empty();
 
 
 
