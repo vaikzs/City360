@@ -6,8 +6,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczM
 
 var map = L.mapbox.map('map')
     .setView([37.773972, -122.431297], 13).on('ready', function() {
-
-
 });
 var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cil8z8h43002ea7kn460yhc42');
 var baseOutdoors = L.mapbox.tileLayer('mapbox.run-bike-hike', {
@@ -65,6 +63,7 @@ var myLayer = L.mapbox.featureLayer().addTo(map);
 //    $('#modal-events').openModal();
 //}, 5000);
 var initialize = function () {
+    map.doubleClickZoom.disable();
 
     $('#init-message').openModal();
     $('#locate').click(function () {

@@ -58,8 +58,8 @@ var reloadTrafficLayer = function () {
 var arrow = false;
 var arrowFunc = function () {
     if (arrow === false) {
-        $(this).animate({left: '330px'});
-        $(this).html("<i class='material-icons'>keyboard_arrow_left</i>");
+        $('#arrow').animate({left: '330px'});
+        $('#arrow').html("<i class='material-icons'>keyboard_arrow_left</i>");
         $('#listings').animate({
             opacity: 1
         });
@@ -69,10 +69,10 @@ var arrowFunc = function () {
         $('#listings').animate({
             opacity: 0
         });
-        $(this).animate({
+        $('#arrow').animate({
             left: '-12px'
         });
-        $(this).html("<i class='material-icons'>keyboard_arrow_right</i>");
+        $('#arrow').html("<i class='material-icons'>keyboard_arrow_right</i>");
         arrow = false;
     }
 
@@ -102,7 +102,7 @@ map.on('dblclick', function (e) {
 map.on('contextmenu', function (e) {
     //twitter(e);
     //roadLinks511(e);
-    //events311(e);
+    events311(e);
 
 });
 // Once we've got a position, zoom and center the map
@@ -125,6 +125,12 @@ map.on('locationfound', function (e) {
 
 });
 
+map.on('click',function(e){
+    arrow = true;
+    arrowFunc();
+
+});
+
 // If the user chooses not to allow their location
 // to be shared, display an error message.
 map.on('locationerror', function () {
@@ -141,7 +147,7 @@ var eventMarkersLayer = function (e) {
     map.addLayer(filterCircle);
     markersEventful = new L.MarkerClusterGroup();
     $.ajax({
-        url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&starttime=today&callback=?",
+        url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&date=This Week&q=all&callback=?",
         dataType: "json",
     }).done(function (data) {
         console.log("Event data" + data)
@@ -159,7 +165,7 @@ var eventMarkersLayer = function (e) {
                 markersEventful.addLayer(markerEF);
 
 
-                $('#events').after('<li><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding:10%" class="">' + data.events.event[i].title.trim() + '</h6></div></li>');
+                $('#events').after('<li  style="margin:2%;" class="card-panel white"><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
 
                 markerEF.on('mouseover', function (e) {
@@ -214,7 +220,7 @@ var eventMarkersLayer = function (e) {
                     count = count + 1;
                     marker.bindPopup('Title : ' + title[0].textContent);
                     markersInrix.addLayer(marker);
-                    $('#incidents').after('<li><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text right">explore</i><h6 style="padding: 10%" class="">' + title[0].textContent + '</h6></div></li>');
+                    $('#incidents').after('<li style="margin:2%;" class="card-panel white"><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text center-align right">explore</i><h6 style="padding: 10%" class="">' + title[0].textContent + '</h6></div></li>');
                     marker.on('mouseover', function (e) {
                         this.openPopup();
                     });
@@ -279,7 +285,7 @@ var trafficCamera = function (e) {
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
-                    $('#cameras').after('<li><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
+                    $('#cameras').after('<li style="margin:2%;" class="card-panel white"><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
 
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
