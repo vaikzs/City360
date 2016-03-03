@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="188ff116-9b82-4bf6-9146-95e7f8553201" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.html" afterPath="$PROJECT_DIR$/src/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Mapbox.js" afterPath="$PROJECT_DIR$/src/js/Mapbox.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/TrafficLayer.js" afterPath="$PROJECT_DIR$/src/js/TrafficLayer.js" />
     </list>
     <ignored path="untitled.iws" />
@@ -26,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32181168">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state vertical-scroll-proportion="-6.5454545">
+              <caret line="42" column="69" selection-start-line="42" selection-start-column="69" selection-end-line="42" selection-end-column="69" />
               <folding>
                 <element signature="n#style#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#a#0;n#li#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -68,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Initial.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Initial.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/js/Initial.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.032258">
-              <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.3650058">
+              <caret line="45" column="48" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
               <folding>
                 <element signature="e#11378#16720#0" expanded="false" />
                 <element signature="e#16748#17549#0" expanded="false" />
@@ -87,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/src/js/TrafficLayer.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-2.1935484">
-              <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+              <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -140,9 +138,9 @@
         <option value="$PROJECT_DIR$/src/css/materialize.css" />
         <option value="$PROJECT_DIR$/src/css/map.css" />
         <option value="$PROJECT_DIR$/src/js/Initial.js" />
-        <option value="$PROJECT_DIR$/src/js/TrafficLayer.js" />
         <option value="$PROJECT_DIR$/src/js/Mapbox.js" />
         <option value="$PROJECT_DIR$/src/index.html" />
+        <option value="$PROJECT_DIR$/src/js/TrafficLayer.js" />
       </list>
     </option>
   </component>
@@ -439,7 +437,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456970178613</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="UI Fix &amp; Autocomplete fix">
+      <created>1456970949126</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1456970949126</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -515,7 +519,8 @@
     <MESSAGE value="Search result suggestions" />
     <MESSAGE value="Autocomplete small fix and contextmenu is on!" />
     <MESSAGE value="Map style, zoom out/in bug, 311 without timestamp query" />
-    <option name="LAST_COMMIT_MESSAGE" value="Map style, zoom out/in bug, 311 without timestamp query" />
+    <MESSAGE value="UI Fix &amp; Autocomplete fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI Fix &amp; Autocomplete fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -969,29 +974,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/TrafficLayer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.1935484">
-          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/Initial.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.032258">
-          <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
-          <folding>
-            <element signature="e#11378#16720#0" expanded="false" />
-            <element signature="e#16748#17549#0" expanded="false" />
-            <marker date="1456969913874" expanded="true" signature="4815:4826" placeholder="..." />
-            <marker date="1456969913874" expanded="true" signature="7311:7323" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/Mapbox.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.83871">
@@ -1002,8 +984,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32181168">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state vertical-scroll-proportion="-6.5454545">
+          <caret line="42" column="69" selection-start-line="42" selection-start-column="69" selection-end-line="42" selection-end-column="69" />
           <folding>
             <element signature="n#style#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#a#0;n#li#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1016,6 +998,29 @@
             <element signature="n#style#0;n#a#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/TrafficLayer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.1935484">
+          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/Initial.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3650058">
+          <caret line="45" column="48" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+          <folding>
+            <element signature="e#11378#16720#0" expanded="false" />
+            <element signature="e#16748#17549#0" expanded="false" />
+            <marker date="1456969913874" expanded="true" signature="4815:4826" placeholder="..." />
+            <marker date="1456969913874" expanded="true" signature="7311:7323" placeholder="..." />
           </folding>
         </state>
       </provider>
