@@ -35,9 +35,11 @@
     </li>
 
 
-    <li class="row card-panel white" >
+    <li class="row card-panel white" style="margin:2%;">
 
-        <input id="icon_prefix" autocomplete="on" placeholder="Enter location" type="search" onkeydown="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1">
+        <input id="icon_prefix" placeholder="Enter location" type="search"
+               onkeypress="return runScript(document.getElementById('icon_prefix').value)"
+               onkeydown="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1" autofocus>
         <a href="#!" class="right " onclick="eval($('#icon_prefix').val())"><i class="material-icons">search</i></a>
         <div class="col s12 search-result">
 
@@ -67,6 +69,7 @@
 <div class="map-section " id="mapIntro">
     <div id='legend' style='display:none;' class="grey darken-1">
 
+        <h4>Traffic flow</h4>
         <img class="grey darken-1" src="http://maps.gstatic.com/tactile/layers/traffic-legend-20150511.png" width="90px"
              height="7px">
 
@@ -74,14 +77,14 @@
     </div>
     <div class="section z-depth-5" id="map"></div>
     <div class="row right nav-buttons " style="padding: 1%;">
-        <div class="row">
-            <a href="#modalCameras"
-               class="traffic-camera fade-in scale hoverable btn-floating btn-large white-text grey darken-1 waves-effect waves-teal blue-grey-text tooltipped modal-trigger fade-in scale"
-               data-position="left"
-               data-tooltip="Cameras NY" data-delay="50" data-target="modalInitial">
-                <i class=" material-icons">photo_camera</i>
-            </a>
-        </div>
+        <!--<div class="row">-->
+        <!--<a href="#modalCameras"-->
+        <!--class="traffic-camera fade-in scale hoverable btn-floating btn-large white-text grey darken-1 waves-effect waves-teal blue-grey-text tooltipped modal-trigger fade-in scale"-->
+        <!--data-position="left"-->
+        <!--data-tooltip="Cameras NY" data-delay="50" data-target="modalInitial">-->
+        <!--<i class=" material-icons">photo_camera</i>-->
+        <!--</a>-->
+        <!--</div>-->
         <div class="row">
             <a href="#initialModal"
                class="btn-floating btn-large modal-trigger fade-in scale hoverable grey darken-1 waves-effect waves-teal tooltipped fade-in scale"
@@ -99,7 +102,8 @@
         <div class="row">
             <a href="#modal-events"
                class="btn-floating btn-large modal-trigger fade-in scale hoverable grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
-               data-position="left" data-delay="50" data-target="modal-events" data-tooltip="Settings information">
+               data-position="left" data-delay="50" data-target="modal-events"
+               data-tooltip="Settings information (Not yet implemented)">
                 <i class=" material-icons">settings</i></a>
         </div>
         <div class="row">
@@ -266,8 +270,8 @@
     <h5 class="modal-content container flow-text">Hello there,<br> Do you wish to locate yourself?</h5>
     <div class="modal-footer">
 
-        <a class="btn-flat modal-close  ">No</a>
-        <a class="btn-flat modal-close grey  left white-text" id="locate">Yes</a>
+        <a class="btn-flat modal-action modal-close  ">No</a>
+        <a class="btn-flat grey modal-close left white-text" id="locate">Yes</a>
     </div>
 </div>
 

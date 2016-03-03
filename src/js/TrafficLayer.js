@@ -5,7 +5,10 @@
  Removing the traffic layer
  */
 var removetrafficflow = function () {
+
     $('.leaflet-image-layer').remove();
+
+
 
 }
 /*
@@ -15,7 +18,7 @@ var removetrafficflow = function () {
  */
 var trafficLayer = function () {
 
-    if (map.getZoom() <= 16) {
+console.log(map.getZoom())
         $.ajax({
             url: "http://na.api.inrix.com/traffic/inrix.ashx?action=getsecuritytoken&VendorID=1808895794&ConsumerID=ce1f424d-fb48-43d3-a4b8-999c0c9d913e",
             dataType: "xml"
@@ -48,7 +51,7 @@ var trafficLayer = function () {
             }
             else if (zoom == 16) {
                 frc = "1,2,3,4,5,6,7";
-                penwidth = 9;
+                penwidth = 8;
             }
 
 
@@ -58,11 +61,7 @@ var trafficLayer = function () {
 
         });
 
-    }
-    else {
 
-        //Popup a message, telling the traffic cannot be displayed for this zoom level
-    }
 }
 
 

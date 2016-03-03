@@ -7,20 +7,6 @@ var clickTrafficLayer = true;
 var geocodeControlLayer = false;
 var populatedMarkers = [];
 var RADIUS = 950;
-map.on('zoomchange',function(e){
-
-
-if(map.getZoom()===17||map.getZoom()===16||map.getZoom()===15){
-
-    RADIUS = 500;
-}
-else if(map.getZoom()===14||map.getZoom()===13||map.getZoom()===12){
-    RADIUS = 700;
-}
-else if(map.getZoom()===11||map.getZoom()===10||map.getZoom()===9){
-    RADIUS = 900;
-}
-});
 
 var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
     opacity: 1,
@@ -39,20 +25,27 @@ var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
  On click traffic layer
  */
 
-map.on('dragstart dragend zoom viewreset', function () {
+
+map.on('dragstart dragend viewreset', function () {
     removetrafficflow();
     trafficLayer();
 });
-
 $("#traffic-flow").click(function () {
     if ($(this).prop('checked')) {
-
         removetrafficflow();
         trafficLayer();
+        map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
     }
     else {
+
         removetrafficflow();
-        map.removeEventListener('dragstart dragend zoom viewreset');
+        map.removeEventListener('dragstart dragend viewreset');
+        map.removeLayer(baseOutdoors);
+        baseOutdoors.addTo(map);
+        map.legendControl.removeLegend(document.getElementById('legend').innerHTML);
+
+
     }
 });
 var reloadTrafficLayer = function () {
@@ -84,14 +77,6 @@ var arrowFunc = function () {
     }
 
 };
-$('#geocode').click(function () {
-
-    console.log("works")
-
-    //geocoder.query('Chester, NJ', showMap);
-
-
-});
 var sidebar_out = function () {
     $('#arrow').animate({left: '330px'});
     $('#arrow').html("<i class='material-icons'>keyboard_arrow_left</i>");
@@ -109,21 +94,21 @@ map.on('dblclick', function (e) {
     $('.welcome-message').hide();
     sidebar_out();
     $('.events-title,#events,#incidents,#cameras').show();
-
     eventMarkersLayer(e);
     trafficCamera(e);
 
 
 });
 map.on('contextmenu', function (e) {
-    twitter(e);
-    roadLinks511(e);
+    //twitter(e);
+    //roadLinks511(e);
+    //events311(e);
+
 });
 // Once we've got a position, zoom and center the map
 // on it, and add a single marker.
-map.on('locationfound', function(e) {
+map.on('locationfound', function (e) {
     map.fitBounds(e.bounds);
-
     myLayer.setGeoJSON({
         type: 'Feature',
         geometry: {
@@ -142,7 +127,7 @@ map.on('locationfound', function(e) {
 
 // If the user chooses not to allow their location
 // to be shared, display an error message.
-map.on('locationerror', function() {
+map.on('locationerror', function () {
     geolocate.innerHTML = 'Position could not be found';
 });
 var eventMarkersLayer = function (e) {
@@ -337,595 +322,181 @@ var trafficCamera = function (e) {
 var roadLinks511 = function (e) {
 
     markersRoads = new L.MarkerClusterGroup();
-    //$.ajax({ url : 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New511.php?callback=json',
-    //         dataType : "json" }).done(function (data) {
-
-    data = [{
-        "linkid": "101000",
-        "startlat": "37.765830993652344",
-        "startlong": "-122.4049072265625",
-        "endlat": "37.76961898803711",
-        "endlong": "-122.40518188476562"
-    }, {
-        "linkid": "101001",
-        "startlat": "37.76961898803711",
-        "startlong": "-122.40518188476562",
-        "endlat": "37.774898529052734",
-        "endlong": "-122.40560913085938"
-    }, {
-        "linkid": "101010",
-        "startlat": "37.774898529052734",
-        "startlong": "-122.40560913085938",
-        "endlat": "37.77996826171875",
-        "endlong": "-122.3984146118164"
-    }, {
-        "linkid": "101020",
-        "startlat": "37.77996826171875",
-        "startlong": "-122.3984146118164",
-        "endlat": "37.78877639770508",
-        "endlong": "-122.38780975341797"
-    }, {
-        "linkid": "101030",
-        "startlat": "37.78877639770508",
-        "startlong": "-122.38780975341797",
-        "endlat": "37.81065368652344",
-        "endlong": "-122.36433410644531"
-    }, {
-        "linkid": "101040",
-        "startlat": "37.81065368652344",
-        "startlong": "-122.36433410644531",
-        "endlat": "37.81917190551758",
-        "endlong": "-122.34320068359375"
-    }, {
-        "linkid": "101050",
-        "startlat": "37.81917190551758",
-        "startlong": "-122.34320068359375",
-        "endlat": "37.82368087768555",
-        "endlong": "-122.31463623046875"
-    }, {
-        "linkid": "101055",
-        "startlat": "37.82368087768555",
-        "startlong": "-122.31463623046875",
-        "endlat": "37.82537078857422",
-        "endlong": "-122.30522155761719"
-    }, {
-        "linkid": "101060",
-        "startlat": "37.82537078857422",
-        "startlong": "-122.30522155761719",
-        "endlat": "37.82986068725586",
-        "endlong": "-122.29347229003906"
-    }, {
-        "linkid": "101065",
-        "startlat": "37.82986068725586",
-        "startlong": "-122.29347229003906",
-        "endlat": "37.83647918701172",
-        "endlong": "-122.29580688476562"
-    }, {
-        "linkid": "101070",
-        "startlat": "37.83647918701172",
-        "startlong": "-122.29580688476562",
-        "endlat": "37.83816146850586",
-        "endlong": "-122.29622650146484"
-    }, {
-        "linkid": "101080",
-        "startlat": "37.83816146850586",
-        "startlong": "-122.29622650146484",
-        "endlat": "37.844730377197266",
-        "endlong": "-122.2977294921875"
-    }, {
-        "linkid": "101090",
-        "startlat": "37.844730377197266",
-        "startlong": "-122.2977294921875",
-        "endlat": "37.850948333740234",
-        "endlong": "-122.29917907714844"
-    }, {
-        "linkid": "101095",
-        "startlat": "37.850948333740234",
-        "startlong": "-122.29917907714844",
-        "endlat": "37.866756439208984",
-        "endlong": "-122.30386352539062"
-    }, {
-        "linkid": "101100",
-        "startlat": "37.866756439208984",
-        "startlong": "-122.30386352539062",
-        "endlat": "37.878135681152344",
-        "endlong": "-122.30731964111328"
-    }];
-    for (var i = 0; i < data.length; i++) {
-        var lat = data[i].startlat.toString();
-        var long = data[i].startlong.toString();
-        var latend = data[i].endlat.toString();
-        var longend = data[i].endlong.toString();
-        var linkid = data[i].linkid.toString();
-
-        if (e.latlng.distanceTo(L.latLng(lat, long)) < RADIUS && e.latlng.distanceTo(L.latLng(latend, longend)) < RADIUS) {
-            $.ajax({
-                url: 'https://api.mapbox.com/v4/directions/mapbox.driving/' + long + ',' + lat + ';' + long + ',' + latend + '.json?access_token=pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA&geometry=geojson',
-                dataType: "json"
-            }).done(function (data) {
+    $.ajax({
+        url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New511.php?callback=json',
+        dataType: "json"
+    }).done(function (data) {
 
 
-                var origin = L.mapbox.featureLayer(data.origin, {
-                    pointToLayer: function (feature, latlon) {
-                        // L.circleMarker() draws a circle with fixed radius in pixels.
-                        // To draw a circle overlay with a radius in meters, use L.circle()
-                        return L.marker(latlon, {
-                            icon: L.mapbox.marker.icon({
-                                'marker-symbol': "o",
-                                'marker-size': 'small',
-                                'marker-color': '#5E35B1'
-                            }),
-                            title: '511 road links'
-                        });
-                    }
-                });
-                origin.addTo(map);
-                origin.bindPopup("Origin");
-                origin.on('mouseover', function (e) {
-                    this.openPopup();
-                });
-                var desti = L.mapbox.featureLayer(data.destination, {
-                    pointToLayer: function (feature, latlon) {
-                        // L.circleMarker() draws a circle with fixed radius in pixels.
-                        // To draw a circle overlay with a radius in meters, use L.circle()
-                        return L.marker(latlon, {
-                            icon: L.mapbox.marker.icon({
-                                'marker-symbol': "d",
-                                'marker-size': 'small',
-                                'marker-color': '#D50000'
-                            }),
-                            title: '511 road links'
-                        });
-                    }
-                });
-                desti.addTo(map);
-                desti.bindPopup("Destination");
-                desti.on('mouseover', function (e) {
-                    this.openPopup();
-                });
+        for (var i = 0; i < data.length; i++) {
+            var lat = data[i].startlat.toString();
+            var long = data[i].startlong.toString();
+            var latend = data[i].endlat.toString();
+            var longend = data[i].endlong.toString();
+            var linkid = data[i].linkid.toString();
 
-                var featureLayer = L.mapbox.featureLayer(data.routes[0].geometry, {
+            if (e.latlng.distanceTo(L.latLng(lat, long)) < RADIUS && e.latlng.distanceTo(L.latLng(latend, longend)) < RADIUS) {
+                $.ajax({
+                    url: 'https://api.mapbox.com/v4/directions/mapbox.driving/' + long + ',' + lat + ';' + long + ',' + latend + '.json?access_token=pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA&geometry=geojson',
+                    dataType: "json"
+                }).done(function (data) {
 
-                    pointToLayer: function (feature, latlon) {
-                        // L.circleMarker() draws a circle with fixed radius in pixels.
-                        // To draw a circle overlay with a radius in meters, use L.circle()
-                        console.log(feature);
-                        return L.marker(latlon, {
-                            icon: L.mapbox.marker.icon({
-                                'marker-symbol': "d",
-                                'marker-size': 'small',
-                                'marker-color': '#D50000'
-                            }),
-                            title: '511 road links'
-                        });
-                    }
-                });
 
-                featureLayer.addTo(map);
-                featureLayer.eachLayer(function (layer) {
-                    // See the `.bindPopup` documentation for full details. This
-                    // dataset has a property called `name`: your dataset might not,
-                    // so inspect it and customize to taste.
-                    layer.bindPopup("haha");
-                });
-                featureLayer.bindPopup(linkid);
-                featureLayer.on('mouseover', function (e) {
-
-                    map.eachLayer(function (layer) {
-                        if (layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras) {
-                            map.removeLayer(layer);
+                    var origin = L.mapbox.featureLayer(data.origin, {
+                        pointToLayer: function (feature, latlon) {
+                            // L.circleMarker() draws a circle with fixed radius in pixels.
+                            // To draw a circle overlay with a radius in meters, use L.circle()
+                            return L.marker(latlon, {
+                                icon: L.mapbox.marker.icon({
+                                    'marker-symbol': "o",
+                                    'marker-size': 'small',
+                                    'marker-color': '#5E35B1'
+                                }),
+                                title: '511 road links'
+                            });
                         }
                     });
                     origin.addTo(map);
+                    origin.bindPopup("Origin");
+                    origin.on('mouseover', function (e) {
+                        this.openPopup();
+                    });
+                    var desti = L.mapbox.featureLayer(data.destination, {
+                        pointToLayer: function (feature, latlon) {
+                            // L.circleMarker() draws a circle with fixed radius in pixels.
+                            // To draw a circle overlay with a radius in meters, use L.circle()
+                            return L.marker(latlon, {
+                                icon: L.mapbox.marker.icon({
+                                    'marker-symbol': "d",
+                                    'marker-size': 'small',
+                                    'marker-color': '#D50000'
+                                }),
+                                title: '511 road links'
+                            });
+                        }
+                    });
                     desti.addTo(map);
+                    desti.bindPopup("Destination");
+                    desti.on('mouseover', function (e) {
+                        this.openPopup();
+                    });
+
+                    var featureLayer = L.mapbox.featureLayer(data.routes[0].geometry, {
+
+                        pointToLayer: function (feature, latlon) {
+                            // L.circleMarker() draws a circle with fixed radius in pixels.
+                            // To draw a circle overlay with a radius in meters, use L.circle()
+                            console.log(feature);
+                            return L.marker(latlon, {
+                                icon: L.mapbox.marker.icon({
+                                    'marker-symbol': "d",
+                                    'marker-size': 'small',
+                                    'marker-color': '#D50000'
+                                }),
+                                title: '511 road links'
+                            });
+                        }
+                    });
+
                     featureLayer.addTo(map);
+                    featureLayer.eachLayer(function (layer) {
+                        // See the `.bindPopup` documentation for full details. This
+                        // dataset has a property called `name`: your dataset might not,
+                        // so inspect it and customize to taste.
+                        layer.bindPopup("haha");
+                    });
+                    featureLayer.bindPopup(linkid);
+                    featureLayer.on('mouseover', function (e) {
+
+                        map.eachLayer(function (layer) {
+                            if (layer !== baseLight && layer !== baseEmerald && layer !== baseStyle && layer !== baseStreet && layer !== baseDark && layer !== baseOutdoors && layer !== baseSatellite && layer !== markersEventful && layer !== markersInrix && layer !== filterCircle && layer !== markersCameras) {
+                                map.removeLayer(layer);
+                            }
+                        });
+                        origin.addTo(map);
+                        desti.addTo(map);
+                        featureLayer.addTo(map);
 
 
+                    });
+                    featureLayer.bringToFront();
+                    origin.bringToFront();
+                    desti.bringToFront();
                 });
-                featureLayer.bringToFront();
-                origin.bringToFront();
-                desti.bringToFront();
-            });
+            }
+
+
+            //
         }
 
-
-        //
-    }
-
-    //map.addLayer(markersRoads);
+        //map.addLayer(markersRoads);
 
 
-    //});
+    });
 
 
 }
 var twitter = function (e) {
 
     markersTwitter = new L.MarkerClusterGroup();
-    //$.ajax({ url : 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New511.php?callback=json',
-    //         dataType : "json" }).done(function (data) {
-    console.log("right click")
-    data = [{
-        "event_type": "weather;",
-        "start_time": "2014-05-22 13:13:59",
-        "end_time": "2014-05-23 12:28:16",
-        "impact": "75",
-        "lat": "37.513994",
-        "longitue": "-122.07076",
-        "Id": "1"
-    }, {
-        "event_type": "fog;",
-        "start_time": "2014-05-22 18:07:03",
-        "end_time": "2014-05-23 12:13:58",
-        "impact": "12",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "2"
-    }, {
-        "event_type": "concert;",
-        "start_time": "2014-05-22 13:12:46",
-        "end_time": "2014-05-23 13:07:29",
-        "impact": "82",
-        "lat": "36.967212",
-        "longitue": "-121.933333",
-        "Id": "3"
-    }, {
-        "event_type": "marathon;",
-        "start_time": "2014-05-22 14:00:45",
-        "end_time": "2014-05-23 11:01:10",
-        "impact": "12",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "4"
-    }, {
-        "event_type": "blocked;",
-        "start_time": "2014-05-22 15:10:49",
-        "end_time": "2014-05-23 09:28:42",
-        "impact": "34",
-        "lat": "37.6648863",
-        "longitue": "-122.470774",
-        "Id": "5"
-    }, {
-        "event_type": "Concert;",
-        "start_time": "2014-05-22 16:42:31",
-        "end_time": "2014-05-23 11:53:25",
-        "impact": "11",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "6"
-    }, {
-        "event_type": "Blocked;",
-        "start_time": "2014-05-22 13:45:57",
-        "end_time": "2014-05-23 12:27:30",
-        "impact": "10",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "7"
-    }, {
-        "event_type": "tournament;",
-        "start_time": "2014-05-22 13:55:16",
-        "end_time": "2014-05-23 01:46:54",
-        "impact": "12",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "8"
-    }, {
-        "event_type": "shooting;",
-        "start_time": "2014-05-22 13:21:51",
-        "end_time": "2014-05-23 03:59:51",
-        "impact": "18",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "9"
-    }, {
-        "event_type": "festival;",
-        "start_time": "2014-05-22 13:34:32",
-        "end_time": "2014-05-23 12:54:14",
-        "impact": "13",
-        "lat": "37.649122",
-        "longitue": "-122.500313",
-        "Id": "10"
-    }, {
-        "event_type": "traffic;",
-        "start_time": "2014-05-22 13:18:10",
-        "end_time": "2014-05-23 13:00:31",
-        "impact": "41",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "11"
-    }, {
-        "event_type": "Festival;",
-        "start_time": "2014-05-22 13:57:55",
-        "end_time": "2014-05-23 12:30:34",
-        "impact": "12",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "12"
-    }, {
-        "event_type": "accident;",
-        "start_time": "2014-05-22 15:03:51",
-        "end_time": "2014-05-23 13:10:01",
-        "impact": "16",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "13"
-    }, {
-        "event_type": "rain;",
-        "start_time": "2014-05-22 13:18:35",
-        "end_time": "2014-05-23 13:03:03",
-        "impact": "66",
-        "lat": "37.248194",
-        "longitue": "-121.810118",
-        "Id": "14"
-    }, {
-        "event_type": "rain;",
-        "start_time": "2014-05-23 14:47:42",
-        "end_time": "2014-05-24 12:50:06",
-        "impact": "28",
-        "lat": "37.6041549",
-        "longitue": "-122.473595",
-        "Id": "15"
-    }, {
-        "event_type": "weather;",
-        "start_time": "2014-05-23 13:38:02",
-        "end_time": "2014-05-24 13:07:31",
-        "impact": "63",
-        "lat": "37.661213",
-        "longitue": "-122.161568",
-        "Id": "16"
-    }, {
-        "event_type": "fog;",
-        "start_time": "2014-05-23 13:32:56",
-        "end_time": "2014-05-24 12:16:51",
-        "impact": "14",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "17"
-    }, {
-        "event_type": "concert;",
-        "start_time": "2014-05-23 13:31:16",
-        "end_time": "2014-05-24 13:01:34",
-        "impact": "101",
-        "lat": "37.513994",
-        "longitue": "-122.07076",
-        "Id": "18"
-    }, {
-        "event_type": "Carnival;",
-        "start_time": "2014-05-23 16:57:45",
-        "end_time": "2014-05-23 21:15:56",
-        "impact": "10",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "19"
-    }, {
-        "event_type": "marathon;",
-        "start_time": "2014-05-23 13:39:14",
-        "end_time": "2014-05-24 12:48:28",
-        "impact": "10",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "20"
-    }, {
-        "event_type": "blocked;",
-        "start_time": "2014-05-23 14:19:55",
-        "end_time": "2014-05-24 12:41:16",
-        "impact": "34",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "21"
-    }, {
-        "event_type": "weather.;",
-        "start_time": "2014-05-23 15:44:33",
-        "end_time": "2014-05-24 11:38:15",
-        "impact": "10",
-        "lat": "37.3567709",
-        "longitue": "-122.117916",
-        "Id": "22"
-    }, {
-        "event_type": "cleared;",
-        "start_time": "2014-05-23 16:44:18",
-        "end_time": "2014-05-24 02:42:32",
-        "impact": "10",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "23"
-    }, {
-        "event_type": "tournament;",
-        "start_time": "2014-05-23 14:31:18",
-        "end_time": "2014-05-24 12:34:55",
-        "impact": "18",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "24"
-    }, {
-        "event_type": "shooting;",
-        "start_time": "2014-05-23 14:44:42",
-        "end_time": "2014-05-24 13:03:39",
-        "impact": "47",
-        "lat": "37.513994",
-        "longitue": "-122.07076",
-        "Id": "25"
-    }, {
-        "event_type": "festival;",
-        "start_time": "2014-05-23 13:34:39",
-        "end_time": "2014-05-24 10:41:13",
-        "impact": "10",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "26"
-    }, {
-        "event_type": "Traffic;",
-        "start_time": "2014-05-23 15:21:27",
-        "end_time": "2014-05-24 01:46:58",
-        "impact": "15",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "27"
-    }, {
-        "event_type": "construction;",
-        "start_time": "2014-05-23 13:25:22",
-        "end_time": "2014-05-24 08:10:44",
-        "impact": "10",
-        "lat": "37.699279",
-        "longitue": "-122.34266",
-        "Id": "28"
-    }, {
-        "event_type": "traffic;",
-        "start_time": "2014-05-23 14:51:07",
-        "end_time": "2014-05-24 07:08:48",
-        "impact": "65",
-        "lat": "37.513994",
-        "longitue": "-122.07076",
-        "Id": "29"
-    }, {
-        "event_type": "Festival;",
-        "start_time": "2014-05-23 16:34:04",
-        "end_time": "2014-05-24 10:39:32",
-        "impact": "10",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "30"
-    }, {
-        "event_type": "accident;",
-        "start_time": "2014-05-23 13:51:59",
-        "end_time": "2014-05-24 12:49:40",
-        "impact": "13",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "31"
-    }, {
-        "event_type": "rain;",
-        "start_time": "2014-05-24 13:21:47",
-        "end_time": "2014-05-25 07:08:20",
-        "impact": "14",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "32"
-    }, {
-        "event_type": "weather;",
-        "start_time": "2014-05-24 13:16:10",
-        "end_time": "2014-05-25 12:58:45",
-        "impact": "57",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "33"
-    }, {
-        "event_type": "concert;",
-        "start_time": "2014-05-24 13:23:28",
-        "end_time": "2014-05-25 13:09:46",
-        "impact": "63",
-        "lat": "37.6041549",
-        "longitue": "-122.473595",
-        "Id": "34"
-    }, {
-        "event_type": "marathon;",
-        "start_time": "2014-05-24 14:06:01",
-        "end_time": "2014-05-25 08:28:18",
-        "impact": "14",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "35"
-    }, {
-        "event_type": "carnival;",
-        "start_time": "2014-05-24 15:06:51",
-        "end_time": "2014-05-25 12:52:16",
-        "impact": "10",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "36"
-    }, {
-        "event_type": "blocked;",
-        "start_time": "2014-05-24 14:25:41",
-        "end_time": "2014-05-25 10:59:50",
-        "impact": "32",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "37"
-    }, {
-        "event_type": "Shooting;",
-        "start_time": "2014-05-24 13:28:42",
-        "end_time": "2014-05-25 12:55:59",
-        "impact": "11",
-        "lat": "37.779803",
-        "longitue": "-122.027412",
-        "Id": "38"
-    }, {
-        "event_type": "crime;",
-        "start_time": "2014-05-24 13:25:13",
-        "end_time": "2014-05-25 12:42:35",
-        "impact": "11",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "39"
-    }, {
-        "event_type": "tournament;",
-        "start_time": "2014-05-24 13:53:01",
-        "end_time": "2014-05-25 12:55:15",
-        "impact": "12",
-        "lat": "37.708075",
-        "longitue": "-122.514926",
-        "Id": "40"
-    }, {
-        "event_type": "snow;",
-        "start_time": "2014-05-24 14:37:40",
-        "end_time": "2014-05-25 02:40:00",
-        "impact": "11",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "41"
-    }, {
-        "event_type": "shooting;",
-        "start_time": "2014-05-24 13:14:09",
-        "end_time": "2014-05-25 12:24:55",
-        "impact": "82",
-        "lat": "37.779803",
-        "longitue": "-122.027412",
-        "Id": "42"
-    }, {
-        "event_type": "festival;",
-        "start_time": "2014-05-24 13:32:25",
-        "end_time": "2014-05-25 12:40:05",
-        "impact": "35",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "43"
-    }, {
-        "event_type": "traffic;",
-        "start_time": "2014-05-24 13:17:27",
-        "end_time": "2014-05-25 13:09:47",
-        "impact": "41",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "44"
-    }, {
-        "event_type": "Festival;",
-        "start_time": "2014-05-24 14:52:13",
-        "end_time": "2014-05-25 12:35:23",
-        "impact": "68",
-        "lat": "32.528832",
-        "longitue": "-124.482003",
-        "Id": "45"
-    }];
-    console.log(data);
-    for (var i = 0; i < data.length; i++) {
+    $.ajax({
+        url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/NewTwitter.php',
+        dataType: "json"
+    }).done(function (data) {
 
-        var lat = data[i].lat;
 
-        var long = data[i].longitue;
-        var marker = L.marker(L.latLng(lat, long), {
-            icon: L.mapbox.marker.icon({'marker-symbol': 't'}),
-            title: 'twitter'
+        for (var i = 0; i < data.length; i++) {
+
+            var lat = data[i].lat;
+
+            var long = data[i].longitue;
+            var marker = L.marker(L.latLng(lat, long), {
+                icon: L.mapbox.marker.icon({'marker-symbol': 't'}),
+                title: 'twitter'
+            });
+
+            marker.bindPopup("Event type : " + data[i].event_type + "<br>Impact " + data[i].impact + "<br>Start time : " + data[i].start_time + "<br>End time" + data[i].end_time);
+            markersTwitter.addLayer(marker);
+
+
+        }
+        map.addLayer(markersTwitter);
+
+
+    });
+
+
+}
+var events311 = function (e) {
+    markers311 = new L.MarkerClusterGroup();
+    $.ajax({
+        url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New311.php?opentime=',
+        dataType: "json"
+    }).done(function (data) {
+        console.log(data);
+        var myIcon = L.icon({
+            iconUrl: 'http://www1.toronto.ca/static_files/immigration_portal/assets/images/LIV-311-ICON_150.jpg',
+            iconSize: [20, 20]
         });
+        for (var i = 0; i < data.length; i++) {
 
-        marker.bindPopup("Event type : " + data[i].event_type + "<br>Impact " + data[i].impact + "<br>Start time : " + data[i].start_time + "<br>End time" + data[i].end_time);
-        markersTwitter.addLayer(marker);
+            var lat = data[i].lat;
+
+            var long = data[i].long;
+            var marker = L.marker(L.latLng(lat, long), {
+                icon: L.mapbox.marker.icon({'marker-symbol': "", 'marker-size': 'large'}),
+                title: '311'
+            });
+
+            marker.bindPopup("<b>Category</b> : " + data[i].category + "<br><b>Neighborhood</b> :  " + data[i].neighborhood + "<br><b>Opened</b> : " +data[i].opened+  "<br><b>Updated</b> : " +data[i].updated+"<br><b>Request type</b> : " + data[i].request_type + "<br><b>Request details</b> : " + data[i].request_details+"<br><b>Responsible Agency</b> : "+data[i].responsible_agency+"<br><b>Status_Notes</b> : " + data[i].status_notes+"<br><b>Supervisor district</b> : " + data[i].supervisor_district);
+            markers311.addLayer(marker);
 
 
-    }
-    map.addLayer(markersTwitter);
+        }
+        map.addLayer(markers311);
 
 
-    //});
+    });
 
 
 }

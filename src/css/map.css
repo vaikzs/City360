@@ -6,10 +6,6 @@
 
 
 }
-
-.leaflet-layer{
-    z-index : 0;
-}
 .legend label,legend span {
     display:block;
     float:left;

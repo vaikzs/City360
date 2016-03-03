@@ -3,15 +3,17 @@
  */
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
-var map = L.mapbox.map('map', 'mapbox.streets', {
-    doubleClickZoom: false,
-    zoomControl: false,
-    attributionControl: false
+
+var map = L.mapbox.map('map')
+    .setView([37.773972, -122.431297], 13).on('ready', function() {
+
+
 });
-var baseOutdoors = L.mapbox.tileLayer('mapbox.outdoors', {
+var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cil8z8h43002ea7kn460yhc42');
+var baseOutdoors = L.mapbox.tileLayer('mapbox.run-bike-hike', {
     interaction: true,
     format: 'png'
-});
+}).addTo(map);
 var baseDark = L.mapbox.tileLayer('mapbox.dark', {
     opacity: 0.85,
     format: 'png'
@@ -24,10 +26,7 @@ var baseSatellite = L.mapbox.tileLayer('mapbox.satellite', {
 
     format: 'png'
 });
-var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cil8z8h43002ea7kn460yhc42', {
 
-    format: 'png'
-});
 var baseEmerald = L.mapbox.tileLayer('mapbox.emerald', {
 
     format: 'png'
@@ -60,16 +59,6 @@ var city = L.OWM.current({
 
 var overlayMaps = {"Weather": city};
 
-var layers = {
-    Custom: baseStyle,
-    Light: baseLight,
-    Dark: baseDark,
-    Streets: baseStreet,
-    Outdoors: baseOutdoors,
-    Satellite: baseSatellite,
-    Emerald: baseEmerald
-};
-
 var myLayer = L.mapbox.featureLayer().addTo(map);
 
 //var timeSettings = setTimeout(function () {
@@ -80,25 +69,15 @@ var initialize = function () {
     $('#init-message').openModal();
     $('#locate').click(function () {
         map.locate({
-            enableHighAccuracy: true
         });
     });
     //$('#initialModal').openModal();
 
-    map.setView([37.773972
-        , -122.431297], 13);
-    var zoom = new L.control.zoom({
-        position: 'bottomright',
-        zoomInTitle: 'zoom in',
-        zoomOutText: 'zoom out'
-    });
-    var attr = new L.control.attribution();
     L.control.scale({metric: true}).addTo(map);
-    baseStyle.addTo(map);
 
-
+    var credits = L.control.attribution();
+    credits.addAttribution("© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>");
     map.legendControl.addLegend(document.getElementById('legend').innerHTML);
-
 
 }
 
@@ -106,14 +85,18 @@ $('#modal-events').click(function () {
 
 });
 $(document).ready(initialize);
-$('.preloader-wrapper').hide();
-var showMap = function(err, data) {
+
+/*
+ Autocomplete feature
+
+ */
+var showMap = function (err, data) {
     // The geocoder can return an area, like a city, or a
     // point, like an address. Here we handle both cases,
     // by fitting the map bounds to an area or zooming to a point.
 
 
-    if(data){
+    if (data) {
         for (var j = 0; j < data.results.features.length; j++) {
 
             $('.search-result').append('<a href="#" class="col s12 white truncate container-fluid"> ' + data.results.features[j].place_name + '</a>')
@@ -130,37 +113,39 @@ var showMap = function(err, data) {
     }
 }
 
-var showresult = function (err,data) {
+var showresult = function (err, data) {
 
     if (data.lbounds) {
         map.fitBounds(data.lbounds);
     }
-    if (data.latlng) {
+    else if (data.latlng) {
         map.setView([data.latlng[0], data.latlng[1]], 15);
         var geocode = L.marker(new L.LatLng(data.latlng[0], data.latlng[1]), {
-            icon: L.mapbox.marker.icon({'marker-color': "1b5e20", 'marker-size': 'medium', 'marker-symbol':'star'}),
+            icon: L.mapbox.marker.icon({'marker-color': "1b5e20", 'marker-size': 'medium', 'marker-symbol': 'star'}),
             title: 'Leaflet'
         });
-        geocode.bindPopup(data.results.features[0].place_name);
+        geocode.bindPopup($('#icon_prefix').val());
         map.addLayer(geocode);
         geocode.openPopup();
 
     }
 }
-var queryGeo = function(v){
+var queryGeo = function (v) {
 
-    geocoder.query(v,showresult);
+    geocoder.query(v, showresult);
 }
-var eval=function(va) {
-    if(va.length>1)
-    geocoder.query(va, showMap);
+var eval = function (va) {
+    if (va.length > 1)
+        geocoder.query(va, showMap);
+
+
     $('.search-result').html(" ");
-
 }
-var runScript = function(e) {
+var runScript = function (e) {
     if (e.keyCode == 13) {
-        var tb = $('#icon_prefix')
-        eval(tb.val());
+        var tb = $('#icon_prefix');
+        queryGeo(tb.val());
         return false;
     }
 }
+
