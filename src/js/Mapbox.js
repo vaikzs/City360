@@ -4,14 +4,13 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 
-var map = L.mapbox.map('map')
+var map = L.mapbox.map('map','mapbox.run-bike-hike',{
+    zoomControl : false
+})
     .setView([37.773972, -122.431297], 13).on('ready', function() {
 });
 var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cil8z8h43002ea7kn460yhc42');
-var baseOutdoors = L.mapbox.tileLayer('mapbox.run-bike-hike', {
-    interaction: true,
-    format: 'png'
-}).addTo(map);
+
 var baseDark = L.mapbox.tileLayer('mapbox.dark', {
     opacity: 0.85,
     format: 'png'
@@ -136,10 +135,10 @@ var queryGeo = function (v) {
     geocoder.query(v, showresult);
 }
 var eval = function (va) {
-    if (va.length > 1)
+    if (va.length > 0)
         geocoder.query(va, showMap);
-
-        $('.search-result').empty();
+    else
+    {  $('.search-result').empty(); }
 
 }
 var runScript = function (e) {
@@ -149,4 +148,5 @@ var runScript = function (e) {
         return false;
     }
 }
+
 

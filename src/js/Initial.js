@@ -89,10 +89,18 @@ var sidebar_out = function () {
 
 }
 $('#arrow').click(arrowFunc);
+$('.preloader-wrapper').hide();
 
+var refreshsummarylist = function(){
+
+    $('.inrix-count,.eventful-count,.camera-count').html("0");
+    $('.event-item').remove();
+};
 map.on('dblclick', function (e) {
+    refreshsummarylist();
     $('.welcome-message').hide();
     sidebar_out();
+
     $('.events-title,#events,#incidents,#cameras').show();
     eventMarkersLayer(e);
     trafficCamera(e);
@@ -136,6 +144,9 @@ map.on('click',function(e){
 map.on('locationerror', function () {
     geolocate.innerHTML = 'Position could not be found';
 });
+markersEventful = new L.MarkerClusterGroup({animateAddingMarkers:true});
+markersInrix = new L.MarkerClusterGroup({animateAddingMarkers:true});
+
 var eventMarkersLayer = function (e) {
 
     filterCircle.addTo(map);
@@ -145,7 +156,6 @@ var eventMarkersLayer = function (e) {
     }
     filterCircle.setLatLng(e.latlng);
     map.addLayer(filterCircle);
-    markersEventful = new L.MarkerClusterGroup();
     $.ajax({
         url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&date=This Week&q=all&callback=?",
         dataType: "json",
@@ -155,17 +165,17 @@ var eventMarkersLayer = function (e) {
         for (var i = 0; i < data.events.event.length; i++) {
 
             var markerEF = L.marker(new L.LatLng(data.events.event[i].latitude, data.events.event[i].longitude), {
-                icon: L.mapbox.marker.icon({'marker-symbol': "e", 'marker-color': "1b5e20", 'marker-size': 'large'}),
+                icon: L.mapbox.marker.icon({'marker-symbol': "theatre", 'marker-color': "#6200ea", 'marker-size': 'large'}),
                 title: 'Eventful'
             });
 
             if (e.latlng.distanceTo(L.latLng(data.events.event[i].latitude.toString(), data.events.event[i].longitude.toString())) < RADIUS) {
                 count = count + 1;
-                markerEF.bindPopup('Title : ' + data.events.event[i].title + '<br> Venue : ' + data.events.event[i].venue_address + '<br> Cityname: ' + data.events.event[i].city_name + ' <br> Starttime:  ' + data.events.event[i].start_time + ' <br> Endtime:  ' + data.events.event[i].stop_time);
+                markerEF.bindPopup('<b>Title</b> : ' + data.events.event[i].title + '<br> <b>Venue</b> : ' + data.events.event[i].venue_address + '<br> <b>Cityname</b>: ' + data.events.event[i].city_name + ' <br> <b>Starttime</b>:  ' + data.events.event[i].start_time + ' <br> <b>Endtime</b>:  ' + data.events.event[i].stop_time);
                 markersEventful.addLayer(markerEF);
 
 
-                $('#events').after('<li  style="margin:2%;" class="card-panel white"><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data.events.event[i].title.trim() + '</h6></div></li>');
+                $('#events').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
 
                 markerEF.on('mouseover', function (e) {
@@ -191,7 +201,6 @@ var eventMarkersLayer = function (e) {
 
     });
 
-    markersInrix = new L.MarkerClusterGroup();
     $.ajax({
         url: "http://na.api.inrix.com/traffic/inrix.ashx?action=getsecuritytoken&VendorID=1808895794&ConsumerID=ce1f424d-fb48-43d3-a4b8-999c0c9d913e",
         dataType: "xml"
@@ -207,20 +216,20 @@ var eventMarkersLayer = function (e) {
             var count = 0;
             for (var j = 0; j < arr.length; j++) {
 
-                var title = arr[j].getElementsByTagName("ShortDesc");
+                var title = arr[j].getElementsByTagName("ParameterizedDescription")[0];
                 var lat = arr[j].getAttribute("latitude");
                 var long = arr[j].getAttribute("longitude");
                 var marker = L.marker(new L.LatLng(lat, long), {
-                    icon: L.mapbox.marker.icon({'marker-symbol': "i", 'marker-size': 'large'}),
+                    icon: L.mapbox.marker.icon({'marker-symbol': "roadblock", 'marker-size': 'large',"marker-color":"#ff1744"}),
                     title: 'Inrix'
                 });
 
-
+		console.log(title.getElementsByTagName("EventText")[0].innerHTML)
                 if (e.latlng.distanceTo(L.latLng(arr[j].getAttribute("latitude"), arr[j].getAttribute("longitude"))) < RADIUS) {
                     count = count + 1;
-                    marker.bindPopup('Title : ' + title[0].textContent);
+                    marker.bindPopup('<b>Title</b> : ' + title.getElementsByTagName("EventText")[0].innerHTML +'<br><b>Location</b> : ' +title.getElementsByTagName("RoadName")[0].innerHTML);
                     markersInrix.addLayer(marker);
-                    $('#incidents').after('<li style="margin:2%;" class="card-panel white"><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text center-align right">explore</i><h6 style="padding: 10%" class="">' + title[0].textContent + '</h6></div></li>');
+                    $('#incidents').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text center-align right">explore</i><h6 style="padding: 10%" class="">' + title.getElementsByTagName("EventText")[0].innerHTML + '</h6></div></li>');
                     marker.on('mouseover', function (e) {
                         this.openPopup();
                     });
@@ -251,7 +260,7 @@ var eventMarkersLayer = function (e) {
 
 }
 
-markersCameras = new L.MarkerClusterGroup();
+markersCameras = new L.MarkerClusterGroup({animateAddingMarkers:true});
 
 var trafficCamera = function (e) {
 
@@ -274,7 +283,7 @@ var trafficCamera = function (e) {
                 var lat = cam[j].getElementsByTagName("Point")[0].attributes[0].value;
                 var long = cam[j].getElementsByTagName("Point")[0].attributes[1].value;
                 var marker = L.marker(L.latLng(lat, long), {
-                    icon: L.mapbox.marker.icon({'marker-symbol': "camera", 'marker-size': 'large'}),
+                    icon: L.mapbox.marker.icon({'marker-symbol': "camera", 'marker-size': 'large','marker-color':'#1de9b6'}),
                     title: 'Inrix traffic cameras'
                 });
 
@@ -284,8 +293,8 @@ var trafficCamera = function (e) {
                     populatedMarkers.push(strll);
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
-                    marker.bindPopup('Title : ' + title[0].textContent + '<br> Camera ID : ' + cameraId);
-                    $('#cameras').after('<li style="margin:2%;" class="card-panel white"><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
+                    marker.bindPopup('<b>Title</b> : ' + title[0].textContent + '<br> <b>Camera ID</b> : ' + cameraId);
+                    $('#cameras').after('<li style="margin:2%;" class="card-panel event-item white"><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
 
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
@@ -474,6 +483,8 @@ var twitter = function (e) {
 
 }
 var events311 = function (e) {
+    var unixTimestamp = new Date();
+    console.log(unixTimestamp.getUTCDate() + "-" + unixTimestamp.getUTCMonth() + "-" + unixTimestamp.getFullYear())
     markers311 = new L.MarkerClusterGroup();
     $.ajax({
         url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New311.php?opentime=',
@@ -481,7 +492,7 @@ var events311 = function (e) {
     }).done(function (data) {
         console.log(data);
         var myIcon = L.icon({
-            iconUrl: 'http://www1.toronto.ca/static_files/immigration_portal/assets/images/LIV-311-ICON_150.jpg',
+            iconUrl: 'http://www.bigeasy.com/templates/client/images/311/311-logo.png.pagespeed.ce.Pxa_2RCvN7.png',
             iconSize: [20, 20]
         });
         for (var i = 0; i < data.length; i++) {
@@ -490,7 +501,7 @@ var events311 = function (e) {
 
             var long = data[i].long;
             var marker = L.marker(L.latLng(lat, long), {
-                icon: L.mapbox.marker.icon({'marker-symbol': "", 'marker-size': 'large'}),
+                icon: L.mapbox.marker.icon({'marker-symbol': "1", 'marker-size': 'large',"marker-color":"#673AB7"}),
                 title: '311'
             });
 

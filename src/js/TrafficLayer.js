@@ -18,7 +18,7 @@ var removetrafficflow = function () {
  */
 var trafficLayer = function () {
 
-console.log(map.getZoom())
+    if(map.getZoom()<=16)
         $.ajax({
             url: "http://na.api.inrix.com/traffic/inrix.ashx?action=getsecuritytoken&VendorID=1808895794&ConsumerID=ce1f424d-fb48-43d3-a4b8-999c0c9d913e",
             dataType: "xml"
@@ -55,7 +55,8 @@ console.log(map.getZoom())
             }
 
 
-            imageOverlay = L.imageOverlay('http://na-rseg-tts.inrix.com/RsegTiles/Tile.ashx?Action=GetMapTile&speedBucketId=54135&token=' + securityToken + '&corner1=' + map.getBounds()._northEast.lat + '|' + map.getBounds()._northEast.lng + '&corner2=' + map.getBounds()._southWest.lat + '|' + map.getBounds()._southWest.lng + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&opacity=100&penwidth=' + penwidth + '&coverage=1&format=png&FRCLevel=' + frc + '&layers=T&roadsegmenttype=TMC&resolution=256', imageBounds, {});
+
+            imageOverlay = L.imageOverlay('http://na-rseg-tts.inrix.com/RsegTiles/Tile.ashx?Action=GetMapTile&speedBucketId=54135&token=' + securityToken + '&corner1=' + map.getBounds()._northEast.lat + '|' + map.getBounds()._northEast.lng + '&corner2=' + map.getBounds()._southWest.lat + '|' + map.getBounds()._southWest.lng + '&width=' + map.getSize().x + '&height=' + map.getSize().y + '&opacity=100&penwidth=' + penwidth + '&coverage=255&format=png&FRCLevel=' + frc + '&layers=T&roadsegmenttype=TMC&resolution=256', imageBounds, {});
 
             imageOverlay.addTo(map);
 
