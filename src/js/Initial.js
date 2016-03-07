@@ -259,9 +259,7 @@ var eventMarkersLayer = function (e) {
 
 
 }
-
 markersCameras = new L.MarkerClusterGroup({animateAddingMarkers:true});
-
 var trafficCamera = function (e) {
 
     $.ajax({
