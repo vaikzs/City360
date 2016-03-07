@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
-    <title>TA</title>
+    <title>City Event Visualization</title>
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
@@ -25,7 +25,7 @@
 <body id="body">
 
 
-<ul id='listings' style="z-index: 1;opacity: 0" class='blue-grey lighten-1 z-index-5 collapsible side-nav fixed'
+<ul id='listings' style="z-index: 1;opacity: 0" class='white z-index-5 collapsible side-nav fixed'
     data-collapsible="expandable">
     <li class="logo row">
         <a id="logo-container" href="http://www.knoesis.org" target="_blank"
@@ -35,11 +35,11 @@
     </li>
 
 
-    <li class="row card-panel white" style="margin:2%;">
+    <li class="row card-panel blue-grey-text grey lighten-4" style="margin:2%;">
 
         <input id="icon_prefix" placeholder="Enter location" type="search"
                onkeypress="return runScript(document.getElementById('icon_prefix').value)"
-               onkeydown="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1" autofocus>
+               oninput="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1" autofocus>
         <a href="#!" class="right " onclick="eval($('#icon_prefix').val())"><i class="material-icons">search</i></a>
         <div class="col s12 search-result">
 
@@ -51,7 +51,7 @@
         <p>This tool is meant for users who can view heterogeneous data in the region of interest that might cause
             traffic congestion in San Francisco Bay Area</p>
     </ul>
-    <h5 class="events-title center card-panel" style="margin:2%;">List</h5>
+    <h5 class="events-title center card-panel blue-grey-text grey lighten-2"  style="margin:2%;">List</h5>
     <li id="events" class="grey white-text card-panel" style="margin:2%;"> Entertainment Events<span
         class="badge eventful-count white-text">0</span></li>
     <li id="incidents" class="grey white-text card-panel" style="margin:2%;">Incidents<span
@@ -61,19 +61,30 @@
         class="badge camera-count white-text">0</span></li>
 </ul>
 
-<a style="top:12px;left:-12px;z-index: 2" id="arrow" href="#!"
+<a style="top:12px;left:-12px;z-index: 1" id="arrow" href="#!"
    class="red lighten-2 hide-on-med-and-down btn-floating"><i
-    class="material-icons">keyboard_arrow_right</i></a>
+    class="material-icons ">keyboard_arrow_right</i></a>
 
 
 <div class="map-section " id="mapIntro">
-    <div id='legend' style='display:none;' class="grey darken-1">
+    <div id='legend' style='display:none;' class="grey ">
 
-        <h4>Traffic flow</h4>
-        <img class="grey darken-1" src="http://maps.gstatic.com/tactile/layers/traffic-legend-20150511.png" width="90px"
+        <strong><b>Traffic flow</b></strong>
+        <img src="http://maps.gstatic.com/tactile/layers/traffic-legend-20150511.png" width="90px"
              height="7px">
 
 
+    </div>
+    <div class="preloader-wrapper active transparent btn-floating">
+        <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
     </div>
     <div class="section z-depth-5" id="map"></div>
     <div class="row right nav-buttons " style="padding: 1%;">
