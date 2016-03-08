@@ -24,8 +24,8 @@ var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
 /*
  On click traffic layer
  */
-
-
+removetrafficflow();
+trafficLayer();
 map.on('dragstart dragend viewreset', function () {
     removetrafficflow();
     trafficLayer();

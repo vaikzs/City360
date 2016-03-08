@@ -32,6 +32,11 @@ var baseLight = L.mapbox.tileLayer('mapbox.light', {
 
     format: 'png'
 });
+var baseOutdoors = L.mapbox.tileLayer('mapbox.run-bike-hike', {
+
+    format: 'png'
+});
+
 var geocoder = L.mapbox.geocoder('mapbox.places', {});
 var clouds = L.OWM.clouds({showLegend: false, opacity: 1});
 var cloudscls = L.OWM.cloudsClassic();
@@ -97,7 +102,7 @@ var showMap = function (err, data) {
     if (data) {
         for (var j = 0; j < data.results.features.length; j++) {
             window.setTimeout(function(){},1000);
-            $('.search-result').append('<a href="#" class="col s12 white truncate results"> ' + data.results.features[j].place_name + '</a>')
+            $('.search-result').append('<a href="#" class="col s12 truncate results"> ' + data.results.features[j].place_name + '</a>')
 
         }
 
@@ -137,8 +142,8 @@ var queryGeo = function (v) {
 var eval = function (va) {
     if (va.length > 0)
         geocoder.query(va, showMap);
-    else
-    {  $('.search-result').empty(); }
+
+      $('.search-result').empty();
 
 }
 var runScript = function (e) {
