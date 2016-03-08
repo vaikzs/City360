@@ -35,7 +35,10 @@ $("#traffic-flow").click(function () {
         removetrafficflow();
         trafficLayer();
         map.legendControl.addLegend(document.getElementById('legend').innerHTML);
-
+        map.on('dragstart dragend viewreset', function () {
+            removetrafficflow();
+            trafficLayer();
+        });
     }
     else {
 
