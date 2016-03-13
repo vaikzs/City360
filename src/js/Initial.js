@@ -2,6 +2,7 @@ var securityToken = '';
 var serverPath = '';
 var imageOverlay = '';
 var div = '';
+var eventfultypelist = [];
 var markersEventful, markersInrix, markersCameras;
 var clickTrafficLayer = true;
 var geocodeControlLayer = false;
@@ -98,18 +99,34 @@ var refreshsummarylist = function(){
 
     $('.inrix-count,.eventful-count,.camera-count').html("0");
     $('.event-item').remove();
+
 };
+$.ajax({
+    url: "http://api.eventful.com/json/categories/list?app_key=NfVrh5tMK93fRG9x&callback=?",
+    dataType: "json",
+}).done(function (data) {
+    for (var i = 0; i < data.category.length; i++)
+        eventfultypelist.push(data.category[i].id);
+});
 map.on('dblclick', function (e) {
+
     refreshsummarylist();
     $('.welcome-message').hide();
     sidebar_out();
-
-    $('.events-title,#events,#incidents,#cameras').show();
+    $('#SF311,.events-title,#events,#incidents,#cameras,.event-categories,.categories-list').show();
     eventMarkersLayer(e);
     trafficCamera(e);
-
+    console.log(eventfultypelist);
+    $('#event-types').autocomplete({
+        source : eventfultypelist
+    });
 
 });
+
+
+
+
+
 map.on('contextmenu', function (e) {
     //twitter(e);
     //roadLinks511(e);
@@ -160,7 +177,7 @@ var eventMarkersLayer = function (e) {
     filterCircle.setLatLng(e.latlng);
     map.addLayer(filterCircle);
     $.ajax({
-        url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&date=This Week&q=all&callback=?",
+        url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&category=music&date=This Week&callback=?",
         dataType: "json",
     }).done(function (data) {
         console.log("Event data" + data)
@@ -488,7 +505,7 @@ var events311 = function (e) {
     console.log(unixTimestamp.getUTCDate() + "-" + unixTimestamp.getUTCMonth() + "-" + unixTimestamp.getFullYear())
     markers311 = new L.MarkerClusterGroup();
     $.ajax({
-        url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New311.php?opentime=',
+        url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New311.php',
         dataType: "json"
     }).done(function (data) {
         console.log(data);
@@ -542,6 +559,6 @@ $('#cancel').click(function () {
 $(document).ready(function () {
 
     sidebar_out();
-    $('.events-title,#events,#incidents,#cameras').hide();
+    $('#SF311,.categories-list,.events-title,#events,#incidents,#cameras').hide();
 });
 

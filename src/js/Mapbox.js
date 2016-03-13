@@ -5,7 +5,8 @@ L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczM
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 
 var map = L.mapbox.map('map','mapbox.run-bike-hike',{
-    zoomControl : false
+    zoomControl : false,
+    maxZoom : 16
 })
     .setView([37.773972, -122.431297], 13).on('ready', function() {
 });

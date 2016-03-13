@@ -16,6 +16,8 @@
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css'
           rel='stylesheet'/>
     <link rel="stylesheet" type="text/css" href="css/leaflet-openweathermap.css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
     <script src="js/leaflet-src.js"></script>
     <script src="js/googleproviders.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -28,9 +30,9 @@
 <ul id='listings' style="z-index: 1;opacity: 0" class='white z-index-5 collapsible side-nav fixed'
     data-collapsible="expandable">
     <li class="logo row">
-        <a id="logo-container" href="http://www.knoesis.org" target="_blank"
+        <a id="logo-container" href="#!" target="_blank"
            class="brand-logo">
-            <img style="margin-top:5%" class="container center-block" src="images/logo.png" height="100%">
+            <img style="margin-top:5%" class="container center-block" src="images/city360.png" height="100%">
         </a>
     </li>
 
@@ -46,14 +48,27 @@
         </div>
     </li>
 
-    <ul class="collection card-panel z-depth-2 welcome-message" style="margin:2%;">
-        <h5 class="collection-item ">Welcome!<i class="material-icons right">info</i></h5>
-        <p>This tool is meant for users who can view heterogeneous data in the region of interest that might cause
-            traffic congestion in San Francisco Bay Area</p>
+    <ul class="collection card-panel z-depth-2 grey darken-1 welcome-message white-text" style="margin:2%;">
+        <h5 class="collection-item grey white-text" style="border-radius:16px">Welcome!<i class="material-icons right">info</i>
+        </h5>
+        <p class="center-align">Visualization of multimodal city events using location, and type of events from
+            Eventful, and 311 for
+            decision support.
+        </p>
     </ul>
-    <h5 class="events-title center card-panel white-text grey lighten-2"  style="margin:2%;">List</h5>
-    <li id="events" class="grey white-text card-panel" style="margin:2%;"> Entertainment Events<span
-        class="badge eventful-count white-text">0</span></li>
+    <h5 class="events-title center card-panel white-text grey lighten-2" style="margin:2%;">List</h5>
+
+    <ul id="events" class="grey white-text card-panel row" style="margin:2%;">
+        <div>
+            <span class="left">Entertainment Events</span>
+            <span class="badge eventful-count right white-text">0</span>
+          </div>
+        <div><input placeholder="Filter event types" id="event-types"></div>
+
+    </ul>
+
+    <li id="SF311" class="grey white-text card-panel" style="margin:2%;">SF311<span
+        class="badge 311-count white-text">0</span></li>
     <li id="incidents" class="grey white-text card-panel" style="margin:2%;">Incidents<span
         class="badge inrix-count white-text">0</span>
     </li>
@@ -79,11 +94,13 @@
         <div class="spinner-layer spinner-red-only">
             <div class="circle-clipper left">
                 <div class="circle"></div>
-            </div><div class="gap-patch">
-            <div class="circle"></div>
-        </div><div class="circle-clipper right">
-            <div class="circle"></div>
-        </div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
         </div>
     </div>
     <div class="section z-depth-5" id="map"></div>
@@ -288,13 +305,13 @@
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="js/inrix.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
 <script src="js/Mapbox.js"></script>
 <script src="js/TrafficLayer.js"></script>
 <script src="js/Initial.js"></script>
-
 
 
 </body>
