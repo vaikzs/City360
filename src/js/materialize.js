@@ -2141,7 +2141,6 @@ if ($) {
     };
 
     $(document).ready(function () {
-        $('.collapsible').collapsible();
     });
 }(jQuery));
 ;(function ($) {
@@ -2371,6 +2370,7 @@ if ($) {
 
     $(document).ready(function () {
         $('.dropdown-button').dropdown();
+
     });
 }(jQuery));
 ;(function ($) {

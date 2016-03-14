@@ -4,7 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <title>City Event Visualization</title>
-    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.3/mapbox-gl.js'></script>
@@ -17,6 +16,7 @@
           rel='stylesheet'/>
     <link rel="stylesheet" type="text/css" href="css/leaflet-openweathermap.css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
     <script src="js/leaflet-src.js"></script>
     <script src="js/googleproviders.js"></script>
@@ -27,11 +27,9 @@
 <body id="body">
 
 
-<ul id='listings' style="z-index: 1;opacity: 0" class='white z-index-5 collapsible side-nav fixed'
-    data-collapsible="expandable">
+<ul id='listings' style="z-index: 1;opacity: 0" class='white side-nav fixed collapsible' data-collapsible="accordion">
     <li class="logo row">
-        <a id="logo-container" href="#!" target="_blank"
-           class="brand-logo">
+        <a id="logo-container" href="#!" class="brand-logo">
             <img style="margin-top:5%" class="container center-block" src="images/city360.png" height="100%">
         </a>
     </li>
@@ -43,37 +41,41 @@
                onkeypress="return runScript(document.getElementById('icon_prefix').value)"
                oninput="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1" autofocus>
         <a href="#!" class="right " onclick="eval($('#icon_prefix').val())"><i class="material-icons">search</i></a>
-        <div class="col s12 search-result">
+        <ul class="col s12 search-result block">
+
+        </ul>
+    </li>
+
+
+    <h5 class="events-title center card-panel grey-text grey lighten-2" style="margin:2%;">List
+        <div id="myTooltip" title="Message" onmouseover="$('#myTooltip').tooltip('open');" class="right"><i
+            class="material-icons">help</i></div>
+    </h5>
+
+    <li id="events" class="grey white-text card-panel row" style="margin:2%;">
+
+        <div class="collapsible-header">
+            <div class="left">Entertainment Events</div>
+            <span class="badge eventful-count right white-text">0</span>
+        </div>
+
+        <div class="grey collapsible-body container col s12" id="event-categories">
+
 
         </div>
+
     </li>
 
-    <ul class="collection card-panel z-depth-2 grey darken-1 welcome-message white-text" style="margin:2%;">
-        <h5 class="collection-item grey white-text" style="border-radius:16px">Welcome!<i class="material-icons right">info</i>
-        </h5>
-        <p class="center-align">Visualization of multimodal city events using location, and type of events from
-            Eventful, and 311 for
-            decision support.
-        </p>
+    <ul id="SF311" class="grey white-text card-panel" style="margin:2%;">
+        SF311
+        <span class="badge 311-count white-text">0</span>
     </ul>
-    <h5 class="events-title center card-panel white-text grey lighten-2" style="margin:2%;">List</h5>
-
-    <ul id="events" class="grey white-text card-panel row" style="margin:2%;">
-        <div>
-            <span class="left">Entertainment Events</span>
-            <span class="badge eventful-count right white-text">0</span>
-          </div>
-        <div><input placeholder="Filter event types" id="event-types"></div>
-
-    </ul>
-
-    <li id="SF311" class="grey white-text card-panel" style="margin:2%;">SF311<span
-        class="badge 311-count white-text">0</span></li>
-    <li id="incidents" class="grey white-text card-panel" style="margin:2%;">Incidents<span
+    <ul id="incidents" class="grey white-text card-panel" style="margin:2%;">Incidents<span
         class="badge inrix-count white-text">0</span>
-    </li>
-    <li id="cameras" class="grey white-text card-panel" style="margin:2%;">Cameras<span
-        class="badge camera-count white-text">0</span></li>
+    </ul>
+    <ul id="cameras" class="grey white-text card-panel" style="margin:2%;">Cameras<span
+        class="badge camera-count white-text">0</span></ul>
+
 </ul>
 
 <a style="top:12px;left:-12px;z-index: 1" id="arrow" href="#!"
@@ -114,6 +116,8 @@
         <!--</a>-->
         <!--</div>-->
         <div class="row">
+
+
             <a href="#initialModal"
                class="btn-floating btn-large modal-trigger fade-in scale hoverable grey darken-1 waves-effect waves-teal tooltipped fade-in scale"
                data-position="left" data-delay="50"
@@ -256,11 +260,12 @@
     <div class="modal-footer">
 
         <a class="btn-flat modal-close grey left white-text">Ok</a>
-        <a class="btn-flat modal-close  ">Cancel</a>
+        <a class="btn-flat modal-close">Cancel</a>
 
     </div>
 
 </div>
+
 
 <ul class="collection modal fade-in scale" id="modal-help">
     <li class="collection-item avatar">
@@ -297,12 +302,32 @@
     <div class="card"></div>
     <h5 class="modal-content container flow-text">Hello there,<br> Do you wish to locate yourself?</h5>
     <div class="modal-footer">
-
-        <a class="btn-flat modal-action modal-close  ">No</a>
+        <a class="btn-flat modal-action modal-close">No</a>
         <a class="btn-flat grey modal-close left white-text" id="locate">Yes</a>
     </div>
 </div>
+<!--
+Modal for double click instruction, radius and time query
+-->
+<div class="modal card-panel white-text grey" id="instruction-event">
+    <ul class="modal-content collection card-panel z-depth-2 grey darken-1 welcome-message white-text" style="margin:2%;">
+        <h5 class="collection-item grey white-text" style="border-radius:16px">Welcome<i class="material-icons right">info</i>
+        </h5>
+        <p class="center-align">Visualization of multimodal city events using location, and type of events from
+            Eventful, and 311 for
+            decision support.
+        </p>
+    </ul>
+    <ul class="modal-content amber-text container">
+        <li class="grey shake center-align"><h5><i class="left material-icons">mouse</i>Double click on the map to query for events</h5></li>
 
+    </ul>
+
+    <div class="modal-footer">
+        <a class="btn-flat modal-action modal-close">Ok</a>
+    </div>
+
+</div>
 
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

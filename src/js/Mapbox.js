@@ -4,12 +4,12 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmFpa3VudGhzcmlkaGFyYW4iLCJhIjoiY2locHR0amczMDQyeXRzbTRrYmcwc3JjciJ9.74473_3r6w8k9P0-dg_cwA';
 
-var map = L.mapbox.map('map','mapbox.run-bike-hike',{
-    zoomControl : false,
-    maxZoom : 16
-})
-    .setView([37.773972, -122.431297], 13).on('ready', function() {
-});
+var map = L.mapbox.map('map', 'mapbox.run-bike-hike', {
+        zoomControl: false,
+        maxZoom: 16
+    })
+    .setView([37.773972, -122.431297], 13).on('ready', function () {
+    });
 var baseStyle = L.mapbox.styleLayer('mapbox://styles/vaikunthsridharan/cil8z8h43002ea7kn460yhc42');
 
 var baseDark = L.mapbox.tileLayer('mapbox.dark', {
@@ -69,16 +69,21 @@ var myLayer = L.mapbox.featureLayer().addTo(map);
 //}, 5000);
 var initialize = function () {
     map.doubleClickZoom.disable();
+    $('#init-message').openModal({
+        complete: function () {
 
-    $('#init-message').openModal();
+           setTimeout(function(){$('#instruction-event').openModal({
+               dismissible : false
+           });},1000);
+        },
+
+
+    });
     $('#locate').click(function () {
-        map.locate({
-        });
+        map.locate({});
     });
     //$('#initialModal').openModal();
-
     L.control.scale({metric: true}).addTo(map);
-
     var credits = L.control.attribution();
     credits.addAttribution("© <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>");
     map.legendControl.addLegend(document.getElementById('legend').innerHTML);
@@ -102,8 +107,9 @@ var showMap = function (err, data) {
     $('.welcome-message').hide();
     if (data) {
         for (var j = 0; j < data.results.features.length; j++) {
-            window.setTimeout(function(){},1000);
-            $('.search-result').append('<a href="#" class="col s12 truncate results"> ' + data.results.features[j].place_name + '</a>')
+            window.setTimeout(function () {
+            }, 1000);
+            $('.search-result').append('<li><a href="#" class="col s12 truncate results"> ' + data.results.features[j].place_name + '</a></li>')
 
         }
 
@@ -112,7 +118,7 @@ var showMap = function (err, data) {
             queryGeo(qu);
             $('#icon_prefix').val($(this).html());
 
-                $('.search-result').empty();
+            $('.search-result').empty();
 
 
         });
@@ -144,7 +150,7 @@ var eval = function (va) {
     if (va.length > 0)
         geocoder.query(va, showMap);
 
-      $('.search-result').empty();
+    $('.search-result').empty();
 
 }
 var runScript = function (e) {
