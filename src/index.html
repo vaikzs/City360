@@ -55,7 +55,7 @@
     <li id="events" class="grey white-text card-panel row" style="margin:2%;">
 
         <div class="collapsible-header">
-            <div class="left">Entertainment Events</div>
+            <div class="left"><span class="left">Entertainment Events</span><i class="material-icons">arrow_drop_down</i></div>
             <span class="badge eventful-count right white-text">0</span>
         </div>
 
@@ -68,7 +68,7 @@
 
     <li id="SF311" class="grey white-text card-panel row" style="margin:2%;">
         <div class="collapsible-header">
-            <div class="left"> SF311</div>
+            <div class="left"><span class="left">SF311</span><i class="material-icons">arrow_drop_down</i></div>
             <span class="badge count311 right white-text">0</span>
         </div>
         <div class="collapsible-body grey container col s12" id="issue-categories">
@@ -303,7 +303,11 @@
 
 <div class="modal card-panel white-text grey" id="init-message">
     <div class="card"></div>
-    <h5 class="modal-content container flow-text">Hello there,<br> Do you wish to locate yourself?</h5>
+    <h5 class="modal-content container flow-text">Hello there,<br> Do you wish to locate yourself?
+
+    </h5>
+    <h6 style="margin: 3%;">Note : San Francisco Bay Area is the area of interest</h6>
+
     <div class="modal-footer">
         <a class="btn-flat modal-action modal-close">No</a>
         <a class="btn-flat grey modal-close left white-text" id="locate">Yes</a>
@@ -315,9 +319,9 @@ Modal for double click instruction, radius and time query
 <div class="modal card-panel grey" id="instruction-event">
     <ul class="modal-content collection card-panel z-depth-2 welcome-message blue-grey-text"
         style="margin:2%;">
-        <h5 class="collection-item grey white-text flow-text" style="border-radius:16px">Welcome<i class="material-icons right">info</i>
+        <h5 class="collection-item grey white-text" style="border-radius:16px">Welcome<i class="material-icons right">info</i>
         </h5>
-        <p class="center-align grey-text">Visualization of multimodal city events using location, and type of events from Eventful, and 311 for decision support.
+        <p class="grey-text flow-text">Visualization of multimodal city events using location, and type of events from Eventful, and 311 for decision support.
         </p>
     </ul>
     <ul class="modal-content white-text container">
@@ -327,7 +331,7 @@ Modal for double click instruction, radius and time query
     </ul>
 
     <div class="modal-footer">
-        <a class="btn-flat modal-action modal-close">Ok</a>
+        <a class="btn-flat modal-action white-text grey modal-close">Ok</a>
     </div>
 
 </div>

@@ -69,18 +69,13 @@ var myLayer = L.mapbox.featureLayer().addTo(map);
 //}, 5000);
 var initialize = function () {
     map.doubleClickZoom.disable();
-    $('#init-message').openModal({
-        complete: function () {
 
-            setTimeout(function () {
-                $('#instruction-event').openModal({
-                    dismissible: false
-                });
-            }, 1000);
-        },
+    setTimeout(function () {
+        $('#instruction-event').openModal({
+            dismissible: false
+        });
+    }, 1000);
 
-
-    });
     $('#locate').click(function () {
         map.locate({});
     });
