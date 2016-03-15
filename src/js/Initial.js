@@ -98,8 +98,8 @@ $('#arrow').click(arrowFunc);
 $('.preloader-wrapper').hide();
 
 var refreshsummarylist = function () {
-
-    $('.inrix-count,.eventful-count,.camera-count').html("0");
+    $('#listings').html($('#listings').html());
+    $('.inrix-count,.eventful-count,.camera-count,.count311').html("0");
     $('.event-item').remove();
 
 };
@@ -265,7 +265,7 @@ var eventMarkersLayer = function (e) {
             if (e.latlng.distanceTo(L.latLng(data.events.event[i].latitude.toString(), data.events.event[i].longitude.toString())) < RADIUS) {
                 count = count + 1;
 
-               markerEF.bindPopup("<h4 class='purple-text'><b>Eventful Events</b><li class='divider'></li></h4>"+'<b>Title</b> : ' + data.events.event[i].title + '<br> <b>Venue</b> : ' + data.events.event[i].venue_address + '<br> <b>Cityname</b>: ' + data.events.event[i].city_name + ' <br> <b>Starttime</b>:  ' + data.events.event[i].start_time + ' <br> <b>Endtime</b>:  ' + data.events.event[i].stop_time + '<br><b>Count</b>:   ' + data.events.event[i].going_count);
+               markerEF.bindPopup("<h4 class='purple-text'><b>Entertainment Events - Eventful</b><li class='divider'></li></h4>"+'<b>Title</b> : ' + data.events.event[i].title + '<br> <b>Venue</b> : ' + data.events.event[i].venue_address + '<br> <b>Cityname</b>: ' + data.events.event[i].city_name + ' <br> <b>Starttime</b>:  ' + data.events.event[i].start_time + ' <br> <b>Endtime</b>:  ' + data.events.event[i].stop_time + '<br><b>Count</b>:   ' + data.events.event[i].going_count);
 
                 markersEventful.addLayer(markerEF);
 
@@ -392,7 +392,7 @@ var trafficCamera = function (e) {
                     populatedMarkers.push(strll);
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
-                    marker.bindPopup("<h4 class='teal-text'><b>Traffic Cameras - Inrix</b><li class='divider'></li></h4>"+'<b>Title</b> : ' + title[0].textContent + '<br> <b>Camera ID</b> : ' + cameraId);
+                    marker.bindPopup("<h4 class='teal-text'><b>Cameras - Inrix</b><li class='divider'></li></h4>"+'<b>Title</b> : ' + title[0].textContent + '<br> <b>Camera ID</b> : ' + cameraId);
                     $('#cameras').after('<li style="margin:2%;" class="card-panel event-item white"><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
@@ -595,9 +595,9 @@ var events311 = function (e) {
 
             if (e.latlng.distanceTo(L.latLng(lat, long)) < RADIUS) {
                 count = count + 1;
-                marker.bindPopup("<h4 class='amber-text'><b>Open data from 311</b><li class='divider'></li></h4>"+"<b>Category</b> : " + data[i].category + "<br><b>Neighborhood</b> :  " + data[i].neighborhood + "<br><b>Opened</b> : " + data[i].opened + "<br><b>Updated</b> : " + data[i].updated + "<br><b>Request type</b> : " + data[i].request_type + "<br><b>Request details</b> : " + data[i].request_details + "<br><b>Responsible Agency</b> : " + data[i].responsible_agency + "<br><b>Status_Notes</b> : " + data[i].status_notes + "<br><b>Supervisor district</b> : " + data[i].supervisor_district,{className:data[i].request_type});
+                marker.bindPopup("<h4 class='amber-text'><b>Open Case data - SF311</b><li class='divider'></li></h4>"+"<b>Category</b> : " + data[i].category + "<br><b>Neighborhood</b> :  " + data[i].neighborhood + "<br><b>Opened</b> : " + data[i].opened + "<br><b>Updated</b> : " + data[i].updated + "<br><b>Request type</b> : " + data[i].request_type + "<br><b>Request details</b> : " + data[i].request_details + "<br><b>Responsible Agency</b> : " + data[i].responsible_agency + "<br><b>Status_Notes</b> : " + data[i].status_notes + "<br><b>Supervisor district</b> : " + data[i].supervisor_district,{className:data[i].request_type});
                 markers311.addLayer(marker);
-                $('#SF311').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header" onclick="map.setView(markers311.getLatlng(), 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data[i].request_type + '</h6></div></li>');
+                $('#SF311').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header" onclick="map.setView(['+lat+','+long+'], 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data[i].request_type + '</h6></div></li>');
                 marker.on('mousemove', function (e) {
                     this.openPopup();
                 });
