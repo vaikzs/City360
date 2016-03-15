@@ -66,15 +66,20 @@
 
     </li>
 
-    <ul id="SF311" class="grey white-text card-panel" style="margin:2%;">
-        SF311
-        <span class="badge 311-count white-text">0</span>
-    </ul>
-    <ul id="incidents" class="grey white-text card-panel" style="margin:2%;">Incidents<span
+    <li id="SF311" class="grey white-text card-panel row" style="margin:2%;">
+        <div class="collapsible-header">
+            <div class="left"> SF311</div>
+            <span class="badge count311 right white-text">0</span>
+        </div>
+        <div class="collapsible-body grey container col s12" id="issue-categories">
+
+        </div>
+    </li>
+    <li id="incidents" class="grey white-text card-panel row" style="margin:2%;">Incidents<span
         class="badge inrix-count white-text">0</span>
-    </ul>
-    <ul id="cameras" class="grey white-text card-panel" style="margin:2%;">Cameras<span
-        class="badge camera-count white-text">0</span></ul>
+    </li>
+    <li id="cameras" class="grey white-text card-panel row" style="margin:2%;">Cameras<span
+        class="badge camera-count white-text">0</span></li>
 
 </ul>
 
@@ -309,17 +314,17 @@
 <!--
 Modal for double click instruction, radius and time query
 -->
-<div class="modal card-panel white-text grey" id="instruction-event">
-    <ul class="modal-content collection card-panel z-depth-2 grey darken-1 welcome-message white-text" style="margin:2%;">
+<div class="modal card-panel grey" id="instruction-event">
+    <ul class="modal-content collection card-panel z-depth-2 welcome-message blue-grey-text"
+        style="margin:2%;">
         <h5 class="collection-item grey white-text" style="border-radius:16px">Welcome<i class="material-icons right">info</i>
         </h5>
-        <p class="center-align">Visualization of multimodal city events using location, and type of events from
-            Eventful, and 311 for
-            decision support.
+        <p class="center-align grey-text">Visualization of multimodal city events using location, and type of events from Eventful, and 311 for decision support.
         </p>
     </ul>
-    <ul class="modal-content amber-text container">
-        <li class="grey shake center-align"><h5><i class="left material-icons">mouse</i>Double click on the map to query for events</h5></li>
+    <ul class="modal-content yellow-text container">
+        <li class="grey shake center-align"><h5><i class="left material-icons">mouse</i>Double click on the map to query
+            for events</h5></li>
 
     </ul>
 

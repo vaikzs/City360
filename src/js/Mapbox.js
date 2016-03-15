@@ -72,9 +72,11 @@ var initialize = function () {
     $('#init-message').openModal({
         complete: function () {
 
-           setTimeout(function(){$('#instruction-event').openModal({
-               dismissible : false
-           });},1000);
+            setTimeout(function () {
+                $('#instruction-event').openModal({
+                    dismissible: false
+                });
+            }, 1000);
         },
 
 
@@ -105,22 +107,23 @@ var showMap = function (err, data) {
     // by fitting the map bounds to an area or zooming to a point.
 
     $('.welcome-message').hide();
+
     if (data) {
+        var resultList = [];
         for (var j = 0; j < data.results.features.length; j++) {
-            window.setTimeout(function () {
-            }, 1000);
-            $('.search-result').append('<li><a href="#" class="col s12 truncate results"> ' + data.results.features[j].place_name + '</a></li>')
+            $('.search-result').append('<li><a href="#" class="col s12 truncate results"> ' + data.results.features[j].place_name + '</a></li>');
+            //resultList.push(data.results.features[j].place_name);
 
         }
-
+        $('#icon_prefix').autocomplete({
+            source: resultList
+        });
         $('.search-result a').click(function () {
             var qu = $(this).html();
             queryGeo(qu);
             $('#icon_prefix').val($(this).html());
 
             $('.search-result').empty();
-
-
         });
     }
 }

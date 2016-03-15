@@ -3,6 +3,7 @@ var serverPath = '';
 var imageOverlay = '';
 var div = '';
 var eventfultypelist = [];
+var open311typelist = []
 var filteredeventtypelist = [];
 var markersEventful, markersInrix, markersCameras;
 var clickTrafficLayer = true;
@@ -147,6 +148,16 @@ var eventtypes = function () {
     $('#event-categories').siblings().addClass("active");
 
 }
+var categorytypes311 = function () {
+    $('#issue-categories').html("");
+    var categorylist = ['Street and Sidewalk Cleaning', 'Litter Receptacles', 'Streetlights', 'Graffiti Public Property', 'Sewer Issues', 'Street Defects', 'Damaged Property'];
+    open311typelist = [];
+    for (var j = 0; j < categorylist.length; j++) {
+        open311typelist.push(categorylist[j]);
+        $('#issue-categories').append('<div class="chip white grey-text categories"><span>' + categorylist[j] + '</span><i class="material-icons" onclick="stackoverflow_removeArrayItem(open311typelist,$(this).siblings().html());console.log(open311typelist)">close</i></div>');
+    }
+
+}
 var openInstructionsModal = function () {
 
     $('#instruction-event').openModal();
@@ -158,12 +169,11 @@ map.on('dblclick', function (e) {
     $('.welcome-message').hide();
     sidebar_out();
     eventtypes();
+    categorytypes311();
     $('#SF311,.events-title,#events,#incidents,#cameras,.event-categories,.categories-list').show();
     eventMarkersLayer(e);
     trafficCamera(e);
-    $('#event-types').autocomplete({
-        source: eventfultypelist
-    });
+    events311(e);
 
 });
 
@@ -171,8 +181,6 @@ map.on('dblclick', function (e) {
 map.on('contextmenu', function (e) {
     //twitter(e);
     //roadLinks511(e);
-    events311(e);
-
 });
 // Once we've got a position, zoom and center the map
 // on it, and add a single marker.
@@ -207,6 +215,25 @@ map.on('locationerror', function () {
 });
 markersEventful = new L.MarkerClusterGroup({animateAddingMarkers: true});
 markersInrix = new L.MarkerClusterGroup({animateAddingMarkers: true});
+var eventRecordFetch = function(eid,title){
+
+    var dat = [];
+    $.ajax({
+        url: 'http://api.eventful.com/json/events/get?app_key=NfVrh5tMK93fRG9x&callback=?&id=' + eid,
+        dataType: "json"
+    }).done(function (datae) {
+
+        //console.log(title.text.trim())
+        //for (var i = 0; i < datae.categories.category.length; i++) {
+        //    console.log("Event category pushing")
+        //    dat.push(datae.categories.category[i].id);
+        //    $('#'+title.toString()).append(datae.categories.category[i].id);
+        //}
+
+
+    });
+
+}
 
 var eventMarkersLayer = function (e) {
 
@@ -237,36 +264,20 @@ var eventMarkersLayer = function (e) {
 
             if (e.latlng.distanceTo(L.latLng(data.events.event[i].latitude.toString(), data.events.event[i].longitude.toString())) < RADIUS) {
                 count = count + 1;
-                var dat = [];
-                $.ajax({
-                    url: 'http://api.eventful.com/json/events/get?app_key=NfVrh5tMK93fRG9x&callback=?&id=' + data.events.event[i].id,
-                    dataType: "json"
-                }).done(function (dataEvent) {
 
-
-                    for (var i = 0; i < dataEvent.categories.category.length; i++) {
-                        dat.push(dataEvent.categories.category[i].id);
-                        console.log((dataEvent.categories.category[i].id));
-                    }
-
-                });
-
-
-                markerEF.bindPopup('<b>Title</b> : ' + data.events.event[i].title + '<br> <b>Venue</b> : ' + data.events.event[i].venue_address + '<br> <b>Cityname</b>: ' + data.events.event[i].city_name + ' <br> <b>Starttime</b>:  ' + data.events.event[i].start_time + ' <br> <b>Endtime</b>:  ' + data.events.event[i].stop_time + '<br><b>Count</b>:   ' + data.events.event[i].going_count + "<br><b>Event category : </b></b>");
+               markerEF.bindPopup("<h4 class='purple-text'><b>Eventful Events</b><li class='divider'></li></h4>"+'<b>Title</b> : ' + data.events.event[i].title + '<br> <b>Venue</b> : ' + data.events.event[i].venue_address + '<br> <b>Cityname</b>: ' + data.events.event[i].city_name + ' <br> <b>Starttime</b>:  ' + data.events.event[i].start_time + ' <br> <b>Endtime</b>:  ' + data.events.event[i].stop_time + '<br><b>Count</b>:   ' + data.events.event[i].going_count);
 
                 markersEventful.addLayer(markerEF);
 
 
                 $('#events').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
+                eventRecordFetch(data.events.event[i].id);
 
                 markerEF.on('mouseover', function (e) {
                     this.openPopup();
+                });
 
-                });
-                markerEF.on('mouseout', function (e) {
-                    this.closePopup();
-                });
                 $('.eventful-count').html(count);
             }
             else {
@@ -313,7 +324,7 @@ var eventMarkersLayer = function (e) {
                 console.log(title.getElementsByTagName("EventText")[0].innerHTML)
                 if (e.latlng.distanceTo(L.latLng(arr[j].getAttribute("latitude"), arr[j].getAttribute("longitude"))) < RADIUS) {
                     count = count + 1;
-                    marker.bindPopup('<b>Title</b> : ' + title.getElementsByTagName("EventText")[0].innerHTML + '<br><b>Location</b> : ' + title.getElementsByTagName("RoadName")[0].innerHTML);
+                    marker.bindPopup("<h4 class='red-text'><b>Incidents - Inrix</b><li class='divider'></li></h4>"+'<b>Title</b> : ' + title.getElementsByTagName("EventText")[0].innerHTML + '<br><b>Location</b> : ' + title.getElementsByTagName("RoadName")[0].innerHTML);
                     markersInrix.addLayer(marker);
                     $('#incidents').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header row"  onclick="map.setView([' + arr[j].getAttribute("latitude") + ', ' + arr[j].getAttribute("longitude") + '], 16);reloadTrafficLayer();"><i class="material-icons teal-text center-align right">explore</i><h6 style="padding: 10%" class="">' + title.getElementsByTagName("EventText")[0].innerHTML + '</h6></div></li>');
                     marker.on('mouseover', function (e) {
@@ -381,18 +392,13 @@ var trafficCamera = function (e) {
                     populatedMarkers.push(strll);
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
-                    marker.bindPopup('<b>Title</b> : ' + title[0].textContent + '<br> <b>Camera ID</b> : ' + cameraId);
+                    marker.bindPopup("<h4 class='teal-text'><b>Traffic Cameras - Inrix</b><li class='divider'></li></h4>"+'<b>Title</b> : ' + title[0].textContent + '<br> <b>Camera ID</b> : ' + cameraId);
                     $('#cameras').after('<li style="margin:2%;" class="card-panel event-item white"><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
-
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
-
                     });
                     marker.on('click', function (e) {
-
                         this.openPopup();
-
-
                     });
 
                     var newCamID = cameraId;
@@ -429,8 +435,6 @@ var roadLinks511 = function (e) {
         url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New511.php?callback=json',
         dataType: "json"
     }).done(function (data) {
-
-
         for (var i = 0; i < data.length; i++) {
             var lat = data[i].startlat.toString();
             var long = data[i].startlong.toString();
@@ -549,15 +553,12 @@ var twitter = function (e) {
 
 
         for (var i = 0; i < data.length; i++) {
-
             var lat = data[i].lat;
-
             var long = data[i].longitue;
             var marker = L.marker(L.latLng(lat, long), {
                 icon: L.mapbox.marker.icon({'marker-symbol': 't'}),
                 title: 'twitter'
             });
-
             marker.bindPopup("Event type : " + data[i].event_type + "<br>Impact " + data[i].impact + "<br>Start time : " + data[i].start_time + "<br>End time" + data[i].end_time);
             markersTwitter.addLayer(marker);
 
@@ -567,15 +568,14 @@ var twitter = function (e) {
 
 
     });
-
-
 }
 var events311 = function (e) {
     var unixTimestamp = new Date();
     console.log(unixTimestamp.getUTCDate() + "-" + unixTimestamp.getUTCMonth() + "-" + unixTimestamp.getFullYear())
     markers311 = new L.MarkerClusterGroup();
+    console.log(open311typelist);
     $.ajax({
-        url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New311.php',
+        url: 'http://sonicbanana.cs.wright.edu/phpmyadmin/Mti_Final_Proj/New311Events.php?categories=' + open311typelist,
         dataType: "json"
     }).done(function (data) {
         console.log(data);
@@ -583,21 +583,36 @@ var events311 = function (e) {
             iconUrl: 'http://www.bigeasy.com/templates/client/images/311/311-logo.png.pagespeed.ce.Pxa_2RCvN7.png',
             iconSize: [20, 20]
         });
+        var count = 0;
         for (var i = 0; i < data.length; i++) {
-
             var lat = data[i].lat;
-
             var long = data[i].long;
             var marker = L.marker(L.latLng(lat, long), {
-                icon: L.mapbox.marker.icon({'marker-symbol': "1", 'marker-size': 'large', "marker-color": "#673AB7"}),
-                title: '311'
+                icon: L.mapbox.marker.icon({'marker-symbol': "c", 'marker-size': 'large', "marker-color": "#ff6f00"}),
+                title: '311',
+                riseOnHover : true
             });
 
-            marker.bindPopup("<b>Category</b> : " + data[i].category + "<br><b>Neighborhood</b> :  " + data[i].neighborhood + "<br><b>Opened</b> : " + data[i].opened + "<br><b>Updated</b> : " + data[i].updated + "<br><b>Request type</b> : " + data[i].request_type + "<br><b>Request details</b> : " + data[i].request_details + "<br><b>Responsible Agency</b> : " + data[i].responsible_agency + "<br><b>Status_Notes</b> : " + data[i].status_notes + "<br><b>Supervisor district</b> : " + data[i].supervisor_district);
-            markers311.addLayer(marker);
+            if (e.latlng.distanceTo(L.latLng(lat, long)) < RADIUS) {
+                count = count + 1;
+                marker.bindPopup("<h4 class='amber-text'><b>Open data from 311</b><li class='divider'></li></h4>"+"<b>Category</b> : " + data[i].category + "<br><b>Neighborhood</b> :  " + data[i].neighborhood + "<br><b>Opened</b> : " + data[i].opened + "<br><b>Updated</b> : " + data[i].updated + "<br><b>Request type</b> : " + data[i].request_type + "<br><b>Request details</b> : " + data[i].request_details + "<br><b>Responsible Agency</b> : " + data[i].responsible_agency + "<br><b>Status_Notes</b> : " + data[i].status_notes + "<br><b>Supervisor district</b> : " + data[i].supervisor_district,{className:data[i].request_type});
+                markers311.addLayer(marker);
+                $('#SF311').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header" onclick="map.setView(markers311.getLatlng(), 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data[i].request_type + '</h6></div></li>');
+                marker.on('mousemove', function (e) {
+                    this.openPopup();
+                });
 
+
+            }
+            else {
+                markers311.removeLayer(marker);
+            }
 
         }
+        $('.count311').html(count);
+
+
+
         map.addLayer(markers311);
 
 
