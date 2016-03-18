@@ -54,6 +54,11 @@ $("#traffic-flow").click(function () {
 
     }
 });
+var scrollingDown = function(camid){
+    $('#listings').animate({
+            scrollTop: $("#"+camid).offset().top},
+        'slow');
+}
 var reloadTrafficLayer = function () {
     removetrafficflow();
     trafficLayer();
@@ -404,7 +409,7 @@ var trafficCamera = function (e) {
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup("<h4 class='teal-text'><b>Cameras - Inrix</b><li class='divider'></li></h4>" + '<b>Title</b> : ' + title[0].textContent + '<br> <b>Camera ID</b> : ' + cameraId);
-                    $('#cameras').after('<li style="margin:2%;" class="card-panel event-item white"><div  id="' + cameraId + '" class="collapsible-header "  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
+                    $('#cameras').after('<li style="margin:2%;" class="card-panel event-item white"><div  id=' + cameraId + ' class="collapsible-header"  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();scrollingDown('+cameraId+');"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
                     });

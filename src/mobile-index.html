@@ -8,8 +8,7 @@
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.3/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.3/mapbox-gl.css' rel='stylesheet'/>
-    <script
-        src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css'
           rel='stylesheet'/>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css'
@@ -17,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="css/leaflet-openweathermap.css"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-
     <script src="js/leaflet-src.js"></script>
     <script src="js/googleproviders.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -27,65 +25,64 @@
 <body id="body">
 
 
-<ul id='listings' style="z-index: 1;opacity: 0;" class='white side-nav fixed collapsible' data-collapsible="accordion">
-    <li class="logo row">
-        <a id="logo-container" href="#!" class="brand-logo">
-            <img style="margin-top:5%" class="container center-block" src="images/city360.png" height="100%">
-        </a>
-    </li>
+    <ul id='listings' class='white fixed side-nav' data-collapsible="accordion">
+        <li class="logo row">
+            <a id="logo-container" href="#!" class="brand-logo">
+                <img style="margin-top:5%" class="container center-block" src="images/city360.png" height="100%">
+            </a>
+        </li>
 
 
-    <li class="row card-panel blue-grey-text grey lighten-4" style="margin:2%;">
+        <li class="row card-panel blue-grey-text grey lighten-4" style="margin:2%;">
 
-        <input id="icon_prefix" placeholder="Enter location" type="search"
-               onkeypress="return runScript(document.getElementById('icon_prefix').value)"
-               oninput="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1" autofocus>
-        <a href="#!" class="right " onclick="eval($('#icon_prefix').val())"><i class="material-icons">search</i></a>
-        <ul class="col s12 search-result block">
+            <input id="icon_prefix" placeholder="Enter location" type="search"
+                   onkeypress="return runScript(document.getElementById('icon_prefix').value)"
+                   oninput="eval(document.getElementById('icon_prefix').value)" class="col s8 offset-s1" autofocus>
+            <ul class="col s12 search-result block">
 
-        </ul>
-    </li>
-
-
-    <h5 class="events-title center card-panel grey-text grey lighten-2" style="margin:2%;">List
-        <div id="myTooltip" title="Navigable Summary list of Events" onmouseover="$('#myTooltip').tooltip('open');" class="right"><i
-            class="material-icons">help</i></div>
-    </h5>
-
-    <li id="events" class="grey white-text card-panel row" style="margin:2%;">
-
-        <div class="collapsible-header">
-            <div class="left"><span class="left">Entertainment Events</span><i class="material-icons">arrow_drop_down</i></div>
-            <span class="badge eventful-count right white-text">0</span>
-        </div>
-
-        <div class="grey collapsible-body container col s12" id="event-categories">
+            </ul>
+        </li>
 
 
-        </div>
+        <h5 class="events-title center card-panel grey-text grey lighten-2" style="margin:2%;">List
+            <div id="myTooltip" title="Message" onmouseover="$('#myTooltip').tooltip('open');" class="right"><i
+                class="material-icons">help</i></div>
+        </h5>
 
-    </li>
+        <li id="events" class="grey white-text card-panel row" style="margin:2%;">
 
-    <li id="SF311" class="grey white-text card-panel row" style="margin:2%;">
-        <div class="collapsible-header">
-            <div class="left"><span class="left">SF311</span><i class="material-icons">arrow_drop_down</i></div>
-            <span class="badge count311 right white-text">0</span>
-        </div>
-        <div class="collapsible-body grey container col s12" id="issue-categories">
+            <div class="collapsible-header">
+                <div class="left"><span class="left">Entertainment Events</span><i
+                    class="material-icons">arrow_drop_down</i></div>
+                <span class="badge eventful-count right white-text">0</span>
+            </div>
 
-        </div>
-    </li>
-    <li id="incidents" class="grey white-text card-panel row" style="margin:2%;">Incidents<span
-        class="badge inrix-count white-text">0</span>
-    </li>
-    <li id="cameras" class="grey white-text card-panel row" style="margin:2%;">Cameras<span
-        class="badge camera-count white-text">0</span></li>
+            <div class="grey collapsible-body container col s12" id="event-categories">
 
-</ul>
 
-<a style="top:12px;left:-12px;z-index: 1" id="arrow" href="#!"
-   class="red lighten-2 hide-on-med-and-down btn-floating"><i
-    class="material-icons ">keyboard_arrow_right</i></a>
+            </div>
+
+        </li>
+
+        <li id="SF311" class="grey white-text card-panel row" style="margin:2%;">
+            <div class="collapsible-header">
+                <div class="left"><span class="left">SF311</span><i class="material-icons">arrow_drop_down</i></div>
+                <span class="badge count311 right white-text">0</span>
+            </div>
+            <div class="collapsible-body grey container col s12" id="issue-categories">
+
+            </div>
+        </li>
+        <li id="incidents" class="grey white-text card-panel row" style="margin:2%;">Incidents<span
+            class="badge inrix-count white-text">0</span>
+        </li>
+        <li id="cameras" class="grey white-text card-panel row" style="margin:2%;">Cameras<span
+            class="badge camera-count white-text">0</span></li>
+
+    </ul>
+<nav>
+    <a href="#" data-activates="listings" class="button-collapse"><i class="material-icons">menu</i></a>
+</nav>
 
 
 <div class="map-section " id="mapIntro">
@@ -111,26 +108,17 @@
         </div>
     </div>
     <div class="section z-depth-5" id="map"></div>
-    <div class="row right nav-buttons " style="padding: 1%;">
-        <!--<div class="row">-->
-        <!--<a href="#modalCameras"-->
-        <!--class="traffic-camera fade-in scale hoverable btn-floating btn-large white-text grey darken-1 waves-effect waves-teal blue-grey-text tooltipped modal-trigger fade-in scale"-->
-        <!--data-position="left"-->
-        <!--data-tooltip="Cameras NY" data-delay="50" data-target="modalInitial">-->
-        <!--<i class=" material-icons">photo_camera</i>-->
-        <!--</a>-->
-        <!--</div>-->
+    <div class="row right nav-buttons transparent hide-on-med-and-down" style="padding: 1%;">
         <div class="row">
-
-
             <a href="#initialModal"
                class="btn-floating btn-large modal-trigger fade-in scale hoverable grey darken-1 waves-effect waves-teal tooltipped fade-in scale"
                data-position="left" data-delay="50"
                data-tooltip="Layers" id="trafficLayer" data-target="initialModal"><i
-                class=" material-icons">layers</i> </a>
+                class=" material-icons">layers</i>
+            </a>
         </div>
         <div class="row">
-            <a class="geocode btn-floating btn-large hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
+            <a class="btn-floating btn-large hoverable fade-in scale grey darken-1 white-text blue-grey-text waves-effect waves-teal nav-events tooltipped fade-in scale"
                data-position="left" data-delay="50"
                data-tooltip="Date selection (Not yet implemented)" id="date-change">
                 <i class="material-icons">date_range</i>
@@ -334,10 +322,17 @@ Modal for double click instruction, radius and time query
 
 </div>
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-75293716-1', 'auto');
     ga('send', 'pageview');
@@ -347,6 +342,13 @@ Modal for double click instruction, radius and time query
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="js/inrix.js"></script>
 <script src="js/materialize.js"></script>
+    <script>
+        $(".button-collapse").sideNav({
+            menuWidth: 340, // Default is 240
+            edge: 'right', // Choose the horizontal origin
+            closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        });
+    </script>
 <script src="js/init.js"></script>
 <script src="js/Mapbox.js"></script>
 <script src="js/TrafficLayer.js"></script>
