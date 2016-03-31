@@ -72,7 +72,12 @@ var initialize = function () {
 
     setTimeout(function () {
         $('#instruction-event').openModal({
-            dismissible: false
+            complete : function(e){
+                $('#important').openModal({
+                    dismissible : false
+                });
+            }
+
         });
     }, 1000);
 
@@ -106,20 +111,20 @@ var showMap = function (err, data) {
     if (data) {
         var resultList = [];
         for (var j = 0; j < data.results.features.length; j++) {
-            $('.search-result').append('<li><a href="#" class="col s12 truncate results"> ' + data.results.features[j].place_name + '</a></li>');
-            //resultList.push(data.results.features[j].place_name);
+            //$('.search-result').removeClass('hide');
+            //$('.search-result').append('<a href="#" class="blue-grey-text z-depth-1-half results collection-item dismissable"> ' + data.results.features[j].place_name + '</a>');
+            resultList.push(data.results.features[j].place_name);
 
         }
         $('#icon_prefix').autocomplete({
             source: resultList
         });
-        $('.search-result a').click(function () {
-            var qu = $(this).html();
-            queryGeo(qu);
-            $('#icon_prefix').val($(this).html());
+        $( "#icon_prefix" ).on( "autocompleteselect", function( event, ui ) {
 
-            $('.search-result').empty();
-        });
+            var qu = $('#icon_prefix').val();
+            queryGeo(qu);
+        } );
+
     }
 }
 

@@ -10,6 +10,7 @@ var clickTrafficLayer = true;
 var geocodeControlLayer = false;
 var populatedMarkers = [];
 var RADIUS = 950;
+var toggleSearch = true;
 
 var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
     opacity: 1,
@@ -54,9 +55,10 @@ $("#traffic-flow").click(function () {
 
     }
 });
-var scrollingDown = function(camid){
+var scrollingDown = function (camid) {
     $('#listings').animate({
-            scrollTop: $("#"+camid).offset().top},
+            scrollTop: $("#" + camid).offset().top
+        },
         'slow');
 }
 var reloadTrafficLayer = function () {
@@ -176,10 +178,14 @@ var categorytypes311 = function () {
 }
 var openInstructionsModal = function () {
 
-    $('#instruction-event').openModal();
+    $('#important').openModal({
+        dismissible: false
+    });
 
 }
 map.on('dblclick', function (e) {
+    if (toggleSearch)
+        $('.search-bar').toggle();
 
     refreshsummarylist();
     $('.welcome-message').hide();
@@ -409,7 +415,7 @@ var trafficCamera = function (e) {
                     //Open dash to give image details
                     var urlstr = 'http://na.api.inrix.com/traffic/inrix.ashx?Action=GetTrafficCameraImage&Token=' + securityToken + '&CameraID=' + cameraId + '&DesiredWidth=640&DesiredHeight=480';
                     marker.bindPopup("<h4 class='teal-text'><b>Cameras - Inrix</b><li class='divider'></li></h4>" + '<b>Title</b> : ' + title[0].textContent + '<br> <b>Camera ID</b> : ' + cameraId);
-                    $('#cameras').after('<li style="margin:2%;" class="card-panel event-item white"><div  id=' + cameraId + ' class="collapsible-header"  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();scrollingDown('+cameraId+');"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
+                    $('#cameras').after('<li style="margin:2%;" class="card-panel event-item white"><div  id=' + cameraId + ' class="collapsible-header"  onclick="map.setView([' + lat + ', ' + long + '], 16);reloadTrafficLayer();scrollingDown(' + cameraId + ');"><i class="teal-text center-align right material-icons">explore</i>' + title[0].textContent + '</div><div class="collapsible-body"><img class="" src=' + urlstr + ' width="100%" height="200px"></div></li>');
                     $('#' + cameraId).click(function () {
                         //map.panTo([40.748817, -73.985428], {});
                     });
@@ -657,8 +663,23 @@ $('#cancel').click(function () {
 });
 
 $(document).ready(function () {
-
-    sidebar_out();
+    //sidebar_out();
+    $('.search-bar').toggle();
+    toggleSearch = false;
     $('#SF311,.categories-list,.events-title,#events,#incidents,#cameras').hide();
 });
 
+$('.search-btn').click(function () {
+    if (toggleSearch) {
+        toggleSearch = false;
+
+
+    }
+    else {
+        toggleSearch = true;
+
+    }
+
+    $('.search-bar').toggle('drop', {direction: 'up'}, 500)
+
+});
