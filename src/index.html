@@ -87,14 +87,14 @@
 
 
     </div>
-    <div class="white search-bar">
-        <form class="">
+    <div class="white search-bar nav-wrapper row">
+        <form>
             <div class="input-field">
-                <input id="icon_prefix" type="search" placeholder="Enter location"
+                <input id="icon_prefix" type="search"
                        onkeypress="return runScript(document.getElementById('icon_prefix').value)"
                        oninput="eval(document.getElementById('icon_prefix').value)" class="grey-text left-align">
-                <label for="icon_prefix" class="grey-text">
-                    <i class="material-icons grey-text " onclick="eval($('#icon_prefix').val())">search</i>
+                <label for="icon_prefix" class="center-align small grey-text">
+                    <i class="material-icons grey-text  " onclick="eval($('#icon_prefix').val())">search</i>
                 </label>
                 <i class="material-icons grey-text" onclick="$('#icon_prefix').val('')">close</i>
             </div>
