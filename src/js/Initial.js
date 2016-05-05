@@ -18,6 +18,28 @@ var filterCircle = L.circle(L.latLng(40, -75), RADIUS, {
     fillOpacity: 0.1,
     color: '#DD2C00'
 });
+
+/*
+READ A FILE
+ */
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
 /*
  Geocoding search for locations, example pan to New york
  */
@@ -203,6 +225,7 @@ map.on('dblclick', function (e) {
 map.on('contextmenu', function (e) {
     //twitter(e);
     //roadLinks511(e);
+
 });
 // Once we've got a position, zoom and center the map
 // on it, and add a single marker.
@@ -237,23 +260,32 @@ map.on('locationerror', function () {
 });
 markersEventful = new L.MarkerClusterGroup({animateAddingMarkers: true});
 markersInrix = new L.MarkerClusterGroup({animateAddingMarkers: true});
-var eventRecordFetch = function (eid, title) {
-
+var eventRecordFetch = function (dataa, marker) {
+    var eid = dataa.id;
     var dat = [];
     $.ajax({
         url: 'http://api.eventful.com/json/events/get?app_key=NfVrh5tMK93fRG9x&callback=?&id=' + eid,
-        dataType: "json"
-    }).done(function (datae) {
+        dataType: "json",
+        async : false
+    }).done(function (data) {
+
+        // console.log("Catgories of eid"+eid+"   ")
+        // console.log(data.categories.category[0])
 
         //console.log(title.text.trim())
-        //for (var i = 0; i < datae.categories.category.length; i++) {
-        //    console.log("Event category pushing")
-        //    dat.push(datae.categories.category[i].id);
-        //    $('#'+title.toString()).append(datae.categories.category[i].id);
-        //}
+        for (var i = 0; i < data.categories.category.length; i++) {
+           console.log("Event category pushing")
+           dat.push(data.categories.category[i].name);
+
+        }
 
 
+
+    }).always(function() {
+        marker.bindPopup("<h4 class='purple-text'><b>Entertainment Events - Eventful</b><li class='divider'></li></h4><b>Category</b> : "+dat+"<br>" + '<b>Title</b> : ' + dataa.title + '<br> <b>Venue</b> : ' + dataa.venue_address + '<br> <b>Cityname</b>: ' + dataa.city_name + ' <br> <b>Starttime</b>:  ' + dataa.start_time + ' <br> <b>Endtime</b>:  ' + dataa.stop_time + '<br><b>Count</b>:   ' + dataa.going_count);
     });
+
+
 
 }
 
@@ -272,6 +304,7 @@ var eventMarkersLayer = function (e) {
         url: "http://api.eventful.com/json/events/search?location=San+Francisco&app_key=NfVrh5tMK93fRG9x&category=" + eventfultypelist.toString() + "&date=This Week&callback=?",
         dataType: "json",
     }).done(function (data) {
+
         var count = 0;
         for (var i = 0; i < data.events.event.length; i++) {
 
@@ -287,14 +320,15 @@ var eventMarkersLayer = function (e) {
             if (e.latlng.distanceTo(L.latLng(data.events.event[i].latitude.toString(), data.events.event[i].longitude.toString())) < RADIUS) {
                 count = count + 1;
 
-                markerEF.bindPopup("<h4 class='purple-text'><b>Entertainment Events - Eventful</b><li class='divider'></li></h4>" + '<b>Title</b> : ' + data.events.event[i].title + '<br> <b>Venue</b> : ' + data.events.event[i].venue_address + '<br> <b>Cityname</b>: ' + data.events.event[i].city_name + ' <br> <b>Starttime</b>:  ' + data.events.event[i].start_time + ' <br> <b>Endtime</b>:  ' + data.events.event[i].stop_time + '<br><b>Count</b>:   ' + data.events.event[i].going_count);
-
+                // markerEF.bindPopup("<h4 class='purple-text'><b>Entertainment Events - Eventful</b><li class='divider'></li></h4><b>Categories</b> : <span id="+data.events.event[i].id+"></span>" + '<b>Title</b> : ' + data.events.event[i].title + '<br> <b>Venue</b> : ' + data.events.event[i].venue_address + '<br> <b>Cityname</b>: ' + data.events.event[i].city_name + ' <br> <b>Starttime</b>:  ' + data.events.event[i].start_time + ' <br> <b>Endtime</b>:  ' + data.events.event[i].stop_time + '<br><b>Count</b>:   ' + data.events.event[i].going_count);
+                eventRecordFetch(data.events.event[i],markerEF);
                 markersEventful.addLayer(markerEF);
 
 
                 $('#events').after('<li style="margin:2%;" class="card-panel event-item white"><div class="collapsible-header"  onclick="map.setView([' + data.events.event[i].latitude.toString() + ', ' + data.events.event[i].longitude.toString() + '], 16); reloadTrafficLayer();"><i class="material-icons center-align teal-text right">explore</i><h6 style="padding:10%" class="">' + data.events.event[i].title.trim() + '</h6></div></li>');
 
-                eventRecordFetch(data.events.event[i].id);
+
+
 
                 markerEF.on('mouseover', function (e) {
                     this.openPopup();
@@ -375,6 +409,7 @@ var eventMarkersLayer = function (e) {
         });
 
     });
+    console.clear();
 
 
 }
