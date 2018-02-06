@@ -8,7 +8,5 @@ Bootstrap Framework
 Node JS 
 
 ## Scenarios
-
-1. ![Screenshots](https://github.com/vaikzs/City360/blob/master/src/images/scenario1.png)
-2. ![Screenshots](https://github.com/vaikzs/City360/blob/master/src/images/scenario2.png)
-
+<img src="https://github.com/vaikzs/City360/blob/master/src/images/scenario1.png" alt="Drawing" height="300"/>
+<img src="https://github.com/vaikzs/City360/blob/master/src/images/scenario2.png" alt="Drawing" height="300"/>
