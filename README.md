@@ -3,7 +3,7 @@ Visualizing Multimodal City Events for Decision Support
 ## Front-end
 - HTML
 - jQuery
-- Bootstrap CSS Framework
+- Materialize CSS Framework
 - Mapbox.js & Leaflet.js
 ## Back-end
 - REST APIs (Inrix, and Eventful)
