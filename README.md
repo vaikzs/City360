@@ -4,6 +4,7 @@ Visualizing Multimodal City Events for Decision Support
 - HTML
 - jQuery
 - Bootstrap CSS Framework
+- Mapbox.js & Leaflet.js
 ## Back-end
 - REST APIs (Inrix, and Eventful)
 - MySQL (Open311) - Data crawling
